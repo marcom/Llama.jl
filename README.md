@@ -17,3 +17,14 @@ add https://github.com/marcom/Llama_cpp.jl
 This currently only works on Linux for i686, x86_64, and aarch64 (due
 cross-compilation for other targets not yet working in the
 `Llama_cpp_jll/build_tarballs.jl` script).
+
+## Downloading the model files
+
+You will need a quantized model file, see
+[llama.cpp](https://github.com/ggerganov/llama.cpp) for instructions.
+
+## Running a model
+
+```julia
+s = llama(model="./ggml2-alpaca-7b-q4.bin", prompt="Hello", extra_args=`-n 16`)
+```
