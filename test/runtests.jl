@@ -9,6 +9,7 @@ showtestset() = println(" "^(2 * Test.get_testset_depth()), "testing ",
     showtestset()
 
     @testset "llama" begin
-        @test llama(; model="", prompt="", extra_args=`-h`) isa String
+        @test llama(; model="", args=`-h`) isa String
+        @test llama(; model="", prompt="", args=`-h`) isa String
     end
 end

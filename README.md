@@ -26,5 +26,17 @@ You will need a quantized model file, see
 ## Running a model
 
 ```julia
-s = llama(model="./ggml2-alpaca-7b-q4.bin", prompt="Hello", extra_args=`-n 16`)
+s = llama(model="./ggml-alpaca-7b-q4.bin", prompt="Hello", args=`-n 16`)
+
+# use more threads
+llama(model="./ggml-alpaca-7b-q4.bin", prompt="Hello", nthreads=4)
+
+# print the help text with more options
+llama(model="", prompt="", args=`-h`)
+```
+
+## Interactive chat mode
+
+```julia
+chat(model="./ggml-alpaca-7b-q4.bin", prompt="Hello chat mode", nthreads=4)
 ```
