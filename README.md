@@ -14,9 +14,10 @@ add https://github.com/marcom/Llama_cpp_jll.jl
 add https://github.com/marcom/Llama_cpp.jl
 ```
 
-This currently only works on Linux for i686, x86_64, and aarch64 (due
-cross-compilation for other targets not yet working in the
-`Llama_cpp_jll/build_tarballs.jl` script).
+The `Llama_cpp_jll.jl` package currently works on Linux, Windows, Mac,
+and FreeBSD on i686, x86_64, and aarch64. See the
+`Llama_cpp_jll/build_tarballs.jl` script for details (note: only
+tested on x86_64-linux so far).
 
 ## Downloading the model files
 
