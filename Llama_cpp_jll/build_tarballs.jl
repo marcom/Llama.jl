@@ -1,100 +1,64 @@
 using BinaryBuilder, Pkg
 
 name = "Llama_cpp"
-version = v"0.0.1"  # fake version number
+version = v"0.0.2"  # fake version number
 
 # url = "https://github.com/ggerganov/llama.cpp"
 # description = "Port of Facebook's LLaMA model in C/C++"
 
 # TODO
-# - is avx2 capability detected at run-time (via cpuid) or hardcoded
+# - is e.g. avx2 capability detected at run-time (via cpuid) or hardcoded
 #   at build-time?
-# - only {i686,x86_64,aarch64}-linux work at the moment
-#   build failures:
-#   - windows: not supported yet according to Makefile (2023.03.20)
-#   - darwin: undeclared identifier ftello
-#   - powerpc64le: Makefile assumes ppc is big-endian (2023.03.20)
-#   - armv6l: disabled, don't know how to discern armv6l / armv7l in build script
-#   - arm7vl: compile fail
+# - i686, x86_64, aarch64 work at the moment
+#   missing architectures: powerpc64le, armv6l, arm7vl
 
 sources = [
-    # 2023.03.20, https://github.com/ggerganov/llama.cpp/releases/tag/master-074bea2
-    # fake version number (used for this _jll) = 0.0.1
-    GitSource("https://github.com/ggerganov/llama.cpp/",
-              "074bea2eb1f1349a0118239c4152914aecaa1be4";
-              unpack_target="llama.cpp"),
+    # 2023.03.21, https://github.com/ggerganov/llama.cpp/releases/tag/master-8cf9f34
+    # fake version number (used for this _jll) = 0.0.2
+    GitSource("https://github.com/ggerganov/llama.cpp.git",
+              "8cf9f34eddc124d4ab28f4d2fe8e99d574510bde"),
     DirectorySource("./bundled"),
+
+    # # 2023.03.20, https://github.com/ggerganov/llama.cpp/releases/tag/master-074bea2
+    # # fake version number (used for this _jll) = 0.0.1
+    # GitSource("https://github.com/ggerganov/llama.cpp.git",
+    #           "074bea2eb1f1349a0118239c4152914aecaa1be4";
+    #           unpack_target="llama.cpp"),
+    # DirectorySource("./bundled"),
 ]
 
 script = raw"""
 cd $WORKSPACE/srcdir/llama.cpp*
 
-atomic_patch -p1 ../patches/fix-makefile-and-missing-clock_gettime.patch
+atomic_patch -p1 ../patches/cmake-remove-mcpu-native.patch
 
-UNAME_S=
-case "${target}" in
-    *-linux-*)
-        UNAME_S=Linux
-        ;;
-    *-apple-darwin*)
-        UNAME_S=Darwin
-        ;;
-    *-w64-mingw32*)
-        UNAME_S=Windows
-        ;;
-    *-freebsd*)
-        UNAME_S=FreeBSD
-        ;;
-esac
+EXTRA_CMAKE_ARGS=
+if [[ "${target}" == *-linux-* ]]; then
+    atomic_patch -p1 ../patches/fix-for-clock_gettime-not-found.patch
+    EXTRA_CMAKE_ARGS='-DCMAKE_EXE_LINKER_FLAGS="-lrt"'
+fi
 
-TARGET=$target
-echo "TARGET=$TARGET"
+mkdir build && cd build
+cmake .. \
+    -DCMAKE_INSTALL_PREFIX=$prefix \
+    -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TARGET_TOOLCHAIN} \
+    -DCMAKE_BUILD_TYPE=RELEASE \
+    $EXTRA_CMAKE_ARGS
+make -j${nproc}
 
-UNAME_P=
-UNAME_M=
-case "${target}" in
-    i686-*)
-        UNAME_P=i686
-        UNAME_M=i686
-        ;;
-    x86_64-*)
-        UNAME_P=x86_64
-        UNAME_M=x86_64
-        ;;
-    aarch64-*)
-        UNAME_P=arm
-        UNAME_M=arm64
-        ;;
-    arm-*)
-        UNAME_P=arm
-        # we assume armv7l
-        UNAME_M=armv7l
-        ;;
-esac
-
-# needed only for old glibc?
-LDFLAGS="-lrt"
-
-make -j${nproc} \
-    CC="${CC}" \
-    CXX="${CXX}" \
-    LDFLAGS="${LDFLAGS}" \
-    UNAME_S="${UNAME_S}" \
-    UNAME_P="${UNAME_P}" \
-    UNAME_M="${UNAME_M}"
-
-for prg in main quantize; do
-    install -Dvm 755 "./${prg}" "${bindir}/${prg}${exeext}"
+# `make install` doesn't work (2023.03.21)
+for prg in llama quantize; do
+    install -Dvm 755 "./${prg}${exeext}" "${bindir}/${prg}${exeext}"
 done
 
-install_license LICENSE
+install_license ../LICENSE
 """
 
-platforms = supported_platforms(; exclude = p -> !Sys.islinux(p) || arch(p) ∉ ["i686", "x86_64", "aarch64"])
+platforms = supported_platforms(; exclude = p -> arch(p) ∉ ["i686", "x86_64", "aarch64"])
 platforms = expand_cxxstring_abis(platforms)
 
 products = [
-    ExecutableProduct("main", :main),
+    ExecutableProduct("llama", :llama),
     ExecutableProduct("quantize", :quantize),
 ]
 
