@@ -1,30 +1,28 @@
 using BinaryBuilder, Pkg
 
-name = "Llama_cpp"
-version = v"0.0.2"  # fake version number
+name = "llama_cpp"
+version = v"0.0.3"  # fake version number
 
 # url = "https://github.com/ggerganov/llama.cpp"
 # description = "Port of Facebook's LLaMA model in C/C++"
 
 # TODO
-# - is e.g. avx2 capability detected at run-time (via cpuid) or hardcoded
-#   at build-time?
-# - i686, x86_64, aarch64 work at the moment
+# - i686, x86_64, aarch64 build
 #   missing architectures: powerpc64le, armv6l, arm7vl
 
-sources = [
-    # 2023.03.21, https://github.com/ggerganov/llama.cpp/releases/tag/master-8cf9f34
-    # fake version number (used for this _jll) = 0.0.2
-    GitSource("https://github.com/ggerganov/llama.cpp.git",
-              "8cf9f34eddc124d4ab28f4d2fe8e99d574510bde"),
-    DirectorySource("./bundled"),
+# versions: fake_version to github_version mapping
+#
+# fake_version    date_released    github_version    github_url
+# 0.0.1           20.03.2023       master-074bea2    https://github.com/ggerganov/llama.cpp/releases/tag/master-074bea2
+# 0.0.2           21.03.2023       master-8cf9f34    https://github.com/ggerganov/llama.cpp/releases/tag/master-8cf9f34
+# 0.0.3           22.03.2023       master-d5850c5    https://github.com/ggerganov/llama.cpp/releases/tag/master-d5850c5
 
-    # # 2023.03.20, https://github.com/ggerganov/llama.cpp/releases/tag/master-074bea2
-    # # fake version number (used for this _jll) = 0.0.1
-    # GitSource("https://github.com/ggerganov/llama.cpp.git",
-    #           "074bea2eb1f1349a0118239c4152914aecaa1be4";
-    #           unpack_target="llama.cpp"),
-    # DirectorySource("./bundled"),
+sources = [
+    # 2023.03.22, https://github.com/ggerganov/llama.cpp/releases/tag/master-d5850c5
+    # fake version = 0.0.3
+    GitSource("https://github.com/ggerganov/llama.cpp.git",
+              "d5850c53ca179b9674b98f35d359763416a3cc11"),
+    DirectorySource("./bundled"),
 ]
 
 script = raw"""
@@ -43,12 +41,14 @@ cmake .. \
     -DCMAKE_INSTALL_PREFIX=$prefix \
     -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TARGET_TOOLCHAIN} \
     -DCMAKE_BUILD_TYPE=RELEASE \
+    -DLLAMA_NATIVE=OFF \
     $EXTRA_CMAKE_ARGS
 make -j${nproc}
 
 # `make install` doesn't work (2023.03.21)
-for prg in llama quantize; do
-    install -Dvm 755 "./${prg}${exeext}" "${bindir}/${prg}${exeext}"
+# make install
+for prg in main quantize; do
+    install -Dvm 755 "./bin/${prg}${exeext}" "${bindir}/${prg}${exeext}"
 done
 
 install_license ../LICENSE
@@ -58,7 +58,7 @@ platforms = supported_platforms(; exclude = p -> arch(p) ∉ ["i686", "x86_64", 
 platforms = expand_cxxstring_abis(platforms)
 
 products = [
-    ExecutableProduct("llama", :llama),
+    ExecutableProduct("main", :main),
     ExecutableProduct("quantize", :quantize),
 ]
 

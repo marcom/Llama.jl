@@ -2,7 +2,7 @@ module Llama_cpp
 
 export llama, chat
 
-import Llama_cpp_jll
+import llama_cpp_jll
 
 # URLs taken from llama.cpp
 #
@@ -26,12 +26,12 @@ const URLs = Dict(
 )
 
 function llama(; model::AbstractString, prompt::AbstractString="", nthreads::Int=1, args=``)
-    cmd = `$(Llama_cpp_jll.llama()) --model $model --prompt $prompt --threads $nthreads $args`
+    cmd = `$(llama_cpp_jll.main()) --model $model --prompt $prompt --threads $nthreads $args`
     return read(cmd, String)
 end
 
 function chat(; model::AbstractString, prompt::AbstractString="", nthreads::Int=1, args=``)
-    cmd = `$(Llama_cpp_jll.llama()) --model $model --prompt $prompt --threads $nthreads $args -ins`
+    cmd = `$(llama_cpp_jll.main()) --model $model --prompt $prompt --threads $nthreads $args -ins`
     run(cmd)
 end
 

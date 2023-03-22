@@ -12,4 +12,8 @@ showtestset() = println(" "^(2 * Test.get_testset_depth()), "testing ",
         @test llama(; model="", args=`-h`) isa String
         @test llama(; model="", prompt="", args=`-h`) isa String
     end
+
+    @testset "chat" begin
+        @test chat(; model="", args=`-h`) isa Base.Process
+    end
 end
