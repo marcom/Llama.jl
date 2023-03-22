@@ -6,3 +6,7 @@ version = "0.1.0"
 [deps]
 Llama_cpp_jll = "ac865fe7-422d-5d0c-a090-5e7bbfe294c4"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[compat]
+Llama_cpp_jll = "0.0.2"
+julia = "1.6"
