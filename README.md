@@ -10,13 +10,11 @@ model).
 Press `]` at the Julia REPL to enter pkg mode, then:
 
 ```
-add https://github.com/marcom/Llama_cpp_jll.jl
 add https://github.com/marcom/Llama_cpp.jl
 ```
 
-The `Llama_cpp_jll.jl` package currently works on Linux, Windows, Mac,
-and FreeBSD on i686, x86_64, and aarch64. See the
-`Llama_cpp_jll/build_tarballs.jl` script for details (note: only
+The `llama_cpp_jll.jl` package used behind the scenes currently works
+on Linux, Windows, Mac, and FreeBSD on i686, x86_64, and aarch64 (note: only
 tested on x86_64-linux so far).
 
 ## Downloading the model files
