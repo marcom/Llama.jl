@@ -17,7 +17,7 @@ The `llama_cpp_jll.jl` package used behind the scenes currently works
 on Linux, Windows, Mac, and FreeBSD on i686, x86_64, and aarch64 (note: only
 tested on x86_64-linux so far).
 
-## Downloading the model files
+## Downloading the model weights
 
 You will need a quantized model file, see
 [llama.cpp](https://github.com/ggerganov/llama.cpp) for instructions.
@@ -25,6 +25,8 @@ You will need a quantized model file, see
 ## Running a model
 
 ```julia
+using Llama
+
 s = llama(model="./ggml-alpaca-7b-q4.bin", prompt="Hello", args=`-n 16`)
 
 # use more threads
