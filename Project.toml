@@ -1,4 +1,4 @@
-name = "Llama_cpp"
+name = "Llama"
 uuid = "882c185a-eef0-4636-aa0b-94c4dba13695"
 authors = ["Marco Matthies <71844+marcom@users.noreply.github.com>"]
 version = "0.1.0"

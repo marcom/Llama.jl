@@ -1,11 +1,11 @@
 using Test
-using Llama_cpp
+using Llama
 
 # show which testset is currently running
 showtestset() = println(" "^(2 * Test.get_testset_depth()), "testing ",
                         Test.get_testset().description)
 
-@testset verbose=true "Llama_cpp" begin
+@testset verbose=true "Llama" begin
     showtestset()
 
     @testset "llama" begin

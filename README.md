@@ -1,4 +1,4 @@
-# Llama_cpp.jl
+# Llama.jl
 
 Julia interface to
 [llama.cpp](https://github.com/ggerganov/llama.cpp), a C/C++ port of
@@ -10,7 +10,7 @@ model).
 Press `]` at the Julia REPL to enter pkg mode, then:
 
 ```
-add https://github.com/marcom/Llama_cpp.jl
+add https://github.com/marcom/Llama.jl
 ```
 
 The `llama_cpp_jll.jl` package used behind the scenes currently works

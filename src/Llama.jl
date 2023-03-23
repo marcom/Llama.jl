@@ -1,4 +1,4 @@
-module Llama_cpp
+module Llama
 
 export llama, chat
 
@@ -35,4 +35,4 @@ function chat(; model::AbstractString, prompt::AbstractString="", nthreads::Int=
     run(cmd)
 end
 
-end # module Llama_cpp
+end # module Llama
