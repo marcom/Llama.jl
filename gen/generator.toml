@@ -1,0 +1,15 @@
+[general]
+library_name = "libllama"
+output_file_path = "../lib/LibLlama.jl"
+module_name = "LibLlama"
+jll_pkg_name = "llama_cpp_jll"
+export_symbol_prefixes = ["llama_", "LLAMA_", "ggml_", "GGML_"]
+use_deterministic_symbol = true
+smart_de_anonymize = true
+
+[codegen]
+opaque_func_arg_as_PtrCvoid = true
+is_function_strictly_typed = false
+
+[codegen.macro]
+macro_mode = "basic"
