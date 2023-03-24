@@ -19,7 +19,7 @@ tested on x86_64-linux so far).
 
 ## Downloading the model weights
 
-You will need a quantized model file, see
+You will need a file with quantized model weights, see
 [llama.cpp](https://github.com/ggerganov/llama.cpp) for instructions.
 
 ## Running a model
