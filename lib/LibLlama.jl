@@ -22,9 +22,11 @@ struct llama_context_params
     f16_kv::Bool
     logits_all::Bool
     vocab_only::Bool
+    use_mlock::Bool
+    embedding::Bool
 end
 
-# no prototype is found for this function at llama.h:58:43, please use with caution
+# no prototype is found for this function at llama.h:60:43, please use with caution
 function llama_context_default_params()
     ccall((:llama_context_default_params, libllama), llama_context_params, ())
 end
@@ -61,16 +63,20 @@ function llama_get_logits(ctx)
     ccall((:llama_get_logits, libllama), Ptr{Cfloat}, (Ptr{llama_context},), ctx)
 end
 
+function llama_get_embeddings(ctx)
+    ccall((:llama_get_embeddings, libllama), Ptr{Cfloat}, (Ptr{llama_context},), ctx)
+end
+
 function llama_token_to_str(ctx, token)
     ccall((:llama_token_to_str, libllama), Ptr{Cchar}, (Ptr{llama_context}, llama_token), ctx, token)
 end
 
-# no prototype is found for this function at llama.h:115:27, please use with caution
+# no prototype is found for this function at llama.h:121:27, please use with caution
 function llama_token_bos()
     ccall((:llama_token_bos, libllama), llama_token, ())
 end
 
-# no prototype is found for this function at llama.h:116:27, please use with caution
+# no prototype is found for this function at llama.h:122:27, please use with caution
 function llama_token_eos()
     ccall((:llama_token_eos, libllama), llama_token, ())
 end
