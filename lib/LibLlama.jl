@@ -15,6 +15,9 @@ struct llama_token_data
     plog::Cfloat
 end
 
+# typedef void ( * llama_progress_callback ) ( double progress , void * ctx )
+const llama_progress_callback = Ptr{Cvoid}
+
 struct llama_context_params
     n_ctx::Cint
     n_parts::Cint
@@ -24,9 +27,11 @@ struct llama_context_params
     vocab_only::Bool
     use_mlock::Bool
     embedding::Bool
+    progress_callback::llama_progress_callback
+    progress_callback_user_data::Ptr{Cvoid}
 end
 
-# no prototype is found for this function at llama.h:60:43, please use with caution
+# no prototype is found for this function at llama.h:67:43, please use with caution
 function llama_context_default_params()
     ccall((:llama_context_default_params, libllama), llama_context_params, ())
 end
@@ -59,6 +64,10 @@ function llama_n_ctx(ctx)
     ccall((:llama_n_ctx, libllama), Cint, (Ptr{llama_context},), ctx)
 end
 
+function llama_n_embd(ctx)
+    ccall((:llama_n_embd, libllama), Cint, (Ptr{llama_context},), ctx)
+end
+
 function llama_get_logits(ctx)
     ccall((:llama_get_logits, libllama), Ptr{Cfloat}, (Ptr{llama_context},), ctx)
 end
@@ -71,12 +80,12 @@ function llama_token_to_str(ctx, token)
     ccall((:llama_token_to_str, libllama), Ptr{Cchar}, (Ptr{llama_context}, llama_token), ctx, token)
 end
 
-# no prototype is found for this function at llama.h:121:27, please use with caution
+# no prototype is found for this function at llama.h:129:27, please use with caution
 function llama_token_bos()
     ccall((:llama_token_bos, libllama), llama_token, ())
 end
 
-# no prototype is found for this function at llama.h:122:27, please use with caution
+# no prototype is found for this function at llama.h:130:27, please use with caution
 function llama_token_eos()
     ccall((:llama_token_eos, libllama), llama_token, ())
 end
