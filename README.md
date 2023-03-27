@@ -22,6 +22,13 @@ tested on x86_64-linux so far).
 You will need a file with quantized model weights, see
 [llama.cpp](https://github.com/ggerganov/llama.cpp) for instructions.
 
+The binary format of the model weights changed around March
+20, 2023. There is a [conversion
+script](https://gist.github.com/eiz/828bddec6162a023114ce19146cb2b82)
+if you have older weights which cannot be loaded anymore. Note that
+you have to use the `--n_parts 1` command-line option if you want to
+use the 1-part model weights this conversion script produces.
+
 ## Running a model
 
 ```julia
