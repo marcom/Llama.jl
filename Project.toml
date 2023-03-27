@@ -9,4 +9,4 @@ llama_cpp_jll = "98bd2d0b-bc7c-583a-ba54-7299b0ad0e7f"
 
 [compat]
 julia = "1.6"
-llama_cpp_jll = "0.0.3"
+llama_cpp_jll = "0.0.4"
