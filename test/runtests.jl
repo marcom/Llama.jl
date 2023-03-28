@@ -16,4 +16,14 @@ showtestset() = println(" "^(2 * Test.get_testset_depth()), "testing ",
     @testset "run_chat" begin
         @test run_chat(; model="", args=`-h`) isa Base.Process
     end
+
+    @testset "LlamaContext" begin
+        model_path = "thisfiledoesnotexist.bin"
+        @test_throws ErrorException LlamaContext(model_path)
+
+        # TODO: commented out for now
+        # - could be tested if we can make a small dummy weights file
+        #model_path = "ggml-alpaca-7b-q4.bin"
+        #@test LlamaContext(model_path) isa LlamaContext
+    end
 end

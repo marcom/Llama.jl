@@ -39,9 +39,14 @@ mutable struct LlamaContext
     function LlamaContext(model_path)
         params = LibLlama.llama_context_default_params()
         ptr = LibLlama.llama_init_from_file(model_path, params)
+        if ptr == C_NULL
+            error("Error initialising model from file: $model_path")
+        end
         ctx = new(ptr, model_path, params)
         finalizer(ctx) do x
-            LibLlama.llama_free(x.ptr)
+            if x.ptr != C_NULL
+                LibLlama.llama_free(x.ptr)
+            end
         end
     end
 end
