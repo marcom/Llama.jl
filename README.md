@@ -34,17 +34,17 @@ use the 1-part model weights this conversion script produces.
 ```julia
 using Llama
 
-s = llama(model="./ggml-alpaca-7b-q4.bin", prompt="Hello", args=`-n 16`)
+s = run_llama(model="./ggml-alpaca-7b-q4.bin", prompt="Hello", args=`-n 16`)
 
 # use more threads
-llama(model="./ggml-alpaca-7b-q4.bin", prompt="Hello", nthreads=4)
+run_llama(model="./ggml-alpaca-7b-q4.bin", prompt="Hello", nthreads=4)
 
 # print the help text with more options
-llama(model="", prompt="", args=`-h`)
+run_llama(model="", prompt="", args=`-h`)
 ```
 
 ## Interactive chat mode
 
 ```julia
-chat(model="./ggml-alpaca-7b-q4.bin", prompt="Hello chat mode", nthreads=4)
+run_chat(model="./ggml-alpaca-7b-q4.bin", prompt="Hello chat mode", nthreads=4)
 ```
