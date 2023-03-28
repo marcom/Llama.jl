@@ -1,12 +1,13 @@
 module Llama
 
 export run_llama, run_chat
+export LlamaContext
 
 import llama_cpp_jll
 
 include("../lib/LibLlama.jl")
 # llama_* types
-import .LibLlama: llama_token
+import .LibLlama: llama_context, llama_context_params, llama_token
 # llama_* functions
 import .LibLlama: llama_context_default_params, llama_init_from_file,
     llama_n_vocab, llama_n_ctx, llama_get_logits, llama_free,
@@ -23,6 +24,26 @@ end
 function run_chat(; model::AbstractString, prompt::AbstractString="", nthreads::Int=1, args=``)
     cmd = `$(llama_cpp_jll.main()) --model $model --prompt $prompt --threads $nthreads $args -ins`
     run(cmd)
+end
+
+# API
+
+mutable struct LlamaContext
+    ptr :: Ptr{llama_context}
+    model_path :: String
+    params :: llama_context_params
+    # TODO: n_threads here?
+
+    # TODO
+    # - kwargs for params
+    function LlamaContext(model_path)
+        params = LibLlama.llama_context_default_params()
+        ptr = LibLlama.llama_init_from_file(model_path, params)
+        ctx = new(ptr, model_path, params)
+        finalizer(ctx) do x
+            LibLlama.llama_free(x.ptr)
+        end
+    end
 end
 
 end # module Llama
