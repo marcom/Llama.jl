@@ -52,7 +52,7 @@ run_llama(model="./ggml-alpaca-7b-q4.bin", prompt="Hello", nthreads=4)
 run_llama(model="", prompt="", args=`-h`)
 ```
 
-## Interactive chat mode
+### Interactive chat mode
 
 ```julia
 run_chat(model="./ggml-alpaca-7b-q4.bin", prompt="Hello chat mode", nthreads=4)
