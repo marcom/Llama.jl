@@ -51,6 +51,19 @@ mutable struct LlamaContext
     end
 end
 
+Base.propertynames(ctx::LlamaContext) = (fieldnames(ctx)..., :n_ctx, :n_embd, :n_vocab)
+function Base.getproperty(ctx::LlamaContext, sym::Symbol)
+    if sym == :n_ctx
+        return Int(LibLlama.llama_n_ctx(ctx.ptr))
+    elseif sym == :n_embd
+        return Int(LibLlama.llama_n_embd(ctx.ptr))
+    elseif sym == :n_vocab
+        return Int(LibLlama.llama_n_vocab(ctx.ptr))
+    else
+        return getfield(ctx, sym) # fallback
+    end
+end
+
 """
     tokenize(ctx :: LlamaContext, text :: AbstractString) -> Vector{llama_token}
 
