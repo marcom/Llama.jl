@@ -26,4 +26,10 @@ using Llama: llama_token
         tokens = tokenize(ctx, "A")
         @test tokens isa Vector{llama_token}
     end
+
+    @testset "token_to_str" begin
+        showtestset()
+        str = token_to_str(ctx, 100)
+        @test str isa String
+    end
 end

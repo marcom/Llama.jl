@@ -1,7 +1,7 @@
 module Llama
 
 export run_llama, run_chat
-export LlamaContext, tokenize, logits
+export LlamaContext, tokenize, logits, token_to_str
 
 import llama_cpp_jll
 
@@ -95,6 +95,19 @@ function tokenize(ctx::LlamaContext, text::AbstractString; add_bos::Bool=false)
     end
     resize!(tokens, n_tok)
     return tokens
+end
+
+"""
+    token_to_str(ctx, token_id) -> String
+
+String representation for token `token_id`.
+"""
+function token_to_str(ctx::LlamaContext, token_id::llama_token)
+    str_ptr = LibLlama.llama_token_to_str(ctx.ptr, token)
+    if str_ptr == C_NULL
+        error("llama_token_to_str returned null pointer")
+    end
+    return unsafe_string(str_ptr)
 end
 
 end # module Llama
