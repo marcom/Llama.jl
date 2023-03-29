@@ -29,7 +29,16 @@ if you have older weights which cannot be loaded anymore. Note that
 you have to use the `--n_parts 1` command-line option if you want to
 use the 1-part model weights this conversion script produces.
 
-## Running a model
+## LibLlama
+
+### `tokenize`
+
+```julia
+ctx = LlamaContext("./ggml-alpaca-7b-q4.bin")
+tokenize(ctx, "Hello world")
+```
+
+## Running example executables from llama.cpp
 
 ```julia
 using Llama

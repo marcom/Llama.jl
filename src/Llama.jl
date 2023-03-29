@@ -51,6 +51,13 @@ mutable struct LlamaContext
     end
 end
 
+"""
+    tokenize(ctx :: LlamaContext, text :: AbstractString) -> Vector{llama_token}
+
+Tokenizes `text` according to the `LlamaContext` `ctx` and returns a
+`Vector{llama_token}`, with `llama_token == $(sprint(show,
+llama_token))`.
+"""
 function tokenize(ctx::LlamaContext, text::AbstractString; add_bos::Bool=false)
     n_max_tokens = sizeof(text)
     tokens = zeros(llama_token, n_max_tokens)
