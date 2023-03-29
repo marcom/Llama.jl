@@ -6,13 +6,7 @@ export LlamaContext, embeddings, tokenize, logits, token_to_str
 import llama_cpp_jll
 
 include("../lib/LibLlama.jl")
-# llama_* types
-import .LibLlama: llama_context, llama_context_params, llama_token
-# llama_* functions
-import .LibLlama: llama_context_default_params, llama_init_from_file,
-    llama_n_vocab, llama_n_ctx, llama_get_logits, llama_free,
-    llama_print_timings, llama_reset_timings, llama_tokenize,
-    llama_eval
+import .LibLlama
 
 # executables
 
@@ -29,9 +23,9 @@ end
 # API
 
 mutable struct LlamaContext
-    ptr :: Ptr{llama_context}
+    ptr :: Ptr{LibLlama.llama_context}
     model_path :: String
-    params :: llama_context_params
+    params :: LibLlama.llama_context_params
     # TODO: n_threads here?
 
     # TODO
@@ -70,7 +64,7 @@ end
 
 Return the embedding, a vector of length `ctx.n_embd`.
 """
-function embeddings(ctx::LlamaContex)
+function embeddings(ctx::LlamaContext)
     f32_ptr = LibLlama.llama_get_embeddings(ctx.ptr)
     if f32_ptr == C_NULL
         error("llama_get_embeddings returned null pointer")
@@ -97,11 +91,11 @@ end
 
 Tokenizes `text` according to the `LlamaContext` `ctx` and returns a
 `Vector{llama_token}`, with `llama_token == $(sprint(show,
-llama_token))`.
+LibLlama.llama_token))`.
 """
 function tokenize(ctx::LlamaContext, text::AbstractString; add_bos::Bool=false)
     n_max_tokens = sizeof(text)
-    tokens = zeros(llama_token, n_max_tokens)
+    tokens = zeros(LibLlama.llama_token, n_max_tokens)
     n_tok = LibLlama.llama_tokenize(ctx.ptr, text, tokens, n_max_tokens, add_bos)
     if n_tok < 0
         error("Error running llama_tokenize on text = $text")
@@ -115,8 +109,8 @@ end
 
 String representation for token `token_id`.
 """
-function token_to_str(ctx::LlamaContext, token_id::llama_token)
-    str_ptr = LibLlama.llama_token_to_str(ctx.ptr, token)
+function token_to_str(ctx::LlamaContext, token_id::Integer)
+    str_ptr = LibLlama.llama_token_to_str(ctx.ptr, LibLlama.llama_token(token_id))
     if str_ptr == C_NULL
         error("llama_token_to_str returned null pointer")
     end
