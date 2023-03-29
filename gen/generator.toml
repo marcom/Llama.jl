@@ -6,6 +6,8 @@ jll_pkg_name = "llama_cpp_jll"
 export_symbol_prefixes = ["llama_", "LLAMA_", "ggml_", "GGML_"]
 use_deterministic_symbol = true
 smart_de_anonymize = true
+show_c_function_prototype = true
+extract_c_comment_style = "raw"
 
 [codegen]
 opaque_func_arg_as_PtrCvoid = true
