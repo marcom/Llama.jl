@@ -1,5 +1,6 @@
 # TODO: make a small dummy weights file
 const MODEL_PATH = "../ggml-alpaca-7b-q4.bin"
+const ctx = LlamaContext(MODEL_PATH)
 
 using Llama: llama_token
 
@@ -7,7 +8,6 @@ using Llama: llama_token
     showtestset()
     @testset "LlamaContext" begin
         showtestset()
-        ctx = LlamaContext(MODEL_PATH)
         @test ctx isa LlamaContext
         @test ctx.n_ctx isa Int
         @test ctx.n_embd isa Int
@@ -16,7 +16,6 @@ using Llama: llama_token
 
     @testset "tokenize" begin
         showtestset()
-        ctx = LlamaContext(MODEL_PATH)
         tokens = tokenize(ctx, "A")
         @test tokens isa Vector{llama_token}
     end
