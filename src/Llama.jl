@@ -1,7 +1,7 @@
 module Llama
 
 export run_llama, run_chat
-export LlamaContext
+export LlamaContext, tokenize
 
 import llama_cpp_jll
 
@@ -49,6 +49,17 @@ mutable struct LlamaContext
             end
         end
     end
+end
+
+function tokenize(ctx::LlamaContext, text::AbstractString; add_bos::Bool=false)
+    n_max_tokens = sizeof(text)
+    tokens = zeros(llama_token, n_max_tokens)
+    n_tok = LibLlama.llama_tokenize(ctx.ptr, text, tokens, n_max_tokens, add_bos)
+    if n_tok < 0
+        error("Error running llama_tokenize on text = $text")
+    end
+    resize!(tokens, n_tok)
+    return tokens
 end
 
 end # module Llama
