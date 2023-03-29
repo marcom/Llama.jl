@@ -1,7 +1,7 @@
 module Llama
 
 export run_llama, run_chat
-export LlamaContext, tokenize
+export LlamaContext, tokenize, logits
 
 import llama_cpp_jll
 
@@ -51,7 +51,8 @@ mutable struct LlamaContext
     end
 end
 
-Base.propertynames(ctx::LlamaContext) = (fieldnames(ctx)..., :n_ctx, :n_embd, :n_vocab)
+Base.propertynames(::LlamaContext) = (fieldnames(LlamaContext)..., :n_ctx, :n_embd, :n_vocab)
+
 function Base.getproperty(ctx::LlamaContext, sym::Symbol)
     if sym == :n_ctx
         return Int(LibLlama.llama_n_ctx(ctx.ptr))
@@ -62,6 +63,20 @@ function Base.getproperty(ctx::LlamaContext, sym::Symbol)
     else
         return getfield(ctx, sym) # fallback
     end
+end
+
+"""
+    logits(ctx::LlamaContext) -> Vec{Float32}
+
+Return the logits (unnormalised probabilities) for each token, a
+vector of length `ctx.n_vocab`.
+"""
+function logits(ctx::LlamaContext)
+    ptr = LibLlama.llama_get_logits(ctx.ptr)
+    if ptr == C_NULL
+        error("llama_get_logits returned null pointer")
+    end
+    return [unsafe_load(ptr, i) for i = 1:ctx.n_vocab]
 end
 
 """

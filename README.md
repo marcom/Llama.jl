@@ -31,11 +31,20 @@ use the 1-part model weights this conversion script produces.
 
 ## LibLlama
 
+```julia
+ctx = LlamaContext("./ggml-alpaca-7b-q4.bin")
+```
+
+### `logits`
+
+```julia
+logits(ctx)  # => Vector{Float32}, length ctx.n_vocab
+```
+
 ### `tokenize`
 
 ```julia
-ctx = LlamaContext("./ggml-alpaca-7b-q4.bin")
-tokenize(ctx, "Hello world")
+tokenize(ctx, "Hello world")  # => Vector{Int32} (token_ids), variable length
 ```
 
 ## Running example executables from llama.cpp

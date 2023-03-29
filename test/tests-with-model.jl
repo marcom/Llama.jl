@@ -14,6 +14,13 @@ using Llama: llama_token
         @test ctx.n_vocab isa Int
     end
 
+    @testset "logits" begin
+        showtestset()
+        lg = logits(ctx)
+        @test lg isa Vector{Float32}
+        @test length(lg) == ctx.n_vocab
+    end
+
     @testset "tokenize" begin
         showtestset()
         tokens = tokenize(ctx, "A")
