@@ -14,6 +14,13 @@ using Llama: llama_token
         @test ctx.n_vocab isa Int
     end
 
+    @testset "embeddings" begin
+        showtestset()
+        em = embeddings(ctx)
+        @test em isa Vector{Float32}
+        @test length(em) == ctx.n_embd
+    end
+
     @testset "logits" begin
         showtestset()
         lg = logits(ctx)

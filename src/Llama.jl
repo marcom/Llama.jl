@@ -1,7 +1,7 @@
 module Llama
 
 export run_llama, run_chat
-export LlamaContext, tokenize, logits, token_to_str
+export LlamaContext, embeddings, tokenize, logits, token_to_str
 
 import llama_cpp_jll
 
@@ -63,6 +63,19 @@ function Base.getproperty(ctx::LlamaContext, sym::Symbol)
     else
         return getfield(ctx, sym) # fallback
     end
+end
+
+"""
+    embeddings(ctx) -> Vector{Float32}
+
+Return the embedding, a vector of length `ctx.n_embd`.
+"""
+function embeddings(ctx::LlamaContex)
+    f32_ptr = LibLlama.llama_get_embeddings(ctx.ptr)
+    if f32_ptr == C_NULL
+        error("llama_get_embeddings returned null pointer")
+    end
+    return [unsafe_load(f32_ptr, i) for i = 1:ctx.n_embd]
 end
 
 """
