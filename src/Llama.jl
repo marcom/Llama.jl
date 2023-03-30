@@ -137,5 +137,6 @@ end
 
 
 include("repl.jl")
+include("generate.jl")
 
 end # module Llama
