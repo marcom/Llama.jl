@@ -29,6 +29,10 @@ if you have older weights which cannot be loaded anymore. Note that
 you have to use the `--n_parts 1` command-line option if you want to
 use the 1-part model weights this conversion script produces.
 
+## REPL mode
+
+The REPL mode is currently non-functional, but stay tuned!
+
 ## LibLlama
 
 ```julia

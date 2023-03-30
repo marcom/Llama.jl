@@ -4,9 +4,12 @@ export run_llama, run_chat
 export LlamaContext, embeddings, tokenize, logits, token_to_str
 
 import llama_cpp_jll
+import ReplMaker
 
 include("../lib/LibLlama.jl")
 import .LibLlama
+
+__init__() = isdefined(Base, :active_repl) ? init_repl() : nothing
 
 # executables
 
@@ -30,7 +33,7 @@ mutable struct LlamaContext
 
     # TODO
     # - kwargs for params
-    function LlamaContext(model_path)
+    function LlamaContext(model_path::AbstractString)
         params = LibLlama.llama_context_default_params()
         ptr = LibLlama.llama_init_from_file(model_path, params)
         if ptr == C_NULL
@@ -43,6 +46,7 @@ mutable struct LlamaContext
             end
         end
     end
+    LlamaContext() = new(C_NULL, "", LibLlama.llama_context_default_params())
 end
 
 Base.propertynames(::LlamaContext) = (fieldnames(LlamaContext)..., :n_ctx, :n_embd, :n_vocab)
@@ -116,5 +120,8 @@ function token_to_str(ctx::LlamaContext, token_id::Integer)
     end
     return unsafe_string(str_ptr)
 end
+
+
+include("repl.jl")
 
 end # module Llama
