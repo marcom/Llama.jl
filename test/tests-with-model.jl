@@ -12,6 +12,8 @@ using Llama: LibLlama
         @test ctx.n_ctx isa Int
         @test ctx.n_embd isa Int
         @test ctx.n_vocab isa Int
+        @test ctx.token_bos isa LibLlama.llama_token
+        @test ctx.token_eos isa LibLlama.llama_token
     end
 
     @testset "embeddings" begin

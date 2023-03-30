@@ -47,7 +47,6 @@ mutable struct LlamaContext
             end
         end
     end
-    LlamaContext() = new(C_NULL, "", LibLlama.llama_context_default_params())
 end
 
 Base.propertynames(::LlamaContext) = (fieldnames(LlamaContext)..., :n_ctx, :n_embd, :n_vocab)

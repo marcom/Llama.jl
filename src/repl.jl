@@ -1,9 +1,9 @@
-global REPL_HAS_CTX::Bool = true
-global REPL_CTX::LlamaContext = LlamaContext()
+global REPL_HAS_CTX::Bool = false
+global REPL_CTX::Ref{LlamaContext}
 
 function get_repl_llama()
     if REPL_HAS_CTX
-        return REPL_CTX
+        return REPL_CTX[]
     else
         return missing
     end
@@ -12,6 +12,7 @@ end
 function set_repl_llama(ctx::LlamaContext)
     REPL_HAS_CTX = true
     REPL_CTX = ctx
+    return nothing
 end
 
 function repl_llama(s)
