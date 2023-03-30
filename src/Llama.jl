@@ -1,7 +1,8 @@
 module Llama
 
 export run_llama, run_chat
-export LlamaContext, embeddings, tokenize, logits, token_to_str
+export LlamaContext, embeddings, llama_eval, logits, tokenize,
+    token_to_str
 
 import llama_cpp_jll
 import ReplMaker
@@ -77,7 +78,17 @@ function embeddings(ctx::LlamaContext)
 end
 
 """
-    logits(ctx::LlamaContext) -> Vec{Float32}
+    llama_eval(ctx::LlamaContext, tokens; n_past, n_threads=1)
+"""
+function llama_eval(ctx::LlamaContext, tokens::Vector{LibLlama.llama_token};
+                    n_past::Int, n_threads::Int=1)
+    n_tokens = length(tokens)
+    ret = LibLlama.llama_eval(ctx.ptr, tokens, n_tokens, n_past, n_threads)
+    return ret
+end
+
+"""
+    logits(ctx::LlamaContext) -> Vector{Float32}
 
 Return the logits (unnormalised probabilities) for each token, a
 vector of length `ctx.n_vocab`.
