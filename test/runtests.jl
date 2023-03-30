@@ -1,5 +1,6 @@
 using Test
 using Llama
+using Llama: LibLlama
 
 # show which testset is currently running
 showtestset() = println(" "^(2 * Test.get_testset_depth()), "testing ",
@@ -23,6 +24,11 @@ showtestset() = println(" "^(2 * Test.get_testset_depth()), "testing ",
         showtestset()
         model_path = "thisfiledoesnotexist.bin"
         @test_throws ErrorException LlamaContext(model_path)
+
+        ctx = LlamaContext()
+        @test ctx isa LlamaContext
+        @test ctx.token_bos isa LibLlama.llama_token
+        @test ctx.token_eos isa LibLlama.llama_token
     end
 end
 

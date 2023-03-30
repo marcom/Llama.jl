@@ -59,6 +59,10 @@ function Base.getproperty(ctx::LlamaContext, sym::Symbol)
         return Int(LibLlama.llama_n_embd(ctx.ptr))
     elseif sym == :n_vocab
         return Int(LibLlama.llama_n_vocab(ctx.ptr))
+    elseif sym == :token_bos
+        return LibLlama.llama_token_bos()
+    elseif sym == :token_eos
+        return LibLlama.llama_token_eos()
     else
         return getfield(ctx, sym) # fallback
     end
