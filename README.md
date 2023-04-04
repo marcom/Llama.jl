@@ -14,7 +14,7 @@ add https://github.com/marcom/Llama.jl
 ```
 
 The `llama_cpp_jll.jl` package used behind the scenes currently works
-on Linux, Windows, Mac, and FreeBSD on i686, x86_64, and aarch64 (note: only
+on Linux, Mac, and FreeBSD on i686, x86_64, and aarch64 (note: only
 tested on x86_64-linux so far).
 
 ## Downloading the model weights
@@ -22,12 +22,11 @@ tested on x86_64-linux so far).
 You will need a file with quantized model weights, see
 [llama.cpp](https://github.com/ggerganov/llama.cpp) for instructions.
 
-The binary format of the model weights changed around March
-20, 2023. There is a [conversion
-script](https://gist.github.com/eiz/828bddec6162a023114ce19146cb2b82)
-if you have older weights which cannot be loaded anymore. Note that
-you have to use the `--n_parts 1` command-line option if you want to
-use the 1-part model weights this conversion script produces.
+The binary format of the model weights changed on March 30, 2023 with
+the new mmap-friendly file format. There are instructions for the
+python conversion scripts in the
+[llama.cpp](https://github.com/ggerganov/llama.cpp) repo.
+
 
 ## REPL mode
 
