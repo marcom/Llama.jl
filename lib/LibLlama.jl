@@ -15,7 +15,7 @@ struct llama_token_data
     plog::Cfloat
 end
 
-# typedef void ( * llama_progress_callback ) ( double progress , void * ctx )
+# typedef void ( * llama_progress_callback ) ( float progress , void * ctx )
 const llama_progress_callback = Ptr{Cvoid}
 
 struct llama_context_params
@@ -25,13 +25,22 @@ struct llama_context_params
     f16_kv::Bool
     logits_all::Bool
     vocab_only::Bool
+    use_mmap::Bool
     use_mlock::Bool
     embedding::Bool
     progress_callback::llama_progress_callback
     progress_callback_user_data::Ptr{Cvoid}
 end
 
-# no prototype is found for this function at llama.h:67:43, please use with caution
+@cenum llama_ftype::UInt32 begin
+    LLAMA_FTYPE_ALL_F32 = 0
+    LLAMA_FTYPE_MOSTLY_F16 = 1
+    LLAMA_FTYPE_MOSTLY_Q4_0 = 2
+    LLAMA_FTYPE_MOSTLY_Q4_1 = 3
+    LLAMA_FTYPE_MOSTLY_Q4_1_SOME_F16 = 4
+end
+
+# no prototype is found for this function at llama.h:77:43, please use with caution
 """
     llama_context_default_params()
 
@@ -43,6 +52,34 @@ struct llama_context_params llama_context_default_params();
 """
 function llama_context_default_params()
     ccall((:llama_context_default_params, libllama), llama_context_params, ())
+end
+
+# no prototype is found for this function at llama.h:79:20, please use with caution
+"""
+    llama_mmap_supported()
+
+
+### Prototype
+```c
+bool llama_mmap_supported();
+```
+"""
+function llama_mmap_supported()
+    ccall((:llama_mmap_supported, libllama), Bool, ())
+end
+
+# no prototype is found for this function at llama.h:80:20, please use with caution
+"""
+    llama_mlock_supported()
+
+
+### Prototype
+```c
+bool llama_mlock_supported();
+```
+"""
+function llama_mlock_supported()
+    ccall((:llama_mlock_supported, libllama), Bool, ())
 end
 
 """
@@ -72,16 +109,68 @@ function llama_free(ctx)
 end
 
 """
-    llama_model_quantize(fname_inp, fname_out, itype, qk)
+    llama_model_quantize(fname_inp, fname_out, ftype)
 
 
 ### Prototype
 ```c
-int llama_model_quantize( const char * fname_inp, const char * fname_out, int itype, int qk);
+int llama_model_quantize( const char * fname_inp, const char * fname_out, enum llama_ftype ftype);
 ```
 """
-function llama_model_quantize(fname_inp, fname_out, itype, qk)
-    ccall((:llama_model_quantize, libllama), Cint, (Ptr{Cchar}, Ptr{Cchar}, Cint, Cint), fname_inp, fname_out, itype, qk)
+function llama_model_quantize(fname_inp, fname_out, ftype)
+    ccall((:llama_model_quantize, libllama), Cint, (Ptr{Cchar}, Ptr{Cchar}, llama_ftype), fname_inp, fname_out, ftype)
+end
+
+"""
+    llama_get_kv_cache(ctx)
+
+
+### Prototype
+```c
+const uint8_t * llama_get_kv_cache(struct llama_context * ctx);
+```
+"""
+function llama_get_kv_cache(ctx)
+    ccall((:llama_get_kv_cache, libllama), Ptr{UInt8}, (Ptr{llama_context},), ctx)
+end
+
+"""
+    llama_get_kv_cache_size(ctx)
+
+
+### Prototype
+```c
+size_t llama_get_kv_cache_size(struct llama_context * ctx);
+```
+"""
+function llama_get_kv_cache_size(ctx)
+    ccall((:llama_get_kv_cache_size, libllama), Csize_t, (Ptr{llama_context},), ctx)
+end
+
+"""
+    llama_get_kv_cache_token_count(ctx)
+
+
+### Prototype
+```c
+int llama_get_kv_cache_token_count(struct llama_context * ctx);
+```
+"""
+function llama_get_kv_cache_token_count(ctx)
+    ccall((:llama_get_kv_cache_token_count, libllama), Cint, (Ptr{llama_context},), ctx)
+end
+
+"""
+    llama_set_kv_cache(ctx, kv_cache, n_size, n_token_count)
+
+
+### Prototype
+```c
+void llama_set_kv_cache( struct llama_context * ctx, const uint8_t * kv_cache, size_t n_size, int n_token_count);
+```
+"""
+function llama_set_kv_cache(ctx, kv_cache, n_size, n_token_count)
+    ccall((:llama_set_kv_cache, libllama), Cvoid, (Ptr{llama_context}, Ptr{UInt8}, Csize_t, Cint), ctx, kv_cache, n_size, n_token_count)
 end
 
 """
@@ -188,7 +277,7 @@ function llama_token_to_str(ctx, token)
     ccall((:llama_token_to_str, libllama), Ptr{Cchar}, (Ptr{llama_context}, llama_token), ctx, token)
 end
 
-# no prototype is found for this function at llama.h:129:27, please use with caution
+# no prototype is found for this function at llama.h:158:27, please use with caution
 """
     llama_token_bos()
 
@@ -202,7 +291,7 @@ function llama_token_bos()
     ccall((:llama_token_bos, libllama), llama_token, ())
 end
 
-# no prototype is found for this function at llama.h:130:27, please use with caution
+# no prototype is found for this function at llama.h:159:27, please use with caution
 """
     llama_token_eos()
 
@@ -222,11 +311,11 @@ end
 
 ### Prototype
 ```c
-llama_token llama_sample_top_p_top_k( struct llama_context * ctx, const llama_token * last_n_tokens_data, int last_n_tokens_size, int top_k, double top_p, double temp, double repeat_penalty);
+llama_token llama_sample_top_p_top_k( struct llama_context * ctx, const llama_token * last_n_tokens_data, int last_n_tokens_size, int top_k, float top_p, float temp, float repeat_penalty);
 ```
 """
 function llama_sample_top_p_top_k(ctx, last_n_tokens_data, last_n_tokens_size, top_k, top_p, temp, repeat_penalty)
-    ccall((:llama_sample_top_p_top_k, libllama), llama_token, (Ptr{llama_context}, Ptr{llama_token}, Cint, Cint, Cdouble, Cdouble, Cdouble), ctx, last_n_tokens_data, last_n_tokens_size, top_k, top_p, temp, repeat_penalty)
+    ccall((:llama_sample_top_p_top_k, libllama), llama_token, (Ptr{llama_context}, Ptr{llama_token}, Cint, Cint, Cfloat, Cfloat, Cfloat), ctx, last_n_tokens_data, last_n_tokens_size, top_k, top_p, temp, repeat_penalty)
 end
 
 """
@@ -270,7 +359,7 @@ end
 
 const LLAMA_FILE_VERSION = 1
 
-const LLAMA_FILE_MAGIC = 0x67676d66
+const LLAMA_FILE_MAGIC = 0x67676a74
 
 const LLAMA_FILE_MAGIC_UNVERSIONED = 0x67676d6c
 
