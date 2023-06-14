@@ -1,11 +1,12 @@
 #!/usr/bin/env julia
 
-using Clang
-using Clang.Generators
-
 d = pwd()
 cd(@__DIR__)
+import Pkg
 Pkg.activate(".")
+
+using Clang
+using Clang.Generators
 
 # Stack environment from parent dir on top of env from this dir.  This
 # is so we can import llama_cpp_jll and always have the same version
