@@ -1,10 +1,21 @@
+#!/usr/bin/env julia
+
 using Clang
 using Clang.Generators
 
-using llama_cpp_jll
-
 d = pwd()
 cd(@__DIR__)
+Pkg.activate(".")
+
+# Stack environment from parent dir on top of env from this dir.  This
+# is so we can import llama_cpp_jll and always have the same version
+# as the parent dir.
+pushfirst!(LOAD_PATH, joinpath(@__DIR__, ".."))
+println("LOAD_PATH =")
+display(LOAD_PATH)
+println()
+
+using llama_cpp_jll
 
 options = load_options(joinpath(@__DIR__, "generator.toml"))
 
