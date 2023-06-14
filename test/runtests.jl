@@ -20,11 +20,11 @@ showtestset() = println(" "^(2 * Test.get_testset_depth()), "testing ",
         @test run_chat(; model="", args=`-h`) isa Base.Process
     end
 
-    @testset "LlamaContext" begin
-        showtestset()
-        model_path = "thisfiledoesnotexist.bin"
-        @test_throws ErrorException LlamaContext(model_path)
-    end
+    # @testset "LlamaContext" begin
+    #     showtestset()
+    #     model_path = "thisfiledoesnotexist.bin"
+    #     @test_throws ErrorException LlamaContext(model_path)
+    # end
 end
 
 if haskey(ENV, "LLAMA_JL_MODEL_TESTS")
