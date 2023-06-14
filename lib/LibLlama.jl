@@ -26,7 +26,7 @@ const llama_progress_callback = Ptr{Cvoid}
 
 struct llama_context_params
     n_ctx::Cint
-    n_parts::Cint
+    n_gpu_layers::Cint
     seed::Cint
     f16_kv::Bool
     logits_all::Bool
@@ -44,7 +44,6 @@ end
     LLAMA_FTYPE_MOSTLY_Q4_0 = 2
     LLAMA_FTYPE_MOSTLY_Q4_1 = 3
     LLAMA_FTYPE_MOSTLY_Q4_1_SOME_F16 = 4
-    LLAMA_FTYPE_MOSTLY_Q4_2 = 5
     LLAMA_FTYPE_MOSTLY_Q8_0 = 7
     LLAMA_FTYPE_MOSTLY_Q5_0 = 8
     LLAMA_FTYPE_MOSTLY_Q5_1 = 9
@@ -184,16 +183,16 @@ function llama_get_state_size(ctx)
 end
 
 """
-    llama_copy_state_data(ctx, dest)
+    llama_copy_state_data(ctx, dst)
 
 
 ### Prototype
 ```c
-size_t llama_copy_state_data(struct llama_context * ctx, uint8_t * dest);
+size_t llama_copy_state_data(struct llama_context * ctx, uint8_t * dst);
 ```
 """
-function llama_copy_state_data(ctx, dest)
-    ccall((:llama_copy_state_data, libllama), Csize_t, (Ptr{llama_context}, Ptr{UInt8}), ctx, dest)
+function llama_copy_state_data(ctx, dst)
+    ccall((:llama_copy_state_data, libllama), Csize_t, (Ptr{llama_context}, Ptr{UInt8}), ctx, dst)
 end
 
 """
@@ -426,7 +425,7 @@ end
 @details Top-K sampling described in academic paper "The Curious Case of Neural Text Degeneration" https://arxiv.org/abs/1904.09751
 ### Prototype
 ```c
-void llama_sample_top_k(struct llama_context * ctx, llama_token_data_array * candidates, int k, size_t min_keep = 1);
+void llama_sample_top_k(struct llama_context * ctx, llama_token_data_array * candidates, int k, size_t min_keep);
 ```
 """
 function llama_sample_top_k(ctx, candidates, k, min_keep)
@@ -439,7 +438,7 @@ end
 @details Nucleus sampling described in academic paper "The Curious Case of Neural Text Degeneration" https://arxiv.org/abs/1904.09751
 ### Prototype
 ```c
-void llama_sample_top_p(struct llama_context * ctx, llama_token_data_array * candidates, float p, size_t min_keep = 1);
+void llama_sample_top_p(struct llama_context * ctx, llama_token_data_array * candidates, float p, size_t min_keep);
 ```
 """
 function llama_sample_top_p(ctx, candidates, p, min_keep)
@@ -452,7 +451,7 @@ end
 @details Tail Free Sampling described in https://www.trentonbricken.com/Tail-Free-Sampling/.
 ### Prototype
 ```c
-void llama_sample_tail_free(struct llama_context * ctx, llama_token_data_array * candidates, float z, size_t min_keep = 1);
+void llama_sample_tail_free(struct llama_context * ctx, llama_token_data_array * candidates, float z, size_t min_keep);
 ```
 """
 function llama_sample_tail_free(ctx, candidates, z, min_keep)
@@ -465,7 +464,7 @@ end
 @details Locally Typical Sampling implementation described in the paper https://arxiv.org/abs/2202.00666.
 ### Prototype
 ```c
-void llama_sample_typical(struct llama_context * ctx, llama_token_data_array * candidates, float p, size_t min_keep = 1);
+void llama_sample_typical(struct llama_context * ctx, llama_token_data_array * candidates, float p, size_t min_keep);
 ```
 """
 function llama_sample_typical(ctx, candidates, p, min_keep)
@@ -585,7 +584,7 @@ function llama_print_system_info()
     ccall((:llama_print_system_info, libllama), Ptr{Cchar}, ())
 end
 
-const LLAMA_FILE_VERSION = 1
+const LLAMA_FILE_VERSION = 3
 
 # Skipping MacroDefinition: LLAMA_FILE_MAGIC 'ggjt'
 
