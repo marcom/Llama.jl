@@ -1,6 +1,5 @@
 #!/usr/bin/env julia
 
-d = pwd()
 cd(@__DIR__)
 import Pkg
 Pkg.activate(".")
@@ -32,5 +31,3 @@ push!(args, "-I$include_dir")
 
 ctx = create_context(headers, args, options)
 build!(ctx)
-
-cd(d)
