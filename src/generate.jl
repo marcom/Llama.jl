@@ -47,7 +47,11 @@ function generate(ctx::LlamaContext, prompt::AbstractString; nthreads::Int=1)
         candidates = LibLlama.llama_token_data[]
         sizehint!(candidates, n_vocab)
         for token_id = 0:n_vocab-1
-            push!(candidates, LibLlama.llama_token_data(llama_token(token_id), unsafe_load(logits, token_id + 1), 0.0f0))
+            push!(candidates, LibLlama.llama_token_data(
+                LibLlama.llama_token(token_id),
+                unsafe_load(logits, token_id + 1),
+                0.0f0
+            ))
         end
         sorted = false
         candidates_p = Ref(LibLlama.llama_token_data_array(pointer(candidates), length(candidates), sorted))
