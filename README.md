@@ -40,8 +40,6 @@ ctx = LlamaContext("./ggml-alpaca-7b-q4.bin")
 
 ### `generate`
 
-This currently seems to produce gibberish.
-
 ```julia
 generate(ctx, "Write me a hello world in python")  # => currently prints text to screen
 ```
