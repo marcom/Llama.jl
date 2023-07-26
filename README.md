@@ -22,10 +22,10 @@ tested on x86_64-linux so far).
 You will need a file with quantized model weights, see
 [llama.cpp](https://github.com/ggerganov/llama.cpp) for instructions.
 
-The binary format of the model weights changed on March 30, 2023 with
-the new mmap-friendly file format. There are instructions for the
-python conversion scripts in the
-[llama.cpp](https://github.com/ggerganov/llama.cpp) repo.
+The weights for OpenLLaMA, an open-source reproduction of Meta AI's
+LLaMA, are freely available.  They can be downloaded here in GGML
+format (choose one of the .bin files):
+https://huggingface.co/SlyEcho/open_llama_3b_v2_ggml
 
 
 ## REPL mode
