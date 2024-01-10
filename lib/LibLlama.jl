@@ -664,10 +664,10 @@ struct ggml_tensor
     type::ggml_type
     backend::ggml_backend_type
     buffer::Ptr{ggml_backend_buffer}
-    ne::NTuple{4, Int64} # ne::NTuple{4, Int64}
-    nb::NTuple{4, Csize_t} # nb::NTuple{4, Csize_t}
+    ne::NTuple{4, Int64}
+    nb::NTuple{4, Csize_t}
     op::ggml_op
-    op_params::NTuple{16, Int32} # op_params::NTuple{16, Int32}
+    op_params::NTuple{16, Int32}
     is_param::Bool
     grad::Ptr{ggml_tensor}
     src::NTuple{10, Ptr{ggml_tensor}}
@@ -680,13 +680,6 @@ struct ggml_tensor
     name::NTuple{64, Cchar}
     extra::Ptr{Cvoid}
     padding::NTuple{8, Cchar}
-end
-
-function Base.getproperty(x::ggml_tensor, f::Symbol)
-    f === :ne && return NTuple{4, Int64}(getfield(x, f))
-    f === :nb && return NTuple{4, Csize_t}(getfield(x, f))
-    f === :op_params && return NTuple{16, Int32}(getfield(x, f))
-    return getfield(x, f)
 end
 
 """
