@@ -1,5 +1,7 @@
 # Llama.jl
 
+[![Build Status](https://github.com/marcom/Llama.jl/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/marcom/Llama.jl/actions/workflows/ci.yml?query=branch%3Amain)
+
 Julia interface to
 [llama.cpp](https://github.com/ggerganov/llama.cpp), a C/C++ port of
 Meta's [LLaMA](https://arxiv.org/abs/2302.13971) (a large language
