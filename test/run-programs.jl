@@ -3,13 +3,13 @@
 
     @testset "run_llama" begin
         showtestset()
-        @test run_llama(; model="", args=`-h`) isa String
-        @test run_llama(; model="", prompt="", args=`-h`) isa String
+        @test run_llama(; model = "", args = `-h`) isa String
+        @test run_llama(; model = "", prompt = "", args = `-h`) isa String
     end
 
     @testset "run_chat" begin
         showtestset()
-        @test run_chat(; model="", args=`-h`) isa Base.Process
+        @test run_chat(; model = "", args = `-h`) isa Base.Process
     end
 
     # @testset "LlamaContext" begin

@@ -1,11 +1,19 @@
 # executables
 
-function run_llama(; model::AbstractString, prompt::AbstractString="", nthreads::Int=1, args=``)
+function run_llama(;
+    model::AbstractString,
+    prompt::AbstractString = "",
+    nthreads::Int = 1,
+    args = ``)
     cmd = `$(llama_cpp_jll.main()) --model $model --prompt $prompt --threads $nthreads $args`
     return read(cmd, String)
 end
 
-function run_chat(; model::AbstractString, prompt::AbstractString="", nthreads::Int=1, args=``)
+function run_chat(;
+    model::AbstractString,
+    prompt::AbstractString = "",
+    nthreads::Int = 1,
+    args = ``)
     cmd = `$(llama_cpp_jll.main()) --model $model --prompt $prompt --threads $nthreads $args -ins`
     run(cmd)
 end
@@ -44,7 +52,13 @@ Downloads.download("https://huggingface.co/TheBloke/dolphin-2_6-phi-2-GGUF/resol
 # Start the server
 run_server(; model)
 """
-function run_server(; model::AbstractString, host::AbstractString="127.0.0.1", port::Int=8080, nthreads::Int=Threads.nthreads(), n_gpu_layers::Int=0, args=``)
+function run_server(;
+    model::AbstractString,
+    host::AbstractString = "127.0.0.1",
+    port::Int = 8080,
+    nthreads::Int = Threads.nthreads(),
+    n_gpu_layers::Int = 0,
+    args = ``)
     cmd = `$(llama_cpp_jll.server()) --model $model --host $host --port $port --threads $nthreads --n-gpu-layers $n_gpu_layers $args`
     run(cmd)
 end

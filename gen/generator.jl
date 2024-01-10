@@ -19,12 +19,11 @@ using llama_cpp_jll
 
 options = load_options(joinpath(@__DIR__, "generator.toml"))
 
-
 include_dir = joinpath(llama_cpp_jll.find_artifact_dir(), "include")
 
 headers = [joinpath(include_dir, "llama.h"), joinpath(include_dir, "ggml.h")]
 
-args = get_default_args() 
+args = get_default_args()
 push!(args, "-I$include_dir")
 
 ctx = create_context(headers, args, options)

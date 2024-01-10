@@ -12,7 +12,6 @@ import .LibLlama
 
 __init__() = isdefined(Base, :active_repl) ? init_repl() : nothing
 
-
 include("api.jl")
 include("run-programs.jl")
 include("repl.jl")

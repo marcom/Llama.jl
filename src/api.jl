@@ -1,9 +1,9 @@
 # API
 
 mutable struct LlamaContext
-    ptr :: Ptr{LibLlama.llama_context}
-    model_path :: String
-    params :: LibLlama.llama_context_params
+    ptr::Ptr{LibLlama.llama_context}
+    model_path::String
+    params::LibLlama.llama_context_params
     # TODO: n_threads here?
 
     # TODO
@@ -23,7 +23,9 @@ mutable struct LlamaContext
     end
 end
 
-Base.propertynames(::LlamaContext) = (fieldnames(LlamaContext)..., :n_ctx, :n_embd, :n_vocab)
+function Base.propertynames(::LlamaContext)
+    (fieldnames(LlamaContext)..., :n_ctx, :n_embd, :n_vocab)
+end
 
 function Base.getproperty(ctx::LlamaContext, sym::Symbol)
     if sym == :n_ctx
@@ -51,14 +53,14 @@ function embeddings(ctx::LlamaContext)
     if f32_ptr == C_NULL
         error("llama_get_embeddings returned null pointer")
     end
-    return [unsafe_load(f32_ptr, i) for i = 1:ctx.n_embd]
+    return [unsafe_load(f32_ptr, i) for i in 1:(ctx.n_embd)]
 end
 
 """
     llama_eval(ctx::LlamaContext, tokens; n_past, n_threads=1)
 """
 function llama_eval(ctx::LlamaContext, tokens::Vector{LibLlama.llama_token};
-                    n_past::Int, n_threads::Int=1)
+    n_past::Int, n_threads::Int = 1)
     n_tokens = length(tokens)
     ret = LibLlama.llama_eval(ctx.ptr, tokens, n_tokens, n_past, n_threads)
     return ret
@@ -75,7 +77,7 @@ function logits(ctx::LlamaContext)
     if ptr == C_NULL
         error("llama_get_logits returned null pointer")
     end
-    return [unsafe_load(ptr, i) for i = 1:ctx.n_vocab]
+    return [unsafe_load(ptr, i) for i in 1:(ctx.n_vocab)]
 end
 
 """
@@ -85,7 +87,7 @@ Tokenizes `text` according to the `LlamaContext` `ctx` and returns a
 `Vector{llama_token}`, with `llama_token == $(sprint(show,
 LibLlama.llama_token))`.
 """
-function tokenize(ctx::LlamaContext, text::AbstractString; add_bos::Bool=false)
+function tokenize(ctx::LlamaContext, text::AbstractString; add_bos::Bool = false)
     n_max_tokens = sizeof(text)
     tokens = zeros(LibLlama.llama_token, n_max_tokens)
     n_tok = LibLlama.llama_tokenize(ctx.ptr, text, tokens, n_max_tokens, add_bos)

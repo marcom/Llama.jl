@@ -24,11 +24,9 @@ function init_repl()
     if ismissing(get_repl_llama())
         @warn "REPL LLaMA model not set, please set with `Llama.set_repl_llama(ctx)`"
     end
-    ReplMaker.initrepl(
-        repl_llama,
+    ReplMaker.initrepl(repl_llama,
         prompt_text = "LLaMA> ",
         prompt_color = :blue,
         start_key = '}',
-        mode_name = "LLaMA_mode",
-    )
+        mode_name = "LLaMA_mode")
 end

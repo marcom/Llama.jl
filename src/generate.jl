@@ -8,8 +8,10 @@
 # token2string(tok::llama_token) -> String
 # token2string(tok::llama_token) = 
 
-function generate(ctx::LlamaContext, prompt::AbstractString; nthreads::Int=1)
-    token2str(tok::LibLlama.llama_token) = unsafe_string(LibLlama.llama_token_to_str(ctx.ptr, tok))
+function generate(ctx::LlamaContext, prompt::AbstractString; nthreads::Int = 1)
+    function token2str(tok::LibLlama.llama_token)
+        unsafe_string(LibLlama.llama_token_to_str(ctx.ptr, tok))
+    end
     max_context_size = LibLlama.llama_n_ctx(ctx.ptr)
     max_tokens_list_size = max_context_size - 4
 
@@ -25,7 +27,7 @@ function generate(ctx::LlamaContext, prompt::AbstractString; nthreads::Int=1)
     resize!(tokens_list, ntokens)
 
     # print prompt tokens
-    for i = 1:ntokens
+    for i in 1:ntokens
         println(token2str(tokens_list[i]))
     end
     flush(stdout)
@@ -35,7 +37,11 @@ function generate(ctx::LlamaContext, prompt::AbstractString; nthreads::Int=1)
     while LibLlama.llama_get_kv_cache_token_count(ctx.ptr) < max_context_size
         # evaluate tokens
         npast = LibLlama.llama_get_kv_cache_token_count(ctx.ptr)
-        if LibLlama.llama_eval(ctx.ptr, tokens_list, length(tokens_list), npast, nthreads) != 0
+        if LibLlama.llama_eval(ctx.ptr,
+            tokens_list,
+            length(tokens_list),
+            npast,
+            nthreads) != 0
             error("Failed to run llama_eval")
         end
         empty!(tokens_list)
@@ -46,15 +52,16 @@ function generate(ctx::LlamaContext, prompt::AbstractString; nthreads::Int=1)
         n_vocab = LibLlama.llama_n_vocab(ctx.ptr)
         candidates = LibLlama.llama_token_data[]
         sizehint!(candidates, n_vocab)
-        for token_id = 0:n_vocab-1
-            push!(candidates, LibLlama.llama_token_data(
-                LibLlama.llama_token(token_id),
-                unsafe_load(logits, token_id + 1),
-                0.0f0
-            ))
+        for token_id in 0:(n_vocab - 1)
+            push!(candidates,
+                LibLlama.llama_token_data(LibLlama.llama_token(token_id),
+                    unsafe_load(logits, token_id + 1),
+                    0.0f0))
         end
         sorted = false
-        candidates_p = Ref(LibLlama.llama_token_data_array(pointer(candidates), length(candidates), sorted))
+        candidates_p = Ref(LibLlama.llama_token_data_array(pointer(candidates),
+            length(candidates),
+            sorted))
         new_token_id = LibLlama.llama_sample_token_greedy(ctx.ptr, candidates_p)
 
         # check for end of stream (eos)

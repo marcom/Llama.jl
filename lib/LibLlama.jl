@@ -287,7 +287,11 @@ struct llama_model * llama_load_model_from_file( const char * path_model, struct
 ```
 """
 function llama_load_model_from_file(path_model, params)
-    ccall((:llama_load_model_from_file, libllama), Ptr{llama_model}, (Ptr{Cchar}, llama_model_params), path_model, params)
+    ccall((:llama_load_model_from_file, libllama),
+        Ptr{llama_model},
+        (Ptr{Cchar}, llama_model_params),
+        path_model,
+        params)
 end
 
 """
@@ -313,7 +317,11 @@ struct llama_context * llama_new_context_with_model( struct llama_model * model,
 ```
 """
 function llama_new_context_with_model(model, params)
-    ccall((:llama_new_context_with_model, libllama), Ptr{llama_context}, (Ptr{llama_model}, llama_context_params), model, params)
+    ccall((:llama_new_context_with_model, libllama),
+        Ptr{llama_context},
+        (Ptr{llama_model}, llama_context_params),
+        model,
+        params)
 end
 
 """
@@ -495,7 +503,13 @@ int32_t llama_model_meta_val_str(const struct llama_model * model, const char * 
 ```
 """
 function llama_model_meta_val_str(model, key, buf, buf_size)
-    ccall((:llama_model_meta_val_str, libllama), Int32, (Ptr{llama_model}, Ptr{Cchar}, Ptr{Cchar}, Csize_t), model, key, buf, buf_size)
+    ccall((:llama_model_meta_val_str, libllama),
+        Int32,
+        (Ptr{llama_model}, Ptr{Cchar}, Ptr{Cchar}, Csize_t),
+        model,
+        key,
+        buf,
+        buf_size)
 end
 
 """
@@ -521,7 +535,13 @@ int32_t llama_model_meta_key_by_index(const struct llama_model * model, int32_t 
 ```
 """
 function llama_model_meta_key_by_index(model, i, buf, buf_size)
-    ccall((:llama_model_meta_key_by_index, libllama), Int32, (Ptr{llama_model}, Int32, Ptr{Cchar}, Csize_t), model, i, buf, buf_size)
+    ccall((:llama_model_meta_key_by_index, libllama),
+        Int32,
+        (Ptr{llama_model}, Int32, Ptr{Cchar}, Csize_t),
+        model,
+        i,
+        buf,
+        buf_size)
 end
 
 """
@@ -534,7 +554,13 @@ int32_t llama_model_meta_val_str_by_index(const struct llama_model * model, int3
 ```
 """
 function llama_model_meta_val_str_by_index(model, i, buf, buf_size)
-    ccall((:llama_model_meta_val_str_by_index, libllama), Int32, (Ptr{llama_model}, Int32, Ptr{Cchar}, Csize_t), model, i, buf, buf_size)
+    ccall((:llama_model_meta_val_str_by_index, libllama),
+        Int32,
+        (Ptr{llama_model}, Int32, Ptr{Cchar}, Csize_t),
+        model,
+        i,
+        buf,
+        buf_size)
 end
 
 """
@@ -547,7 +573,12 @@ int32_t llama_model_desc(const struct llama_model * model, char * buf, size_t bu
 ```
 """
 function llama_model_desc(model, buf, buf_size)
-    ccall((:llama_model_desc, libllama), Int32, (Ptr{llama_model}, Ptr{Cchar}, Csize_t), model, buf, buf_size)
+    ccall((:llama_model_desc, libllama),
+        Int32,
+        (Ptr{llama_model}, Ptr{Cchar}, Csize_t),
+        model,
+        buf,
+        buf_size)
 end
 
 """
@@ -692,7 +723,11 @@ struct ggml_tensor * llama_get_model_tensor(struct llama_model * model, const ch
 ```
 """
 function llama_get_model_tensor(model, name)
-    ccall((:llama_get_model_tensor, libllama), Ptr{ggml_tensor}, (Ptr{llama_model}, Ptr{Cchar}), model, name)
+    ccall((:llama_get_model_tensor, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{llama_model}, Ptr{Cchar}),
+        model,
+        name)
 end
 
 """
@@ -705,7 +740,12 @@ uint32_t llama_model_quantize( const char * fname_inp, const char * fname_out, c
 ```
 """
 function llama_model_quantize(fname_inp, fname_out, params)
-    ccall((:llama_model_quantize, libllama), UInt32, (Ptr{Cchar}, Ptr{Cchar}, Ptr{llama_model_quantize_params}), fname_inp, fname_out, params)
+    ccall((:llama_model_quantize, libllama),
+        UInt32,
+        (Ptr{Cchar}, Ptr{Cchar}, Ptr{llama_model_quantize_params}),
+        fname_inp,
+        fname_out,
+        params)
 end
 
 """
@@ -718,7 +758,14 @@ DEPRECATED(int32_t llama_apply_lora_from_file( struct llama_context * ctx, const
 ```
 """
 function llama_apply_lora_from_file(ctx, path_lora, scale, path_base_model, n_threads)
-    ccall((:llama_apply_lora_from_file, libllama), Int32, (Ptr{llama_context}, Ptr{Cchar}, Cfloat, Ptr{Cchar}, Int32), ctx, path_lora, scale, path_base_model, n_threads)
+    ccall((:llama_apply_lora_from_file, libllama),
+        Int32,
+        (Ptr{llama_context}, Ptr{Cchar}, Cfloat, Ptr{Cchar}, Int32),
+        ctx,
+        path_lora,
+        scale,
+        path_base_model,
+        n_threads)
 end
 
 """
@@ -730,8 +777,19 @@ end
 int32_t llama_model_apply_lora_from_file( const struct llama_model * model, const char * path_lora, float scale, const char * path_base_model, int32_t n_threads);
 ```
 """
-function llama_model_apply_lora_from_file(model, path_lora, scale, path_base_model, n_threads)
-    ccall((:llama_model_apply_lora_from_file, libllama), Int32, (Ptr{llama_model}, Ptr{Cchar}, Cfloat, Ptr{Cchar}, Int32), model, path_lora, scale, path_base_model, n_threads)
+function llama_model_apply_lora_from_file(model,
+    path_lora,
+    scale,
+    path_base_model,
+    n_threads)
+    ccall((:llama_model_apply_lora_from_file, libllama),
+        Int32,
+        (Ptr{llama_model}, Ptr{Cchar}, Cfloat, Ptr{Cchar}, Int32),
+        model,
+        path_lora,
+        scale,
+        path_base_model,
+        n_threads)
 end
 
 struct llama_kv_cache_view_cell
@@ -759,7 +817,11 @@ struct llama_kv_cache_view llama_kv_cache_view_init(const struct llama_context *
 ```
 """
 function llama_kv_cache_view_init(ctx, n_max_seq)
-    ccall((:llama_kv_cache_view_init, libllama), llama_kv_cache_view, (Ptr{llama_context}, Int32), ctx, n_max_seq)
+    ccall((:llama_kv_cache_view_init, libllama),
+        llama_kv_cache_view,
+        (Ptr{llama_context}, Int32),
+        ctx,
+        n_max_seq)
 end
 
 """
@@ -785,7 +847,11 @@ void llama_kv_cache_view_update(const struct llama_context * ctx, struct llama_k
 ```
 """
 function llama_kv_cache_view_update(ctx, view)
-    ccall((:llama_kv_cache_view_update, libllama), Cvoid, (Ptr{llama_context}, Ptr{llama_kv_cache_view}), ctx, view)
+    ccall((:llama_kv_cache_view_update, libllama),
+        Cvoid,
+        (Ptr{llama_context}, Ptr{llama_kv_cache_view}),
+        ctx,
+        view)
 end
 
 """
@@ -837,7 +903,13 @@ void llama_kv_cache_seq_rm( struct llama_context * ctx, llama_seq_id seq_id, lla
 ```
 """
 function llama_kv_cache_seq_rm(ctx, seq_id, p0, p1)
-    ccall((:llama_kv_cache_seq_rm, libllama), Cvoid, (Ptr{llama_context}, llama_seq_id, llama_pos, llama_pos), ctx, seq_id, p0, p1)
+    ccall((:llama_kv_cache_seq_rm, libllama),
+        Cvoid,
+        (Ptr{llama_context}, llama_seq_id, llama_pos, llama_pos),
+        ctx,
+        seq_id,
+        p0,
+        p1)
 end
 
 """
@@ -850,7 +922,14 @@ void llama_kv_cache_seq_cp( struct llama_context * ctx, llama_seq_id seq_id_src,
 ```
 """
 function llama_kv_cache_seq_cp(ctx, seq_id_src, seq_id_dst, p0, p1)
-    ccall((:llama_kv_cache_seq_cp, libllama), Cvoid, (Ptr{llama_context}, llama_seq_id, llama_seq_id, llama_pos, llama_pos), ctx, seq_id_src, seq_id_dst, p0, p1)
+    ccall((:llama_kv_cache_seq_cp, libllama),
+        Cvoid,
+        (Ptr{llama_context}, llama_seq_id, llama_seq_id, llama_pos, llama_pos),
+        ctx,
+        seq_id_src,
+        seq_id_dst,
+        p0,
+        p1)
 end
 
 """
@@ -863,7 +942,11 @@ void llama_kv_cache_seq_keep( struct llama_context * ctx, llama_seq_id seq_id);
 ```
 """
 function llama_kv_cache_seq_keep(ctx, seq_id)
-    ccall((:llama_kv_cache_seq_keep, libllama), Cvoid, (Ptr{llama_context}, llama_seq_id), ctx, seq_id)
+    ccall((:llama_kv_cache_seq_keep, libllama),
+        Cvoid,
+        (Ptr{llama_context}, llama_seq_id),
+        ctx,
+        seq_id)
 end
 
 """
@@ -876,7 +959,14 @@ void llama_kv_cache_seq_shift( struct llama_context * ctx, llama_seq_id seq_id, 
 ```
 """
 function llama_kv_cache_seq_shift(ctx, seq_id, p0, p1, delta)
-    ccall((:llama_kv_cache_seq_shift, libllama), Cvoid, (Ptr{llama_context}, llama_seq_id, llama_pos, llama_pos, llama_pos), ctx, seq_id, p0, p1, delta)
+    ccall((:llama_kv_cache_seq_shift, libllama),
+        Cvoid,
+        (Ptr{llama_context}, llama_seq_id, llama_pos, llama_pos, llama_pos),
+        ctx,
+        seq_id,
+        p0,
+        p1,
+        delta)
 end
 
 """
@@ -889,7 +979,14 @@ void llama_kv_cache_seq_div( struct llama_context * ctx, llama_seq_id seq_id, ll
 ```
 """
 function llama_kv_cache_seq_div(ctx, seq_id, p0, p1, d)
-    ccall((:llama_kv_cache_seq_div, libllama), Cvoid, (Ptr{llama_context}, llama_seq_id, llama_pos, llama_pos, Cint), ctx, seq_id, p0, p1, d)
+    ccall((:llama_kv_cache_seq_div, libllama),
+        Cvoid,
+        (Ptr{llama_context}, llama_seq_id, llama_pos, llama_pos, Cint),
+        ctx,
+        seq_id,
+        p0,
+        p1,
+        d)
 end
 
 """
@@ -915,7 +1012,11 @@ size_t llama_copy_state_data( struct llama_context * ctx, uint8_t * dst);
 ```
 """
 function llama_copy_state_data(ctx, dst)
-    ccall((:llama_copy_state_data, libllama), Csize_t, (Ptr{llama_context}, Ptr{UInt8}), ctx, dst)
+    ccall((:llama_copy_state_data, libllama),
+        Csize_t,
+        (Ptr{llama_context}, Ptr{UInt8}),
+        ctx,
+        dst)
 end
 
 """
@@ -928,7 +1029,11 @@ size_t llama_set_state_data( struct llama_context * ctx, uint8_t * src);
 ```
 """
 function llama_set_state_data(ctx, src)
-    ccall((:llama_set_state_data, libllama), Csize_t, (Ptr{llama_context}, Ptr{UInt8}), ctx, src)
+    ccall((:llama_set_state_data, libllama),
+        Csize_t,
+        (Ptr{llama_context}, Ptr{UInt8}),
+        ctx,
+        src)
 end
 
 """
@@ -940,8 +1045,19 @@ end
 bool llama_load_session_file( struct llama_context * ctx, const char * path_session, llama_token * tokens_out, size_t n_token_capacity, size_t * n_token_count_out);
 ```
 """
-function llama_load_session_file(ctx, path_session, tokens_out, n_token_capacity, n_token_count_out)
-    ccall((:llama_load_session_file, libllama), Bool, (Ptr{llama_context}, Ptr{Cchar}, Ptr{llama_token}, Csize_t, Ptr{Csize_t}), ctx, path_session, tokens_out, n_token_capacity, n_token_count_out)
+function llama_load_session_file(ctx,
+    path_session,
+    tokens_out,
+    n_token_capacity,
+    n_token_count_out)
+    ccall((:llama_load_session_file, libllama),
+        Bool,
+        (Ptr{llama_context}, Ptr{Cchar}, Ptr{llama_token}, Csize_t, Ptr{Csize_t}),
+        ctx,
+        path_session,
+        tokens_out,
+        n_token_capacity,
+        n_token_count_out)
 end
 
 """
@@ -954,7 +1070,13 @@ bool llama_save_session_file( struct llama_context * ctx, const char * path_sess
 ```
 """
 function llama_save_session_file(ctx, path_session, tokens, n_token_count)
-    ccall((:llama_save_session_file, libllama), Bool, (Ptr{llama_context}, Ptr{Cchar}, Ptr{llama_token}, Csize_t), ctx, path_session, tokens, n_token_count)
+    ccall((:llama_save_session_file, libllama),
+        Bool,
+        (Ptr{llama_context}, Ptr{Cchar}, Ptr{llama_token}, Csize_t),
+        ctx,
+        path_session,
+        tokens,
+        n_token_count)
 end
 
 """
@@ -967,7 +1089,13 @@ DEPRECATED(int llama_eval( struct llama_context * ctx, llama_token * tokens, int
 ```
 """
 function llama_eval(ctx, tokens, n_tokens, n_past)
-    ccall((:llama_eval, libllama), Cint, (Ptr{llama_context}, Ptr{llama_token}, Int32, Int32), ctx, tokens, n_tokens, n_past)
+    ccall((:llama_eval, libllama),
+        Cint,
+        (Ptr{llama_context}, Ptr{llama_token}, Int32, Int32),
+        ctx,
+        tokens,
+        n_tokens,
+        n_past)
 end
 
 """
@@ -980,7 +1108,13 @@ DEPRECATED(int llama_eval_embd( struct llama_context * ctx, float * embd, int32_
 ```
 """
 function llama_eval_embd(ctx, embd, n_tokens, n_past)
-    ccall((:llama_eval_embd, libllama), Cint, (Ptr{llama_context}, Ptr{Cfloat}, Int32, Int32), ctx, embd, n_tokens, n_past)
+    ccall((:llama_eval_embd, libllama),
+        Cint,
+        (Ptr{llama_context}, Ptr{Cfloat}, Int32, Int32),
+        ctx,
+        embd,
+        n_tokens,
+        n_past)
 end
 
 """
@@ -993,7 +1127,13 @@ struct llama_batch llama_batch_get_one( llama_token * tokens, int32_t n_tokens, 
 ```
 """
 function llama_batch_get_one(tokens, n_tokens, pos_0, seq_id)
-    ccall((:llama_batch_get_one, libllama), llama_batch, (Ptr{llama_token}, Int32, llama_pos, llama_seq_id), tokens, n_tokens, pos_0, seq_id)
+    ccall((:llama_batch_get_one, libllama),
+        llama_batch,
+        (Ptr{llama_token}, Int32, llama_pos, llama_seq_id),
+        tokens,
+        n_tokens,
+        pos_0,
+        seq_id)
 end
 
 """
@@ -1006,7 +1146,12 @@ struct llama_batch llama_batch_init( int32_t n_tokens, int32_t embd, int32_t n_s
 ```
 """
 function llama_batch_init(n_tokens, embd, n_seq_max)
-    ccall((:llama_batch_init, libllama), llama_batch, (Int32, Int32, Int32), n_tokens, embd, n_seq_max)
+    ccall((:llama_batch_init, libllama),
+        llama_batch,
+        (Int32, Int32, Int32),
+        n_tokens,
+        embd,
+        n_seq_max)
 end
 
 """
@@ -1045,7 +1190,12 @@ void llama_set_n_threads(struct llama_context * ctx, uint32_t n_threads, uint32_
 ```
 """
 function llama_set_n_threads(ctx, n_threads, n_threads_batch)
-    ccall((:llama_set_n_threads, libllama), Cvoid, (Ptr{llama_context}, UInt32, UInt32), ctx, n_threads, n_threads_batch)
+    ccall((:llama_set_n_threads, libllama),
+        Cvoid,
+        (Ptr{llama_context}, UInt32, UInt32),
+        ctx,
+        n_threads,
+        n_threads_batch)
 end
 
 """
@@ -1071,7 +1221,11 @@ float * llama_get_logits_ith(struct llama_context * ctx, int32_t i);
 ```
 """
 function llama_get_logits_ith(ctx, i)
-    ccall((:llama_get_logits_ith, libllama), Ptr{Cfloat}, (Ptr{llama_context}, Int32), ctx, i)
+    ccall((:llama_get_logits_ith, libllama),
+        Ptr{Cfloat},
+        (Ptr{llama_context}, Int32),
+        ctx,
+        i)
 end
 
 """
@@ -1097,7 +1251,11 @@ const char * llama_token_get_text(const struct llama_model * model, llama_token 
 ```
 """
 function llama_token_get_text(model, token)
-    ccall((:llama_token_get_text, libllama), Ptr{Cchar}, (Ptr{llama_model}, llama_token), model, token)
+    ccall((:llama_token_get_text, libllama),
+        Ptr{Cchar},
+        (Ptr{llama_model}, llama_token),
+        model,
+        token)
 end
 
 """
@@ -1110,7 +1268,11 @@ float llama_token_get_score(const struct llama_model * model, llama_token token)
 ```
 """
 function llama_token_get_score(model, token)
-    ccall((:llama_token_get_score, libllama), Cfloat, (Ptr{llama_model}, llama_token), model, token)
+    ccall((:llama_token_get_score, libllama),
+        Cfloat,
+        (Ptr{llama_model}, llama_token),
+        model,
+        token)
 end
 
 """
@@ -1123,7 +1285,11 @@ enum llama_token_type llama_token_get_type(const struct llama_model * model, lla
 ```
 """
 function llama_token_get_type(model, token)
-    ccall((:llama_token_get_type, libllama), llama_token_type, (Ptr{llama_model}, llama_token), model, token)
+    ccall((:llama_token_get_type, libllama),
+        llama_token_type,
+        (Ptr{llama_model}, llama_token),
+        model,
+        token)
 end
 
 """
@@ -1258,7 +1424,16 @@ int32_t llama_tokenize( const struct llama_model * model, const char * text, int
 ```
 """
 function llama_tokenize(model, text, text_len, tokens, n_max_tokens, add_bos, special)
-    ccall((:llama_tokenize, libllama), Int32, (Ptr{llama_model}, Ptr{Cchar}, Int32, Ptr{llama_token}, Int32, Bool, Bool), model, text, text_len, tokens, n_max_tokens, add_bos, special)
+    ccall((:llama_tokenize, libllama),
+        Int32,
+        (Ptr{llama_model}, Ptr{Cchar}, Int32, Ptr{llama_token}, Int32, Bool, Bool),
+        model,
+        text,
+        text_len,
+        tokens,
+        n_max_tokens,
+        add_bos,
+        special)
 end
 
 """
@@ -1271,7 +1446,13 @@ int32_t llama_token_to_piece( const struct llama_model * model, llama_token toke
 ```
 """
 function llama_token_to_piece(model, token, buf, length)
-    ccall((:llama_token_to_piece, libllama), Int32, (Ptr{llama_model}, llama_token, Ptr{Cchar}, Int32), model, token, buf, length)
+    ccall((:llama_token_to_piece, libllama),
+        Int32,
+        (Ptr{llama_model}, llama_token, Ptr{Cchar}, Int32),
+        model,
+        token,
+        buf,
+        length)
 end
 
 """
@@ -1284,7 +1465,12 @@ struct llama_grammar * llama_grammar_init( const llama_grammar_element ** rules,
 ```
 """
 function llama_grammar_init(rules, n_rules, start_rule_index)
-    ccall((:llama_grammar_init, libllama), Ptr{llama_grammar}, (Ptr{Ptr{llama_grammar_element}}, Csize_t, Csize_t), rules, n_rules, start_rule_index)
+    ccall((:llama_grammar_init, libllama),
+        Ptr{llama_grammar},
+        (Ptr{Ptr{llama_grammar_element}}, Csize_t, Csize_t),
+        rules,
+        n_rules,
+        start_rule_index)
 end
 
 """
@@ -1310,7 +1496,10 @@ struct llama_grammar * llama_grammar_copy(const struct llama_grammar * grammar);
 ```
 """
 function llama_grammar_copy(grammar)
-    ccall((:llama_grammar_copy, libllama), Ptr{llama_grammar}, (Ptr{llama_grammar},), grammar)
+    ccall((:llama_grammar_copy, libllama),
+        Ptr{llama_grammar},
+        (Ptr{llama_grammar},),
+        grammar)
 end
 
 """
@@ -1336,8 +1525,29 @@ end
 void llama_sample_repetition_penalties( struct llama_context * ctx, llama_token_data_array * candidates, const llama_token * last_tokens, size_t penalty_last_n, float penalty_repeat, float penalty_freq, float penalty_present);
 ```
 """
-function llama_sample_repetition_penalties(ctx, candidates, last_tokens, penalty_last_n, penalty_repeat, penalty_freq, penalty_present)
-    ccall((:llama_sample_repetition_penalties, libllama), Cvoid, (Ptr{llama_context}, Ptr{llama_token_data_array}, Ptr{llama_token}, Csize_t, Cfloat, Cfloat, Cfloat), ctx, candidates, last_tokens, penalty_last_n, penalty_repeat, penalty_freq, penalty_present)
+function llama_sample_repetition_penalties(ctx,
+    candidates,
+    last_tokens,
+    penalty_last_n,
+    penalty_repeat,
+    penalty_freq,
+    penalty_present)
+    ccall((:llama_sample_repetition_penalties, libllama),
+        Cvoid,
+        (Ptr{llama_context},
+            Ptr{llama_token_data_array},
+            Ptr{llama_token},
+            Csize_t,
+            Cfloat,
+            Cfloat,
+            Cfloat),
+        ctx,
+        candidates,
+        last_tokens,
+        penalty_last_n,
+        penalty_repeat,
+        penalty_freq,
+        penalty_present)
 end
 
 """
@@ -1353,7 +1563,13 @@ void llama_sample_classifier_free_guidance( struct llama_context * ctx, llama_to
 ```
 """
 function llama_sample_classifier_free_guidance(ctx, candidates, guidance_ctx, scale)
-    ccall((:llama_sample_classifier_free_guidance, libllama), Cvoid, (Ptr{llama_context}, Ptr{llama_token_data_array}, Ptr{llama_context}, Cfloat), ctx, candidates, guidance_ctx, scale)
+    ccall((:llama_sample_classifier_free_guidance, libllama),
+        Cvoid,
+        (Ptr{llama_context}, Ptr{llama_token_data_array}, Ptr{llama_context}, Cfloat),
+        ctx,
+        candidates,
+        guidance_ctx,
+        scale)
 end
 
 """
@@ -1366,7 +1582,11 @@ void llama_sample_softmax( struct llama_context * ctx, llama_token_data_array * 
 ```
 """
 function llama_sample_softmax(ctx, candidates)
-    ccall((:llama_sample_softmax, libllama), Cvoid, (Ptr{llama_context}, Ptr{llama_token_data_array}), ctx, candidates)
+    ccall((:llama_sample_softmax, libllama),
+        Cvoid,
+        (Ptr{llama_context}, Ptr{llama_token_data_array}),
+        ctx,
+        candidates)
 end
 
 """
@@ -1379,7 +1599,13 @@ void llama_sample_top_k( struct llama_context * ctx, llama_token_data_array * ca
 ```
 """
 function llama_sample_top_k(ctx, candidates, k, min_keep)
-    ccall((:llama_sample_top_k, libllama), Cvoid, (Ptr{llama_context}, Ptr{llama_token_data_array}, Int32, Csize_t), ctx, candidates, k, min_keep)
+    ccall((:llama_sample_top_k, libllama),
+        Cvoid,
+        (Ptr{llama_context}, Ptr{llama_token_data_array}, Int32, Csize_t),
+        ctx,
+        candidates,
+        k,
+        min_keep)
 end
 
 """
@@ -1392,7 +1618,13 @@ void llama_sample_top_p( struct llama_context * ctx, llama_token_data_array * ca
 ```
 """
 function llama_sample_top_p(ctx, candidates, p, min_keep)
-    ccall((:llama_sample_top_p, libllama), Cvoid, (Ptr{llama_context}, Ptr{llama_token_data_array}, Cfloat, Csize_t), ctx, candidates, p, min_keep)
+    ccall((:llama_sample_top_p, libllama),
+        Cvoid,
+        (Ptr{llama_context}, Ptr{llama_token_data_array}, Cfloat, Csize_t),
+        ctx,
+        candidates,
+        p,
+        min_keep)
 end
 
 """
@@ -1405,7 +1637,13 @@ void llama_sample_min_p( struct llama_context * ctx, llama_token_data_array * ca
 ```
 """
 function llama_sample_min_p(ctx, candidates, p, min_keep)
-    ccall((:llama_sample_min_p, libllama), Cvoid, (Ptr{llama_context}, Ptr{llama_token_data_array}, Cfloat, Csize_t), ctx, candidates, p, min_keep)
+    ccall((:llama_sample_min_p, libllama),
+        Cvoid,
+        (Ptr{llama_context}, Ptr{llama_token_data_array}, Cfloat, Csize_t),
+        ctx,
+        candidates,
+        p,
+        min_keep)
 end
 
 """
@@ -1418,7 +1656,13 @@ void llama_sample_tail_free( struct llama_context * ctx, llama_token_data_array 
 ```
 """
 function llama_sample_tail_free(ctx, candidates, z, min_keep)
-    ccall((:llama_sample_tail_free, libllama), Cvoid, (Ptr{llama_context}, Ptr{llama_token_data_array}, Cfloat, Csize_t), ctx, candidates, z, min_keep)
+    ccall((:llama_sample_tail_free, libllama),
+        Cvoid,
+        (Ptr{llama_context}, Ptr{llama_token_data_array}, Cfloat, Csize_t),
+        ctx,
+        candidates,
+        z,
+        min_keep)
 end
 
 """
@@ -1431,7 +1675,13 @@ void llama_sample_typical( struct llama_context * ctx, llama_token_data_array * 
 ```
 """
 function llama_sample_typical(ctx, candidates, p, min_keep)
-    ccall((:llama_sample_typical, libllama), Cvoid, (Ptr{llama_context}, Ptr{llama_token_data_array}, Cfloat, Csize_t), ctx, candidates, p, min_keep)
+    ccall((:llama_sample_typical, libllama),
+        Cvoid,
+        (Ptr{llama_context}, Ptr{llama_token_data_array}, Cfloat, Csize_t),
+        ctx,
+        candidates,
+        p,
+        min_keep)
 end
 
 """
@@ -1444,7 +1694,12 @@ void llama_sample_temp( struct llama_context * ctx, llama_token_data_array * can
 ```
 """
 function llama_sample_temp(ctx, candidates, temp)
-    ccall((:llama_sample_temp, libllama), Cvoid, (Ptr{llama_context}, Ptr{llama_token_data_array}, Cfloat), ctx, candidates, temp)
+    ccall((:llama_sample_temp, libllama),
+        Cvoid,
+        (Ptr{llama_context}, Ptr{llama_token_data_array}, Cfloat),
+        ctx,
+        candidates,
+        temp)
 end
 
 """
@@ -1457,7 +1712,12 @@ DEPRECATED(void llama_sample_temperature( struct llama_context * ctx, llama_toke
 ```
 """
 function llama_sample_temperature(ctx, candidates, temp)
-    ccall((:llama_sample_temperature, libllama), Cvoid, (Ptr{llama_context}, Ptr{llama_token_data_array}, Cfloat), ctx, candidates, temp)
+    ccall((:llama_sample_temperature, libllama),
+        Cvoid,
+        (Ptr{llama_context}, Ptr{llama_token_data_array}, Cfloat),
+        ctx,
+        candidates,
+        temp)
 end
 
 """
@@ -1470,7 +1730,12 @@ void llama_sample_grammar( struct llama_context * ctx, llama_token_data_array * 
 ```
 """
 function llama_sample_grammar(ctx, candidates, grammar)
-    ccall((:llama_sample_grammar, libllama), Cvoid, (Ptr{llama_context}, Ptr{llama_token_data_array}, Ptr{llama_grammar}), ctx, candidates, grammar)
+    ccall((:llama_sample_grammar, libllama),
+        Cvoid,
+        (Ptr{llama_context}, Ptr{llama_token_data_array}, Ptr{llama_grammar}),
+        ctx,
+        candidates,
+        grammar)
 end
 
 """
@@ -1488,7 +1753,20 @@ llama_token llama_sample_token_mirostat( struct llama_context * ctx, llama_token
 ```
 """
 function llama_sample_token_mirostat(ctx, candidates, tau, eta, m, mu)
-    ccall((:llama_sample_token_mirostat, libllama), llama_token, (Ptr{llama_context}, Ptr{llama_token_data_array}, Cfloat, Cfloat, Int32, Ptr{Cfloat}), ctx, candidates, tau, eta, m, mu)
+    ccall((:llama_sample_token_mirostat, libllama),
+        llama_token,
+        (Ptr{llama_context},
+            Ptr{llama_token_data_array},
+            Cfloat,
+            Cfloat,
+            Int32,
+            Ptr{Cfloat}),
+        ctx,
+        candidates,
+        tau,
+        eta,
+        m,
+        mu)
 end
 
 """
@@ -1505,7 +1783,14 @@ llama_token llama_sample_token_mirostat_v2( struct llama_context * ctx, llama_to
 ```
 """
 function llama_sample_token_mirostat_v2(ctx, candidates, tau, eta, mu)
-    ccall((:llama_sample_token_mirostat_v2, libllama), llama_token, (Ptr{llama_context}, Ptr{llama_token_data_array}, Cfloat, Cfloat, Ptr{Cfloat}), ctx, candidates, tau, eta, mu)
+    ccall((:llama_sample_token_mirostat_v2, libllama),
+        llama_token,
+        (Ptr{llama_context}, Ptr{llama_token_data_array}, Cfloat, Cfloat, Ptr{Cfloat}),
+        ctx,
+        candidates,
+        tau,
+        eta,
+        mu)
 end
 
 """
@@ -1519,7 +1804,11 @@ llama_token llama_sample_token_greedy( struct llama_context * ctx, llama_token_d
 ```
 """
 function llama_sample_token_greedy(ctx, candidates)
-    ccall((:llama_sample_token_greedy, libllama), llama_token, (Ptr{llama_context}, Ptr{llama_token_data_array}), ctx, candidates)
+    ccall((:llama_sample_token_greedy, libllama),
+        llama_token,
+        (Ptr{llama_context}, Ptr{llama_token_data_array}),
+        ctx,
+        candidates)
 end
 
 """
@@ -1532,7 +1821,11 @@ llama_token llama_sample_token( struct llama_context * ctx, llama_token_data_arr
 ```
 """
 function llama_sample_token(ctx, candidates)
-    ccall((:llama_sample_token, libllama), llama_token, (Ptr{llama_context}, Ptr{llama_token_data_array}), ctx, candidates)
+    ccall((:llama_sample_token, libllama),
+        llama_token,
+        (Ptr{llama_context}, Ptr{llama_token_data_array}),
+        ctx,
+        candidates)
 end
 
 """
@@ -1545,7 +1838,12 @@ void llama_grammar_accept_token( struct llama_context * ctx, struct llama_gramma
 ```
 """
 function llama_grammar_accept_token(ctx, grammar, token)
-    ccall((:llama_grammar_accept_token, libllama), Cvoid, (Ptr{llama_context}, Ptr{llama_grammar}, llama_token), ctx, grammar, token)
+    ccall((:llama_grammar_accept_token, libllama),
+        Cvoid,
+        (Ptr{llama_context}, Ptr{llama_grammar}, llama_token),
+        ctx,
+        grammar,
+        token)
 end
 
 struct llama_beam_view
@@ -1581,7 +1879,20 @@ void llama_beam_search( struct llama_context * ctx, llama_beam_search_callback_f
 ```
 """
 function llama_beam_search(ctx, callback, callback_data, n_beams, n_past, n_predict)
-    ccall((:llama_beam_search, libllama), Cvoid, (Ptr{llama_context}, llama_beam_search_callback_fn_t, Ptr{Cvoid}, Csize_t, Int32, Int32), ctx, callback, callback_data, n_beams, n_past, n_predict)
+    ccall((:llama_beam_search, libllama),
+        Cvoid,
+        (Ptr{llama_context},
+            llama_beam_search_callback_fn_t,
+            Ptr{Cvoid},
+            Csize_t,
+            Int32,
+            Int32),
+        ctx,
+        callback,
+        callback_data,
+        n_beams,
+        n_past,
+        n_predict)
 end
 
 """
@@ -1649,7 +1960,11 @@ void llama_log_set(ggml_log_callback log_callback, void * user_data);
 ```
 """
 function llama_log_set(log_callback, user_data)
-    ccall((:llama_log_set, libllama), Cvoid, (ggml_log_callback, Ptr{Cvoid}), log_callback, user_data)
+    ccall((:llama_log_set, libllama),
+        Cvoid,
+        (ggml_log_callback, Ptr{Cvoid}),
+        log_callback,
+        user_data)
 end
 
 """
@@ -1662,7 +1977,11 @@ void llama_dump_timing_info_yaml(FILE * stream, const struct llama_context * ctx
 ```
 """
 function llama_dump_timing_info_yaml(stream, ctx)
-    ccall((:llama_dump_timing_info_yaml, libllama), Cvoid, (Ptr{Libc.FILE}, Ptr{llama_context}), stream, ctx)
+    ccall((:llama_dump_timing_info_yaml, libllama),
+        Cvoid,
+        (Ptr{Libc.FILE}, Ptr{llama_context}),
+        stream,
+        ctx)
 end
 
 """
@@ -1716,7 +2035,12 @@ void ggml_fp16_to_fp32_row(const ggml_fp16_t * x, float * y, int n);
 ```
 """
 function ggml_fp16_to_fp32_row(x, y, n)
-    ccall((:ggml_fp16_to_fp32_row, libllama), Cvoid, (Ptr{ggml_fp16_t}, Ptr{Cfloat}, Cint), x, y, n)
+    ccall((:ggml_fp16_to_fp32_row, libllama),
+        Cvoid,
+        (Ptr{ggml_fp16_t}, Ptr{Cfloat}, Cint),
+        x,
+        y,
+        n)
 end
 
 """
@@ -1729,7 +2053,12 @@ void ggml_fp32_to_fp16_row(const float * x, ggml_fp16_t * y, int n);
 ```
 """
 function ggml_fp32_to_fp16_row(x, y, n)
-    ccall((:ggml_fp32_to_fp16_row, libllama), Cvoid, (Ptr{Cfloat}, Ptr{ggml_fp16_t}, Cint), x, y, n)
+    ccall((:ggml_fp32_to_fp16_row, libllama),
+        Cvoid,
+        (Ptr{Cfloat}, Ptr{ggml_fp16_t}, Cint),
+        x,
+        y,
+        n)
 end
 
 @cenum ggml_prec::UInt32 begin
@@ -2290,7 +2619,11 @@ bool ggml_are_same_shape(const struct ggml_tensor * t0, const struct ggml_tensor
 ```
 """
 function ggml_are_same_shape(t0, t1)
-    ccall((:ggml_are_same_shape, libllama), Bool, (Ptr{ggml_tensor}, Ptr{ggml_tensor}), t0, t1)
+    ccall((:ggml_are_same_shape, libllama),
+        Bool,
+        (Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        t0,
+        t1)
 end
 
 """
@@ -2355,7 +2688,11 @@ size_t ggml_set_scratch (struct ggml_context * ctx, struct ggml_scratch scratch)
 ```
 """
 function ggml_set_scratch(ctx, scratch)
-    ccall((:ggml_set_scratch, libllama), Csize_t, (Ptr{ggml_context}, ggml_scratch), ctx, scratch)
+    ccall((:ggml_set_scratch, libllama),
+        Csize_t,
+        (Ptr{ggml_context}, ggml_scratch),
+        ctx,
+        scratch)
 end
 
 """
@@ -2433,7 +2770,13 @@ struct ggml_tensor * ggml_new_tensor( struct ggml_context * ctx, enum ggml_type 
 ```
 """
 function ggml_new_tensor(ctx, type, n_dims, ne)
-    ccall((:ggml_new_tensor, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, ggml_type, Cint, Ptr{Int64}), ctx, type, n_dims, ne)
+    ccall((:ggml_new_tensor, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, ggml_type, Cint, Ptr{Int64}),
+        ctx,
+        type,
+        n_dims,
+        ne)
 end
 
 """
@@ -2446,7 +2789,12 @@ struct ggml_tensor * ggml_new_tensor_1d( struct ggml_context * ctx, enum ggml_ty
 ```
 """
 function ggml_new_tensor_1d(ctx, type, ne0)
-    ccall((:ggml_new_tensor_1d, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, ggml_type, Int64), ctx, type, ne0)
+    ccall((:ggml_new_tensor_1d, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, ggml_type, Int64),
+        ctx,
+        type,
+        ne0)
 end
 
 """
@@ -2459,7 +2807,13 @@ struct ggml_tensor * ggml_new_tensor_2d( struct ggml_context * ctx, enum ggml_ty
 ```
 """
 function ggml_new_tensor_2d(ctx, type, ne0, ne1)
-    ccall((:ggml_new_tensor_2d, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, ggml_type, Int64, Int64), ctx, type, ne0, ne1)
+    ccall((:ggml_new_tensor_2d, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, ggml_type, Int64, Int64),
+        ctx,
+        type,
+        ne0,
+        ne1)
 end
 
 """
@@ -2472,7 +2826,14 @@ struct ggml_tensor * ggml_new_tensor_3d( struct ggml_context * ctx, enum ggml_ty
 ```
 """
 function ggml_new_tensor_3d(ctx, type, ne0, ne1, ne2)
-    ccall((:ggml_new_tensor_3d, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, ggml_type, Int64, Int64, Int64), ctx, type, ne0, ne1, ne2)
+    ccall((:ggml_new_tensor_3d, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, ggml_type, Int64, Int64, Int64),
+        ctx,
+        type,
+        ne0,
+        ne1,
+        ne2)
 end
 
 """
@@ -2485,7 +2846,15 @@ struct ggml_tensor * ggml_new_tensor_4d( struct ggml_context * ctx, enum ggml_ty
 ```
 """
 function ggml_new_tensor_4d(ctx, type, ne0, ne1, ne2, ne3)
-    ccall((:ggml_new_tensor_4d, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, ggml_type, Int64, Int64, Int64, Int64), ctx, type, ne0, ne1, ne2, ne3)
+    ccall((:ggml_new_tensor_4d, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, ggml_type, Int64, Int64, Int64, Int64),
+        ctx,
+        type,
+        ne0,
+        ne1,
+        ne2,
+        ne3)
 end
 
 """
@@ -2498,7 +2867,11 @@ struct ggml_tensor * ggml_new_i32(struct ggml_context * ctx, int32_t value);
 ```
 """
 function ggml_new_i32(ctx, value)
-    ccall((:ggml_new_i32, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Int32), ctx, value)
+    ccall((:ggml_new_i32, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Int32),
+        ctx,
+        value)
 end
 
 """
@@ -2511,7 +2884,11 @@ struct ggml_tensor * ggml_new_f32(struct ggml_context * ctx, float value);
 ```
 """
 function ggml_new_f32(ctx, value)
-    ccall((:ggml_new_f32, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Cfloat), ctx, value)
+    ccall((:ggml_new_f32, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Cfloat),
+        ctx,
+        value)
 end
 
 """
@@ -2524,7 +2901,11 @@ struct ggml_tensor * ggml_dup_tensor (struct ggml_context * ctx, const struct gg
 ```
 """
 function ggml_dup_tensor(ctx, src)
-    ccall((:ggml_dup_tensor, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, src)
+    ccall((:ggml_dup_tensor, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        src)
 end
 
 """
@@ -2537,7 +2918,11 @@ struct ggml_tensor * ggml_view_tensor(struct ggml_context * ctx, struct ggml_ten
 ```
 """
 function ggml_view_tensor(ctx, src)
-    ccall((:ggml_view_tensor, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, src)
+    ccall((:ggml_view_tensor, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        src)
 end
 
 """
@@ -2563,7 +2948,11 @@ struct ggml_tensor * ggml_get_next_tensor (const struct ggml_context * ctx, stru
 ```
 """
 function ggml_get_next_tensor(ctx, tensor)
-    ccall((:ggml_get_next_tensor, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, tensor)
+    ccall((:ggml_get_next_tensor, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        tensor)
 end
 
 """
@@ -2576,7 +2965,11 @@ struct ggml_tensor * ggml_get_tensor(struct ggml_context * ctx, const char * nam
 ```
 """
 function ggml_get_tensor(ctx, name)
-    ccall((:ggml_get_tensor, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{Cchar}), ctx, name)
+    ccall((:ggml_get_tensor, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{Cchar}),
+        ctx,
+        name)
 end
 
 """
@@ -2602,7 +2995,11 @@ struct ggml_tensor * ggml_set_i32 (struct ggml_tensor * tensor, int32_t value);
 ```
 """
 function ggml_set_i32(tensor, value)
-    ccall((:ggml_set_i32, libllama), Ptr{ggml_tensor}, (Ptr{ggml_tensor}, Int32), tensor, value)
+    ccall((:ggml_set_i32, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_tensor}, Int32),
+        tensor,
+        value)
 end
 
 """
@@ -2615,7 +3012,11 @@ struct ggml_tensor * ggml_set_f32 (struct ggml_tensor * tensor, float value);
 ```
 """
 function ggml_set_f32(tensor, value)
-    ccall((:ggml_set_f32, libllama), Ptr{ggml_tensor}, (Ptr{ggml_tensor}, Cfloat), tensor, value)
+    ccall((:ggml_set_f32, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_tensor}, Cfloat),
+        tensor,
+        value)
 end
 
 """
@@ -2628,7 +3029,15 @@ void ggml_unravel_index(const struct ggml_tensor * tensor, int64_t i, int64_t * 
 ```
 """
 function ggml_unravel_index(tensor, i, i0, i1, i2, i3)
-    ccall((:ggml_unravel_index, libllama), Cvoid, (Ptr{ggml_tensor}, Int64, Ptr{Int64}, Ptr{Int64}, Ptr{Int64}, Ptr{Int64}), tensor, i, i0, i1, i2, i3)
+    ccall((:ggml_unravel_index, libllama),
+        Cvoid,
+        (Ptr{ggml_tensor}, Int64, Ptr{Int64}, Ptr{Int64}, Ptr{Int64}, Ptr{Int64}),
+        tensor,
+        i,
+        i0,
+        i1,
+        i2,
+        i3)
 end
 
 """
@@ -2654,7 +3063,12 @@ void ggml_set_i32_1d(const struct ggml_tensor * tensor, int i, int32_t value);
 ```
 """
 function ggml_set_i32_1d(tensor, i, value)
-    ccall((:ggml_set_i32_1d, libllama), Cvoid, (Ptr{ggml_tensor}, Cint, Int32), tensor, i, value)
+    ccall((:ggml_set_i32_1d, libllama),
+        Cvoid,
+        (Ptr{ggml_tensor}, Cint, Int32),
+        tensor,
+        i,
+        value)
 end
 
 """
@@ -2667,7 +3081,14 @@ int32_t ggml_get_i32_nd(const struct ggml_tensor * tensor, int i0, int i1, int i
 ```
 """
 function ggml_get_i32_nd(tensor, i0, i1, i2, i3)
-    ccall((:ggml_get_i32_nd, libllama), Int32, (Ptr{ggml_tensor}, Cint, Cint, Cint, Cint), tensor, i0, i1, i2, i3)
+    ccall((:ggml_get_i32_nd, libllama),
+        Int32,
+        (Ptr{ggml_tensor}, Cint, Cint, Cint, Cint),
+        tensor,
+        i0,
+        i1,
+        i2,
+        i3)
 end
 
 """
@@ -2680,7 +3101,15 @@ void ggml_set_i32_nd(const struct ggml_tensor * tensor, int i0, int i1, int i2, 
 ```
 """
 function ggml_set_i32_nd(tensor, i0, i1, i2, i3, value)
-    ccall((:ggml_set_i32_nd, libllama), Cvoid, (Ptr{ggml_tensor}, Cint, Cint, Cint, Cint, Int32), tensor, i0, i1, i2, i3, value)
+    ccall((:ggml_set_i32_nd, libllama),
+        Cvoid,
+        (Ptr{ggml_tensor}, Cint, Cint, Cint, Cint, Int32),
+        tensor,
+        i0,
+        i1,
+        i2,
+        i3,
+        value)
 end
 
 """
@@ -2706,7 +3135,12 @@ void ggml_set_f32_1d(const struct ggml_tensor * tensor, int i, float value);
 ```
 """
 function ggml_set_f32_1d(tensor, i, value)
-    ccall((:ggml_set_f32_1d, libllama), Cvoid, (Ptr{ggml_tensor}, Cint, Cfloat), tensor, i, value)
+    ccall((:ggml_set_f32_1d, libllama),
+        Cvoid,
+        (Ptr{ggml_tensor}, Cint, Cfloat),
+        tensor,
+        i,
+        value)
 end
 
 """
@@ -2719,7 +3153,14 @@ float ggml_get_f32_nd(const struct ggml_tensor * tensor, int i0, int i1, int i2,
 ```
 """
 function ggml_get_f32_nd(tensor, i0, i1, i2, i3)
-    ccall((:ggml_get_f32_nd, libllama), Cfloat, (Ptr{ggml_tensor}, Cint, Cint, Cint, Cint), tensor, i0, i1, i2, i3)
+    ccall((:ggml_get_f32_nd, libllama),
+        Cfloat,
+        (Ptr{ggml_tensor}, Cint, Cint, Cint, Cint),
+        tensor,
+        i0,
+        i1,
+        i2,
+        i3)
 end
 
 """
@@ -2732,7 +3173,15 @@ void ggml_set_f32_nd(const struct ggml_tensor * tensor, int i0, int i1, int i2, 
 ```
 """
 function ggml_set_f32_nd(tensor, i0, i1, i2, i3, value)
-    ccall((:ggml_set_f32_nd, libllama), Cvoid, (Ptr{ggml_tensor}, Cint, Cint, Cint, Cint, Cfloat), tensor, i0, i1, i2, i3, value)
+    ccall((:ggml_set_f32_nd, libllama),
+        Cvoid,
+        (Ptr{ggml_tensor}, Cint, Cint, Cint, Cint, Cfloat),
+        tensor,
+        i0,
+        i1,
+        i2,
+        i3,
+        value)
 end
 
 """
@@ -2797,7 +3246,11 @@ struct ggml_tensor * ggml_set_name ( struct ggml_tensor * tensor, const char * n
 ```
 """
 function ggml_set_name(tensor, name)
-    ccall((:ggml_set_name, libllama), Ptr{ggml_tensor}, (Ptr{ggml_tensor}, Ptr{Cchar}), tensor, name)
+    ccall((:ggml_set_name, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_tensor}, Ptr{Cchar}),
+        tensor,
+        name)
 end
 
 """
@@ -2810,7 +3263,11 @@ struct ggml_tensor * ggml_dup( struct ggml_context * ctx, struct ggml_tensor * a
 ```
 """
 function ggml_dup(ctx, a)
-    ccall((:ggml_dup, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_dup, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -2823,7 +3280,11 @@ struct ggml_tensor * ggml_dup_inplace( struct ggml_context * ctx, struct ggml_te
 ```
 """
 function ggml_dup_inplace(ctx, a)
-    ccall((:ggml_dup_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_dup_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -2836,7 +3297,12 @@ struct ggml_tensor * ggml_add( struct ggml_context * ctx, struct ggml_tensor * a
 ```
 """
 function ggml_add(ctx, a, b)
-    ccall((:ggml_add, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_add, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -2849,7 +3315,12 @@ struct ggml_tensor * ggml_add_inplace( struct ggml_context * ctx, struct ggml_te
 ```
 """
 function ggml_add_inplace(ctx, a, b)
-    ccall((:ggml_add_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_add_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -2862,7 +3333,13 @@ struct ggml_tensor * ggml_add_cast( struct ggml_context * ctx, struct ggml_tenso
 ```
 """
 function ggml_add_cast(ctx, a, b, type)
-    ccall((:ggml_add_cast, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, ggml_type), ctx, a, b, type)
+    ccall((:ggml_add_cast, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, ggml_type),
+        ctx,
+        a,
+        b,
+        type)
 end
 
 """
@@ -2875,7 +3352,12 @@ struct ggml_tensor * ggml_add1( struct ggml_context * ctx, struct ggml_tensor * 
 ```
 """
 function ggml_add1(ctx, a, b)
-    ccall((:ggml_add1, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_add1, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -2888,7 +3370,12 @@ struct ggml_tensor * ggml_add1_inplace( struct ggml_context * ctx, struct ggml_t
 ```
 """
 function ggml_add1_inplace(ctx, a, b)
-    ccall((:ggml_add1_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_add1_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -2901,7 +3388,22 @@ struct ggml_tensor * ggml_acc( struct ggml_context * ctx, struct ggml_tensor * a
 ```
 """
 function ggml_acc(ctx, a, b, nb1, nb2, nb3, offset)
-    ccall((:ggml_acc, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Csize_t, Csize_t, Csize_t, Csize_t), ctx, a, b, nb1, nb2, nb3, offset)
+    ccall((:ggml_acc, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            Csize_t,
+            Csize_t,
+            Csize_t,
+            Csize_t),
+        ctx,
+        a,
+        b,
+        nb1,
+        nb2,
+        nb3,
+        offset)
 end
 
 """
@@ -2914,7 +3416,22 @@ struct ggml_tensor * ggml_acc_inplace( struct ggml_context * ctx, struct ggml_te
 ```
 """
 function ggml_acc_inplace(ctx, a, b, nb1, nb2, nb3, offset)
-    ccall((:ggml_acc_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Csize_t, Csize_t, Csize_t, Csize_t), ctx, a, b, nb1, nb2, nb3, offset)
+    ccall((:ggml_acc_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            Csize_t,
+            Csize_t,
+            Csize_t,
+            Csize_t),
+        ctx,
+        a,
+        b,
+        nb1,
+        nb2,
+        nb3,
+        offset)
 end
 
 """
@@ -2927,7 +3444,12 @@ struct ggml_tensor * ggml_sub( struct ggml_context * ctx, struct ggml_tensor * a
 ```
 """
 function ggml_sub(ctx, a, b)
-    ccall((:ggml_sub, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_sub, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -2940,7 +3462,12 @@ struct ggml_tensor * ggml_sub_inplace( struct ggml_context * ctx, struct ggml_te
 ```
 """
 function ggml_sub_inplace(ctx, a, b)
-    ccall((:ggml_sub_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_sub_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -2953,7 +3480,12 @@ struct ggml_tensor * ggml_mul( struct ggml_context * ctx, struct ggml_tensor * a
 ```
 """
 function ggml_mul(ctx, a, b)
-    ccall((:ggml_mul, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_mul, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -2966,7 +3498,12 @@ struct ggml_tensor * ggml_mul_inplace( struct ggml_context * ctx, struct ggml_te
 ```
 """
 function ggml_mul_inplace(ctx, a, b)
-    ccall((:ggml_mul_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_mul_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -2979,7 +3516,12 @@ struct ggml_tensor * ggml_div( struct ggml_context * ctx, struct ggml_tensor * a
 ```
 """
 function ggml_div(ctx, a, b)
-    ccall((:ggml_div, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_div, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -2992,7 +3534,12 @@ struct ggml_tensor * ggml_div_inplace( struct ggml_context * ctx, struct ggml_te
 ```
 """
 function ggml_div_inplace(ctx, a, b)
-    ccall((:ggml_div_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_div_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -3005,7 +3552,11 @@ struct ggml_tensor * ggml_sqr( struct ggml_context * ctx, struct ggml_tensor * a
 ```
 """
 function ggml_sqr(ctx, a)
-    ccall((:ggml_sqr, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_sqr, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3018,7 +3569,11 @@ struct ggml_tensor * ggml_sqr_inplace( struct ggml_context * ctx, struct ggml_te
 ```
 """
 function ggml_sqr_inplace(ctx, a)
-    ccall((:ggml_sqr_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_sqr_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3031,7 +3586,11 @@ struct ggml_tensor * ggml_sqrt( struct ggml_context * ctx, struct ggml_tensor * 
 ```
 """
 function ggml_sqrt(ctx, a)
-    ccall((:ggml_sqrt, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_sqrt, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3044,7 +3603,11 @@ struct ggml_tensor * ggml_sqrt_inplace( struct ggml_context * ctx, struct ggml_t
 ```
 """
 function ggml_sqrt_inplace(ctx, a)
-    ccall((:ggml_sqrt_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_sqrt_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3057,7 +3620,11 @@ struct ggml_tensor * ggml_log( struct ggml_context * ctx, struct ggml_tensor * a
 ```
 """
 function ggml_log(ctx, a)
-    ccall((:ggml_log, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_log, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3070,7 +3637,11 @@ struct ggml_tensor * ggml_log_inplace( struct ggml_context * ctx, struct ggml_te
 ```
 """
 function ggml_log_inplace(ctx, a)
-    ccall((:ggml_log_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_log_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3083,7 +3654,11 @@ struct ggml_tensor * ggml_sum( struct ggml_context * ctx, struct ggml_tensor * a
 ```
 """
 function ggml_sum(ctx, a)
-    ccall((:ggml_sum, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_sum, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3096,7 +3671,11 @@ struct ggml_tensor * ggml_sum_rows( struct ggml_context * ctx, struct ggml_tenso
 ```
 """
 function ggml_sum_rows(ctx, a)
-    ccall((:ggml_sum_rows, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_sum_rows, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3109,7 +3688,11 @@ struct ggml_tensor * ggml_mean( struct ggml_context * ctx, struct ggml_tensor * 
 ```
 """
 function ggml_mean(ctx, a)
-    ccall((:ggml_mean, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_mean, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3122,7 +3705,11 @@ struct ggml_tensor * ggml_argmax( struct ggml_context * ctx, struct ggml_tensor 
 ```
 """
 function ggml_argmax(ctx, a)
-    ccall((:ggml_argmax, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_argmax, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3135,7 +3722,12 @@ struct ggml_tensor * ggml_repeat( struct ggml_context * ctx, struct ggml_tensor 
 ```
 """
 function ggml_repeat(ctx, a, b)
-    ccall((:ggml_repeat, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_repeat, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -3148,7 +3740,12 @@ struct ggml_tensor * ggml_repeat_back( struct ggml_context * ctx, struct ggml_te
 ```
 """
 function ggml_repeat_back(ctx, a, b)
-    ccall((:ggml_repeat_back, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_repeat_back, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -3161,7 +3758,12 @@ struct ggml_tensor * ggml_concat( struct ggml_context * ctx, struct ggml_tensor 
 ```
 """
 function ggml_concat(ctx, a, b)
-    ccall((:ggml_concat, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_concat, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -3174,7 +3776,11 @@ struct ggml_tensor * ggml_abs( struct ggml_context * ctx, struct ggml_tensor * a
 ```
 """
 function ggml_abs(ctx, a)
-    ccall((:ggml_abs, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_abs, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3187,7 +3793,11 @@ struct ggml_tensor * ggml_abs_inplace( struct ggml_context * ctx, struct ggml_te
 ```
 """
 function ggml_abs_inplace(ctx, a)
-    ccall((:ggml_abs_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_abs_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3200,7 +3810,11 @@ struct ggml_tensor * ggml_sgn( struct ggml_context * ctx, struct ggml_tensor * a
 ```
 """
 function ggml_sgn(ctx, a)
-    ccall((:ggml_sgn, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_sgn, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3213,7 +3827,11 @@ struct ggml_tensor * ggml_sgn_inplace( struct ggml_context * ctx, struct ggml_te
 ```
 """
 function ggml_sgn_inplace(ctx, a)
-    ccall((:ggml_sgn_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_sgn_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3226,7 +3844,11 @@ struct ggml_tensor * ggml_neg( struct ggml_context * ctx, struct ggml_tensor * a
 ```
 """
 function ggml_neg(ctx, a)
-    ccall((:ggml_neg, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_neg, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3239,7 +3861,11 @@ struct ggml_tensor * ggml_neg_inplace( struct ggml_context * ctx, struct ggml_te
 ```
 """
 function ggml_neg_inplace(ctx, a)
-    ccall((:ggml_neg_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_neg_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3252,7 +3878,11 @@ struct ggml_tensor * ggml_step( struct ggml_context * ctx, struct ggml_tensor * 
 ```
 """
 function ggml_step(ctx, a)
-    ccall((:ggml_step, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_step, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3265,7 +3895,11 @@ struct ggml_tensor * ggml_step_inplace( struct ggml_context * ctx, struct ggml_t
 ```
 """
 function ggml_step_inplace(ctx, a)
-    ccall((:ggml_step_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_step_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3278,7 +3912,11 @@ struct ggml_tensor * ggml_tanh( struct ggml_context * ctx, struct ggml_tensor * 
 ```
 """
 function ggml_tanh(ctx, a)
-    ccall((:ggml_tanh, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_tanh, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3291,7 +3929,11 @@ struct ggml_tensor * ggml_tanh_inplace( struct ggml_context * ctx, struct ggml_t
 ```
 """
 function ggml_tanh_inplace(ctx, a)
-    ccall((:ggml_tanh_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_tanh_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3304,7 +3946,11 @@ struct ggml_tensor * ggml_elu( struct ggml_context * ctx, struct ggml_tensor * a
 ```
 """
 function ggml_elu(ctx, a)
-    ccall((:ggml_elu, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_elu, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3317,7 +3963,11 @@ struct ggml_tensor * ggml_elu_inplace( struct ggml_context * ctx, struct ggml_te
 ```
 """
 function ggml_elu_inplace(ctx, a)
-    ccall((:ggml_elu_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_elu_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3330,7 +3980,11 @@ struct ggml_tensor * ggml_relu( struct ggml_context * ctx, struct ggml_tensor * 
 ```
 """
 function ggml_relu(ctx, a)
-    ccall((:ggml_relu, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_relu, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3343,7 +3997,13 @@ struct ggml_tensor * ggml_leaky_relu( struct ggml_context * ctx, struct ggml_ten
 ```
 """
 function ggml_leaky_relu(ctx, a, negative_slope, inplace)
-    ccall((:ggml_leaky_relu, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Cfloat, Bool), ctx, a, negative_slope, inplace)
+    ccall((:ggml_leaky_relu, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Cfloat, Bool),
+        ctx,
+        a,
+        negative_slope,
+        inplace)
 end
 
 """
@@ -3356,7 +4016,11 @@ struct ggml_tensor * ggml_relu_inplace( struct ggml_context * ctx, struct ggml_t
 ```
 """
 function ggml_relu_inplace(ctx, a)
-    ccall((:ggml_relu_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_relu_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3369,7 +4033,11 @@ struct ggml_tensor * ggml_gelu( struct ggml_context * ctx, struct ggml_tensor * 
 ```
 """
 function ggml_gelu(ctx, a)
-    ccall((:ggml_gelu, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_gelu, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3382,7 +4050,11 @@ struct ggml_tensor * ggml_gelu_inplace( struct ggml_context * ctx, struct ggml_t
 ```
 """
 function ggml_gelu_inplace(ctx, a)
-    ccall((:ggml_gelu_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_gelu_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3395,7 +4067,11 @@ struct ggml_tensor * ggml_gelu_quick( struct ggml_context * ctx, struct ggml_ten
 ```
 """
 function ggml_gelu_quick(ctx, a)
-    ccall((:ggml_gelu_quick, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_gelu_quick, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3408,7 +4084,11 @@ struct ggml_tensor * ggml_gelu_quick_inplace( struct ggml_context * ctx, struct 
 ```
 """
 function ggml_gelu_quick_inplace(ctx, a)
-    ccall((:ggml_gelu_quick_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_gelu_quick_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3421,7 +4101,11 @@ struct ggml_tensor * ggml_silu( struct ggml_context * ctx, struct ggml_tensor * 
 ```
 """
 function ggml_silu(ctx, a)
-    ccall((:ggml_silu, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_silu, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3434,7 +4118,11 @@ struct ggml_tensor * ggml_silu_inplace( struct ggml_context * ctx, struct ggml_t
 ```
 """
 function ggml_silu_inplace(ctx, a)
-    ccall((:ggml_silu_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_silu_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3447,7 +4135,12 @@ struct ggml_tensor * ggml_silu_back( struct ggml_context * ctx, struct ggml_tens
 ```
 """
 function ggml_silu_back(ctx, a, b)
-    ccall((:ggml_silu_back, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_silu_back, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -3460,7 +4153,12 @@ struct ggml_tensor * ggml_norm( struct ggml_context * ctx, struct ggml_tensor * 
 ```
 """
 function ggml_norm(ctx, a, eps)
-    ccall((:ggml_norm, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Cfloat), ctx, a, eps)
+    ccall((:ggml_norm, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Cfloat),
+        ctx,
+        a,
+        eps)
 end
 
 """
@@ -3473,7 +4171,12 @@ struct ggml_tensor * ggml_norm_inplace( struct ggml_context * ctx, struct ggml_t
 ```
 """
 function ggml_norm_inplace(ctx, a, eps)
-    ccall((:ggml_norm_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Cfloat), ctx, a, eps)
+    ccall((:ggml_norm_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Cfloat),
+        ctx,
+        a,
+        eps)
 end
 
 """
@@ -3486,7 +4189,12 @@ struct ggml_tensor * ggml_rms_norm( struct ggml_context * ctx, struct ggml_tenso
 ```
 """
 function ggml_rms_norm(ctx, a, eps)
-    ccall((:ggml_rms_norm, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Cfloat), ctx, a, eps)
+    ccall((:ggml_rms_norm, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Cfloat),
+        ctx,
+        a,
+        eps)
 end
 
 """
@@ -3499,7 +4207,12 @@ struct ggml_tensor * ggml_rms_norm_inplace( struct ggml_context * ctx, struct gg
 ```
 """
 function ggml_rms_norm_inplace(ctx, a, eps)
-    ccall((:ggml_rms_norm_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Cfloat), ctx, a, eps)
+    ccall((:ggml_rms_norm_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Cfloat),
+        ctx,
+        a,
+        eps)
 end
 
 """
@@ -3512,7 +4225,12 @@ struct ggml_tensor * ggml_group_norm( struct ggml_context * ctx, struct ggml_ten
 ```
 """
 function ggml_group_norm(ctx, a, n_groups)
-    ccall((:ggml_group_norm, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint), ctx, a, n_groups)
+    ccall((:ggml_group_norm, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint),
+        ctx,
+        a,
+        n_groups)
 end
 
 """
@@ -3525,7 +4243,12 @@ struct ggml_tensor * ggml_group_norm_inplace( struct ggml_context * ctx, struct 
 ```
 """
 function ggml_group_norm_inplace(ctx, a, n_groups)
-    ccall((:ggml_group_norm_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint), ctx, a, n_groups)
+    ccall((:ggml_group_norm_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint),
+        ctx,
+        a,
+        n_groups)
 end
 
 """
@@ -3538,7 +4261,13 @@ struct ggml_tensor * ggml_rms_norm_back( struct ggml_context * ctx, struct ggml_
 ```
 """
 function ggml_rms_norm_back(ctx, a, b, eps)
-    ccall((:ggml_rms_norm_back, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Cfloat), ctx, a, b, eps)
+    ccall((:ggml_rms_norm_back, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Cfloat),
+        ctx,
+        a,
+        b,
+        eps)
 end
 
 """
@@ -3551,7 +4280,12 @@ struct ggml_tensor * ggml_mul_mat( struct ggml_context * ctx, struct ggml_tensor
 ```
 """
 function ggml_mul_mat(ctx, a, b)
-    ccall((:ggml_mul_mat, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_mul_mat, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -3577,7 +4311,20 @@ struct ggml_tensor * ggml_mul_mat_id( struct ggml_context * ctx, struct ggml_ten
 ```
 """
 function ggml_mul_mat_id(ctx, as, n_as, ids, id, b)
-    ccall((:ggml_mul_mat_id, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{Ptr{ggml_tensor}}, Cint, Ptr{ggml_tensor}, Cint, Ptr{ggml_tensor}), ctx, as, n_as, ids, id, b)
+    ccall((:ggml_mul_mat_id, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context},
+            Ptr{Ptr{ggml_tensor}},
+            Cint,
+            Ptr{ggml_tensor},
+            Cint,
+            Ptr{ggml_tensor}),
+        ctx,
+        as,
+        n_as,
+        ids,
+        id,
+        b)
 end
 
 """
@@ -3590,7 +4337,12 @@ struct ggml_tensor * ggml_out_prod( struct ggml_context * ctx, struct ggml_tenso
 ```
 """
 function ggml_out_prod(ctx, a, b)
-    ccall((:ggml_out_prod, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_out_prod, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -3603,7 +4355,12 @@ struct ggml_tensor * ggml_scale( struct ggml_context * ctx, struct ggml_tensor *
 ```
 """
 function ggml_scale(ctx, a, s)
-    ccall((:ggml_scale, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Cfloat), ctx, a, s)
+    ccall((:ggml_scale, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Cfloat),
+        ctx,
+        a,
+        s)
 end
 
 """
@@ -3616,7 +4373,12 @@ struct ggml_tensor * ggml_scale_inplace( struct ggml_context * ctx, struct ggml_
 ```
 """
 function ggml_scale_inplace(ctx, a, s)
-    ccall((:ggml_scale_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Cfloat), ctx, a, s)
+    ccall((:ggml_scale_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Cfloat),
+        ctx,
+        a,
+        s)
 end
 
 """
@@ -3629,7 +4391,22 @@ struct ggml_tensor * ggml_set( struct ggml_context * ctx, struct ggml_tensor * a
 ```
 """
 function ggml_set(ctx, a, b, nb1, nb2, nb3, offset)
-    ccall((:ggml_set, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Csize_t, Csize_t, Csize_t, Csize_t), ctx, a, b, nb1, nb2, nb3, offset)
+    ccall((:ggml_set, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            Csize_t,
+            Csize_t,
+            Csize_t,
+            Csize_t),
+        ctx,
+        a,
+        b,
+        nb1,
+        nb2,
+        nb3,
+        offset)
 end
 
 """
@@ -3642,7 +4419,22 @@ struct ggml_tensor * ggml_set_inplace( struct ggml_context * ctx, struct ggml_te
 ```
 """
 function ggml_set_inplace(ctx, a, b, nb1, nb2, nb3, offset)
-    ccall((:ggml_set_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Csize_t, Csize_t, Csize_t, Csize_t), ctx, a, b, nb1, nb2, nb3, offset)
+    ccall((:ggml_set_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            Csize_t,
+            Csize_t,
+            Csize_t,
+            Csize_t),
+        ctx,
+        a,
+        b,
+        nb1,
+        nb2,
+        nb3,
+        offset)
 end
 
 """
@@ -3655,7 +4447,13 @@ struct ggml_tensor * ggml_set_1d( struct ggml_context * ctx, struct ggml_tensor 
 ```
 """
 function ggml_set_1d(ctx, a, b, offset)
-    ccall((:ggml_set_1d, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Csize_t), ctx, a, b, offset)
+    ccall((:ggml_set_1d, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Csize_t),
+        ctx,
+        a,
+        b,
+        offset)
 end
 
 """
@@ -3668,7 +4466,13 @@ struct ggml_tensor * ggml_set_1d_inplace( struct ggml_context * ctx, struct ggml
 ```
 """
 function ggml_set_1d_inplace(ctx, a, b, offset)
-    ccall((:ggml_set_1d_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Csize_t), ctx, a, b, offset)
+    ccall((:ggml_set_1d_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Csize_t),
+        ctx,
+        a,
+        b,
+        offset)
 end
 
 """
@@ -3681,7 +4485,14 @@ struct ggml_tensor * ggml_set_2d( struct ggml_context * ctx, struct ggml_tensor 
 ```
 """
 function ggml_set_2d(ctx, a, b, nb1, offset)
-    ccall((:ggml_set_2d, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Csize_t, Csize_t), ctx, a, b, nb1, offset)
+    ccall((:ggml_set_2d, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Csize_t, Csize_t),
+        ctx,
+        a,
+        b,
+        nb1,
+        offset)
 end
 
 """
@@ -3694,7 +4505,14 @@ struct ggml_tensor * ggml_set_2d_inplace( struct ggml_context * ctx, struct ggml
 ```
 """
 function ggml_set_2d_inplace(ctx, a, b, nb1, offset)
-    ccall((:ggml_set_2d_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Csize_t, Csize_t), ctx, a, b, nb1, offset)
+    ccall((:ggml_set_2d_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Csize_t, Csize_t),
+        ctx,
+        a,
+        b,
+        nb1,
+        offset)
 end
 
 """
@@ -3707,7 +4525,12 @@ struct ggml_tensor * ggml_cpy( struct ggml_context * ctx, struct ggml_tensor * a
 ```
 """
 function ggml_cpy(ctx, a, b)
-    ccall((:ggml_cpy, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_cpy, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -3720,7 +4543,12 @@ struct ggml_tensor * ggml_cpy_inplace( struct ggml_context * ctx, struct ggml_te
 ```
 """
 function ggml_cpy_inplace(ctx, a, b)
-    ccall((:ggml_cpy_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_cpy_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -3733,7 +4561,11 @@ struct ggml_tensor * ggml_cont( struct ggml_context * ctx, struct ggml_tensor * 
 ```
 """
 function ggml_cont(ctx, a)
-    ccall((:ggml_cont, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_cont, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3746,7 +4578,11 @@ struct ggml_tensor * ggml_cont_inplace( struct ggml_context * ctx, struct ggml_t
 ```
 """
 function ggml_cont_inplace(ctx, a)
-    ccall((:ggml_cont_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_cont_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3759,7 +4595,12 @@ struct ggml_tensor * ggml_cont_1d( struct ggml_context * ctx, struct ggml_tensor
 ```
 """
 function ggml_cont_1d(ctx, a, ne0)
-    ccall((:ggml_cont_1d, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Int64), ctx, a, ne0)
+    ccall((:ggml_cont_1d, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Int64),
+        ctx,
+        a,
+        ne0)
 end
 
 """
@@ -3772,7 +4613,13 @@ struct ggml_tensor * ggml_cont_2d( struct ggml_context * ctx, struct ggml_tensor
 ```
 """
 function ggml_cont_2d(ctx, a, ne0, ne1)
-    ccall((:ggml_cont_2d, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Int64, Int64), ctx, a, ne0, ne1)
+    ccall((:ggml_cont_2d, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Int64, Int64),
+        ctx,
+        a,
+        ne0,
+        ne1)
 end
 
 """
@@ -3785,7 +4632,14 @@ struct ggml_tensor * ggml_cont_3d( struct ggml_context * ctx, struct ggml_tensor
 ```
 """
 function ggml_cont_3d(ctx, a, ne0, ne1, ne2)
-    ccall((:ggml_cont_3d, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Int64, Int64, Int64), ctx, a, ne0, ne1, ne2)
+    ccall((:ggml_cont_3d, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Int64, Int64, Int64),
+        ctx,
+        a,
+        ne0,
+        ne1,
+        ne2)
 end
 
 """
@@ -3798,7 +4652,15 @@ struct ggml_tensor * ggml_cont_4d( struct ggml_context * ctx, struct ggml_tensor
 ```
 """
 function ggml_cont_4d(ctx, a, ne0, ne1, ne2, ne3)
-    ccall((:ggml_cont_4d, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Int64, Int64, Int64, Int64), ctx, a, ne0, ne1, ne2, ne3)
+    ccall((:ggml_cont_4d, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Int64, Int64, Int64, Int64),
+        ctx,
+        a,
+        ne0,
+        ne1,
+        ne2,
+        ne3)
 end
 
 """
@@ -3811,7 +4673,12 @@ struct ggml_tensor * ggml_reshape( struct ggml_context * ctx, struct ggml_tensor
 ```
 """
 function ggml_reshape(ctx, a, b)
-    ccall((:ggml_reshape, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_reshape, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -3824,7 +4691,12 @@ struct ggml_tensor * ggml_reshape_1d( struct ggml_context * ctx, struct ggml_ten
 ```
 """
 function ggml_reshape_1d(ctx, a, ne0)
-    ccall((:ggml_reshape_1d, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Int64), ctx, a, ne0)
+    ccall((:ggml_reshape_1d, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Int64),
+        ctx,
+        a,
+        ne0)
 end
 
 """
@@ -3837,7 +4709,13 @@ struct ggml_tensor * ggml_reshape_2d( struct ggml_context * ctx, struct ggml_ten
 ```
 """
 function ggml_reshape_2d(ctx, a, ne0, ne1)
-    ccall((:ggml_reshape_2d, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Int64, Int64), ctx, a, ne0, ne1)
+    ccall((:ggml_reshape_2d, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Int64, Int64),
+        ctx,
+        a,
+        ne0,
+        ne1)
 end
 
 """
@@ -3850,7 +4728,14 @@ struct ggml_tensor * ggml_reshape_3d( struct ggml_context * ctx, struct ggml_ten
 ```
 """
 function ggml_reshape_3d(ctx, a, ne0, ne1, ne2)
-    ccall((:ggml_reshape_3d, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Int64, Int64, Int64), ctx, a, ne0, ne1, ne2)
+    ccall((:ggml_reshape_3d, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Int64, Int64, Int64),
+        ctx,
+        a,
+        ne0,
+        ne1,
+        ne2)
 end
 
 """
@@ -3863,7 +4748,15 @@ struct ggml_tensor * ggml_reshape_4d( struct ggml_context * ctx, struct ggml_ten
 ```
 """
 function ggml_reshape_4d(ctx, a, ne0, ne1, ne2, ne3)
-    ccall((:ggml_reshape_4d, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Int64, Int64, Int64, Int64), ctx, a, ne0, ne1, ne2, ne3)
+    ccall((:ggml_reshape_4d, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Int64, Int64, Int64, Int64),
+        ctx,
+        a,
+        ne0,
+        ne1,
+        ne2,
+        ne3)
 end
 
 """
@@ -3876,7 +4769,13 @@ struct ggml_tensor * ggml_view_1d( struct ggml_context * ctx, struct ggml_tensor
 ```
 """
 function ggml_view_1d(ctx, a, ne0, offset)
-    ccall((:ggml_view_1d, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Int64, Csize_t), ctx, a, ne0, offset)
+    ccall((:ggml_view_1d, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Int64, Csize_t),
+        ctx,
+        a,
+        ne0,
+        offset)
 end
 
 """
@@ -3889,7 +4788,15 @@ struct ggml_tensor * ggml_view_2d( struct ggml_context * ctx, struct ggml_tensor
 ```
 """
 function ggml_view_2d(ctx, a, ne0, ne1, nb1, offset)
-    ccall((:ggml_view_2d, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Int64, Int64, Csize_t, Csize_t), ctx, a, ne0, ne1, nb1, offset)
+    ccall((:ggml_view_2d, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Int64, Int64, Csize_t, Csize_t),
+        ctx,
+        a,
+        ne0,
+        ne1,
+        nb1,
+        offset)
 end
 
 """
@@ -3902,7 +4809,24 @@ struct ggml_tensor * ggml_view_3d( struct ggml_context * ctx, struct ggml_tensor
 ```
 """
 function ggml_view_3d(ctx, a, ne0, ne1, ne2, nb1, nb2, offset)
-    ccall((:ggml_view_3d, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Int64, Int64, Int64, Csize_t, Csize_t, Csize_t), ctx, a, ne0, ne1, ne2, nb1, nb2, offset)
+    ccall((:ggml_view_3d, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context},
+            Ptr{ggml_tensor},
+            Int64,
+            Int64,
+            Int64,
+            Csize_t,
+            Csize_t,
+            Csize_t),
+        ctx,
+        a,
+        ne0,
+        ne1,
+        ne2,
+        nb1,
+        nb2,
+        offset)
 end
 
 """
@@ -3915,7 +4839,28 @@ struct ggml_tensor * ggml_view_4d( struct ggml_context * ctx, struct ggml_tensor
 ```
 """
 function ggml_view_4d(ctx, a, ne0, ne1, ne2, ne3, nb1, nb2, nb3, offset)
-    ccall((:ggml_view_4d, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Int64, Int64, Int64, Int64, Csize_t, Csize_t, Csize_t, Csize_t), ctx, a, ne0, ne1, ne2, ne3, nb1, nb2, nb3, offset)
+    ccall((:ggml_view_4d, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context},
+            Ptr{ggml_tensor},
+            Int64,
+            Int64,
+            Int64,
+            Int64,
+            Csize_t,
+            Csize_t,
+            Csize_t,
+            Csize_t),
+        ctx,
+        a,
+        ne0,
+        ne1,
+        ne2,
+        ne3,
+        nb1,
+        nb2,
+        nb3,
+        offset)
 end
 
 """
@@ -3928,7 +4873,15 @@ struct ggml_tensor * ggml_permute( struct ggml_context * ctx, struct ggml_tensor
 ```
 """
 function ggml_permute(ctx, a, axis0, axis1, axis2, axis3)
-    ccall((:ggml_permute, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint, Cint, Cint, Cint), ctx, a, axis0, axis1, axis2, axis3)
+    ccall((:ggml_permute, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint, Cint, Cint, Cint),
+        ctx,
+        a,
+        axis0,
+        axis1,
+        axis2,
+        axis3)
 end
 
 """
@@ -3941,7 +4894,11 @@ struct ggml_tensor * ggml_transpose( struct ggml_context * ctx, struct ggml_tens
 ```
 """
 function ggml_transpose(ctx, a)
-    ccall((:ggml_transpose, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_transpose, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3954,7 +4911,12 @@ struct ggml_tensor * ggml_get_rows( struct ggml_context * ctx, struct ggml_tenso
 ```
 """
 function ggml_get_rows(ctx, a, b)
-    ccall((:ggml_get_rows, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_get_rows, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -3967,7 +4929,13 @@ struct ggml_tensor * ggml_get_rows_back( struct ggml_context * ctx, struct ggml_
 ```
 """
 function ggml_get_rows_back(ctx, a, b, c)
-    ccall((:ggml_get_rows_back, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b, c)
+    ccall((:ggml_get_rows_back, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b,
+        c)
 end
 
 """
@@ -3980,7 +4948,11 @@ struct ggml_tensor * ggml_diag( struct ggml_context * ctx, struct ggml_tensor * 
 ```
 """
 function ggml_diag(ctx, a)
-    ccall((:ggml_diag, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_diag, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -3993,7 +4965,12 @@ struct ggml_tensor * ggml_diag_mask_inf( struct ggml_context * ctx, struct ggml_
 ```
 """
 function ggml_diag_mask_inf(ctx, a, n_past)
-    ccall((:ggml_diag_mask_inf, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint), ctx, a, n_past)
+    ccall((:ggml_diag_mask_inf, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint),
+        ctx,
+        a,
+        n_past)
 end
 
 """
@@ -4006,7 +4983,12 @@ struct ggml_tensor * ggml_diag_mask_inf_inplace( struct ggml_context * ctx, stru
 ```
 """
 function ggml_diag_mask_inf_inplace(ctx, a, n_past)
-    ccall((:ggml_diag_mask_inf_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint), ctx, a, n_past)
+    ccall((:ggml_diag_mask_inf_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint),
+        ctx,
+        a,
+        n_past)
 end
 
 """
@@ -4019,7 +5001,12 @@ struct ggml_tensor * ggml_diag_mask_zero( struct ggml_context * ctx, struct ggml
 ```
 """
 function ggml_diag_mask_zero(ctx, a, n_past)
-    ccall((:ggml_diag_mask_zero, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint), ctx, a, n_past)
+    ccall((:ggml_diag_mask_zero, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint),
+        ctx,
+        a,
+        n_past)
 end
 
 """
@@ -4032,7 +5019,12 @@ struct ggml_tensor * ggml_diag_mask_zero_inplace( struct ggml_context * ctx, str
 ```
 """
 function ggml_diag_mask_zero_inplace(ctx, a, n_past)
-    ccall((:ggml_diag_mask_zero_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint), ctx, a, n_past)
+    ccall((:ggml_diag_mask_zero_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint),
+        ctx,
+        a,
+        n_past)
 end
 
 """
@@ -4045,7 +5037,11 @@ struct ggml_tensor * ggml_soft_max( struct ggml_context * ctx, struct ggml_tenso
 ```
 """
 function ggml_soft_max(ctx, a)
-    ccall((:ggml_soft_max, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_soft_max, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -4058,7 +5054,11 @@ struct ggml_tensor * ggml_soft_max_inplace( struct ggml_context * ctx, struct gg
 ```
 """
 function ggml_soft_max_inplace(ctx, a)
-    ccall((:ggml_soft_max_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, a)
+    ccall((:ggml_soft_max_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        a)
 end
 
 """
@@ -4071,7 +5071,13 @@ struct ggml_tensor * ggml_soft_max_ext( struct ggml_context * ctx, struct ggml_t
 ```
 """
 function ggml_soft_max_ext(ctx, a, mask, scale)
-    ccall((:ggml_soft_max_ext, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Cfloat), ctx, a, mask, scale)
+    ccall((:ggml_soft_max_ext, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Cfloat),
+        ctx,
+        a,
+        mask,
+        scale)
 end
 
 """
@@ -4084,7 +5090,12 @@ struct ggml_tensor * ggml_soft_max_back( struct ggml_context * ctx, struct ggml_
 ```
 """
 function ggml_soft_max_back(ctx, a, b)
-    ccall((:ggml_soft_max_back, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_soft_max_back, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -4097,7 +5108,12 @@ struct ggml_tensor * ggml_soft_max_back_inplace( struct ggml_context * ctx, stru
 ```
 """
 function ggml_soft_max_back_inplace(ctx, a, b)
-    ccall((:ggml_soft_max_back_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_soft_max_back_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -4110,7 +5126,15 @@ struct ggml_tensor * ggml_rope( struct ggml_context * ctx, struct ggml_tensor * 
 ```
 """
 function ggml_rope(ctx, a, b, n_dims, mode, n_ctx)
-    ccall((:ggml_rope, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Cint, Cint, Cint), ctx, a, b, n_dims, mode, n_ctx)
+    ccall((:ggml_rope, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Cint, Cint, Cint),
+        ctx,
+        a,
+        b,
+        n_dims,
+        mode,
+        n_ctx)
 end
 
 """
@@ -4123,7 +5147,15 @@ struct ggml_tensor * ggml_rope_inplace( struct ggml_context * ctx, struct ggml_t
 ```
 """
 function ggml_rope_inplace(ctx, a, b, n_dims, mode, n_ctx)
-    ccall((:ggml_rope_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Cint, Cint, Cint), ctx, a, b, n_dims, mode, n_ctx)
+    ccall((:ggml_rope_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Cint, Cint, Cint),
+        ctx,
+        a,
+        b,
+        n_dims,
+        mode,
+        n_ctx)
 end
 
 """
@@ -4135,8 +5167,47 @@ end
 struct ggml_tensor * ggml_rope_custom( struct ggml_context * ctx, struct ggml_tensor * a, struct ggml_tensor * b, int n_dims, int mode, int n_ctx, int n_orig_ctx, float freq_base, float freq_scale, float ext_factor, float attn_factor, float beta_fast, float beta_slow);
 ```
 """
-function ggml_rope_custom(ctx, a, b, n_dims, mode, n_ctx, n_orig_ctx, freq_base, freq_scale, ext_factor, attn_factor, beta_fast, beta_slow)
-    ccall((:ggml_rope_custom, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Cint, Cint, Cint, Cint, Cfloat, Cfloat, Cfloat, Cfloat, Cfloat, Cfloat), ctx, a, b, n_dims, mode, n_ctx, n_orig_ctx, freq_base, freq_scale, ext_factor, attn_factor, beta_fast, beta_slow)
+function ggml_rope_custom(ctx,
+    a,
+    b,
+    n_dims,
+    mode,
+    n_ctx,
+    n_orig_ctx,
+    freq_base,
+    freq_scale,
+    ext_factor,
+    attn_factor,
+    beta_fast,
+    beta_slow)
+    ccall((:ggml_rope_custom, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            Cint,
+            Cint,
+            Cint,
+            Cint,
+            Cfloat,
+            Cfloat,
+            Cfloat,
+            Cfloat,
+            Cfloat,
+            Cfloat),
+        ctx,
+        a,
+        b,
+        n_dims,
+        mode,
+        n_ctx,
+        n_orig_ctx,
+        freq_base,
+        freq_scale,
+        ext_factor,
+        attn_factor,
+        beta_fast,
+        beta_slow)
 end
 
 """
@@ -4148,8 +5219,47 @@ end
 struct ggml_tensor * ggml_rope_custom_inplace( struct ggml_context * ctx, struct ggml_tensor * a, struct ggml_tensor * b, int n_dims, int mode, int n_ctx, int n_orig_ctx, float freq_base, float freq_scale, float ext_factor, float attn_factor, float beta_fast, float beta_slow);
 ```
 """
-function ggml_rope_custom_inplace(ctx, a, b, n_dims, mode, n_ctx, n_orig_ctx, freq_base, freq_scale, ext_factor, attn_factor, beta_fast, beta_slow)
-    ccall((:ggml_rope_custom_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Cint, Cint, Cint, Cint, Cfloat, Cfloat, Cfloat, Cfloat, Cfloat, Cfloat), ctx, a, b, n_dims, mode, n_ctx, n_orig_ctx, freq_base, freq_scale, ext_factor, attn_factor, beta_fast, beta_slow)
+function ggml_rope_custom_inplace(ctx,
+    a,
+    b,
+    n_dims,
+    mode,
+    n_ctx,
+    n_orig_ctx,
+    freq_base,
+    freq_scale,
+    ext_factor,
+    attn_factor,
+    beta_fast,
+    beta_slow)
+    ccall((:ggml_rope_custom_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            Cint,
+            Cint,
+            Cint,
+            Cint,
+            Cfloat,
+            Cfloat,
+            Cfloat,
+            Cfloat,
+            Cfloat,
+            Cfloat),
+        ctx,
+        a,
+        b,
+        n_dims,
+        mode,
+        n_ctx,
+        n_orig_ctx,
+        freq_base,
+        freq_scale,
+        ext_factor,
+        attn_factor,
+        beta_fast,
+        beta_slow)
 end
 
 """
@@ -4162,7 +5272,15 @@ void ggml_rope_yarn_corr_dims( int n_dims, int n_orig_ctx, float freq_base, floa
 ```
 """
 function ggml_rope_yarn_corr_dims(n_dims, n_orig_ctx, freq_base, beta_fast, beta_slow, dims)
-    ccall((:ggml_rope_yarn_corr_dims, libllama), Cvoid, (Cint, Cint, Cfloat, Cfloat, Cfloat, Ptr{Cfloat}), n_dims, n_orig_ctx, freq_base, beta_fast, beta_slow, dims)
+    ccall((:ggml_rope_yarn_corr_dims, libllama),
+        Cvoid,
+        (Cint, Cint, Cfloat, Cfloat, Cfloat, Ptr{Cfloat}),
+        n_dims,
+        n_orig_ctx,
+        freq_base,
+        beta_fast,
+        beta_slow,
+        dims)
 end
 
 """
@@ -4175,7 +5293,15 @@ struct ggml_tensor * ggml_rope_xpos_inplace( struct ggml_context * ctx, struct g
 ```
 """
 function ggml_rope_xpos_inplace(ctx, a, b, n_dims, base, down)
-    ccall((:ggml_rope_xpos_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Cint, Cfloat, Bool), ctx, a, b, n_dims, base, down)
+    ccall((:ggml_rope_xpos_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Cint, Cfloat, Bool),
+        ctx,
+        a,
+        b,
+        n_dims,
+        base,
+        down)
 end
 
 """
@@ -4187,8 +5313,53 @@ end
 struct ggml_tensor * ggml_rope_back( struct ggml_context * ctx, struct ggml_tensor * a, struct ggml_tensor * b, int n_dims, int mode, int n_ctx, int n_orig_ctx, float freq_base, float freq_scale, float ext_factor, float attn_factor, float beta_fast, float beta_slow, float xpos_base, bool xpos_down);
 ```
 """
-function ggml_rope_back(ctx, a, b, n_dims, mode, n_ctx, n_orig_ctx, freq_base, freq_scale, ext_factor, attn_factor, beta_fast, beta_slow, xpos_base, xpos_down)
-    ccall((:ggml_rope_back, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Cint, Cint, Cint, Cint, Cfloat, Cfloat, Cfloat, Cfloat, Cfloat, Cfloat, Cfloat, Bool), ctx, a, b, n_dims, mode, n_ctx, n_orig_ctx, freq_base, freq_scale, ext_factor, attn_factor, beta_fast, beta_slow, xpos_base, xpos_down)
+function ggml_rope_back(ctx,
+    a,
+    b,
+    n_dims,
+    mode,
+    n_ctx,
+    n_orig_ctx,
+    freq_base,
+    freq_scale,
+    ext_factor,
+    attn_factor,
+    beta_fast,
+    beta_slow,
+    xpos_base,
+    xpos_down)
+    ccall((:ggml_rope_back, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            Cint,
+            Cint,
+            Cint,
+            Cint,
+            Cfloat,
+            Cfloat,
+            Cfloat,
+            Cfloat,
+            Cfloat,
+            Cfloat,
+            Cfloat,
+            Bool),
+        ctx,
+        a,
+        b,
+        n_dims,
+        mode,
+        n_ctx,
+        n_orig_ctx,
+        freq_base,
+        freq_scale,
+        ext_factor,
+        attn_factor,
+        beta_fast,
+        beta_slow,
+        xpos_base,
+        xpos_down)
 end
 
 """
@@ -4201,7 +5372,14 @@ struct ggml_tensor * ggml_alibi( struct ggml_context * ctx, struct ggml_tensor *
 ```
 """
 function ggml_alibi(ctx, a, n_past, n_head, bias_max)
-    ccall((:ggml_alibi, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint, Cint, Cfloat), ctx, a, n_past, n_head, bias_max)
+    ccall((:ggml_alibi, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint, Cint, Cfloat),
+        ctx,
+        a,
+        n_past,
+        n_head,
+        bias_max)
 end
 
 """
@@ -4214,7 +5392,13 @@ struct ggml_tensor * ggml_clamp( struct ggml_context * ctx, struct ggml_tensor *
 ```
 """
 function ggml_clamp(ctx, a, min, max)
-    ccall((:ggml_clamp, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Cfloat, Cfloat), ctx, a, min, max)
+    ccall((:ggml_clamp, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Cfloat, Cfloat),
+        ctx,
+        a,
+        min,
+        max)
 end
 
 """
@@ -4227,7 +5411,28 @@ struct ggml_tensor * ggml_im2col( struct ggml_context * ctx, struct ggml_tensor 
 ```
 """
 function ggml_im2col(ctx, a, b, s0, s1, p0, p1, d0, d1, is_2D)
-    ccall((:ggml_im2col, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Cint, Cint, Cint, Cint, Cint, Cint, Bool), ctx, a, b, s0, s1, p0, p1, d0, d1, is_2D)
+    ccall((:ggml_im2col, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            Cint,
+            Cint,
+            Cint,
+            Cint,
+            Cint,
+            Cint,
+            Bool),
+        ctx,
+        a,
+        b,
+        s0,
+        s1,
+        p0,
+        p1,
+        d0,
+        d1,
+        is_2D)
 end
 
 """
@@ -4240,7 +5445,15 @@ struct ggml_tensor * ggml_conv_1d( struct ggml_context * ctx, struct ggml_tensor
 ```
 """
 function ggml_conv_1d(ctx, a, b, s0, p0, d0)
-    ccall((:ggml_conv_1d, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Cint, Cint, Cint), ctx, a, b, s0, p0, d0)
+    ccall((:ggml_conv_1d, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Cint, Cint, Cint),
+        ctx,
+        a,
+        b,
+        s0,
+        p0,
+        d0)
 end
 
 """
@@ -4253,7 +5466,14 @@ struct ggml_tensor* ggml_conv_1d_ph( struct ggml_context * ctx, struct ggml_tens
 ```
 """
 function ggml_conv_1d_ph(ctx, a, b, s, d)
-    ccall((:ggml_conv_1d_ph, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Cint, Cint), ctx, a, b, s, d)
+    ccall((:ggml_conv_1d_ph, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Cint, Cint),
+        ctx,
+        a,
+        b,
+        s,
+        d)
 end
 
 """
@@ -4266,7 +5486,15 @@ struct ggml_tensor * ggml_conv_transpose_1d( struct ggml_context * ctx, struct g
 ```
 """
 function ggml_conv_transpose_1d(ctx, a, b, s0, p0, d0)
-    ccall((:ggml_conv_transpose_1d, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Cint, Cint, Cint), ctx, a, b, s0, p0, d0)
+    ccall((:ggml_conv_transpose_1d, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Cint, Cint, Cint),
+        ctx,
+        a,
+        b,
+        s0,
+        p0,
+        d0)
 end
 
 """
@@ -4279,7 +5507,26 @@ struct ggml_tensor * ggml_conv_2d( struct ggml_context * ctx, struct ggml_tensor
 ```
 """
 function ggml_conv_2d(ctx, a, b, s0, s1, p0, p1, d0, d1)
-    ccall((:ggml_conv_2d, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Cint, Cint, Cint, Cint, Cint, Cint), ctx, a, b, s0, s1, p0, p1, d0, d1)
+    ccall((:ggml_conv_2d, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            Cint,
+            Cint,
+            Cint,
+            Cint,
+            Cint,
+            Cint),
+        ctx,
+        a,
+        b,
+        s0,
+        s1,
+        p0,
+        p1,
+        d0,
+        d1)
 end
 
 """
@@ -4292,7 +5539,12 @@ struct ggml_tensor * ggml_conv_2d_sk_p0( struct ggml_context * ctx, struct ggml_
 ```
 """
 function ggml_conv_2d_sk_p0(ctx, a, b)
-    ccall((:ggml_conv_2d_sk_p0, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_conv_2d_sk_p0, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -4305,7 +5557,12 @@ struct ggml_tensor * ggml_conv_2d_s1_ph( struct ggml_context * ctx, struct ggml_
 ```
 """
 function ggml_conv_2d_s1_ph(ctx, a, b)
-    ccall((:ggml_conv_2d_s1_ph, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_conv_2d_s1_ph, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -4318,7 +5575,13 @@ struct ggml_tensor * ggml_conv_transpose_2d_p0( struct ggml_context * ctx, struc
 ```
 """
 function ggml_conv_transpose_2d_p0(ctx, a, b, stride)
-    ccall((:ggml_conv_transpose_2d_p0, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Cint), ctx, a, b, stride)
+    ccall((:ggml_conv_transpose_2d_p0, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Cint),
+        ctx,
+        a,
+        b,
+        stride)
 end
 
 @cenum ggml_op_pool::UInt32 begin
@@ -4337,7 +5600,15 @@ struct ggml_tensor * ggml_pool_1d( struct ggml_context * ctx, struct ggml_tensor
 ```
 """
 function ggml_pool_1d(ctx, a, op, k0, s0, p0)
-    ccall((:ggml_pool_1d, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, ggml_op_pool, Cint, Cint, Cint), ctx, a, op, k0, s0, p0)
+    ccall((:ggml_pool_1d, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, ggml_op_pool, Cint, Cint, Cint),
+        ctx,
+        a,
+        op,
+        k0,
+        s0,
+        p0)
 end
 
 """
@@ -4350,7 +5621,26 @@ struct ggml_tensor * ggml_pool_2d( struct ggml_context * ctx, struct ggml_tensor
 ```
 """
 function ggml_pool_2d(ctx, a, op, k0, k1, s0, s1, p0, p1)
-    ccall((:ggml_pool_2d, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, ggml_op_pool, Cint, Cint, Cint, Cint, Cfloat, Cfloat), ctx, a, op, k0, k1, s0, s1, p0, p1)
+    ccall((:ggml_pool_2d, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context},
+            Ptr{ggml_tensor},
+            ggml_op_pool,
+            Cint,
+            Cint,
+            Cint,
+            Cint,
+            Cfloat,
+            Cfloat),
+        ctx,
+        a,
+        op,
+        k0,
+        k1,
+        s0,
+        s1,
+        p0,
+        p1)
 end
 
 """
@@ -4363,7 +5653,12 @@ struct ggml_tensor * ggml_upscale( struct ggml_context * ctx, struct ggml_tensor
 ```
 """
 function ggml_upscale(ctx, a, scale_factor)
-    ccall((:ggml_upscale, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint), ctx, a, scale_factor)
+    ccall((:ggml_upscale, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint),
+        ctx,
+        a,
+        scale_factor)
 end
 
 """
@@ -4376,7 +5671,15 @@ struct ggml_tensor * ggml_pad( struct ggml_context * ctx, struct ggml_tensor * a
 ```
 """
 function ggml_pad(ctx, a, p0, p1, p2, p3)
-    ccall((:ggml_pad, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint, Cint, Cint, Cint), ctx, a, p0, p1, p2, p3)
+    ccall((:ggml_pad, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint, Cint, Cint, Cint),
+        ctx,
+        a,
+        p0,
+        p1,
+        p2,
+        p3)
 end
 
 @cenum ggml_sort_order::UInt32 begin
@@ -4394,7 +5697,12 @@ struct ggml_tensor * ggml_argsort( struct ggml_context * ctx, struct ggml_tensor
 ```
 """
 function ggml_argsort(ctx, a, order)
-    ccall((:ggml_argsort, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, ggml_sort_order), ctx, a, order)
+    ccall((:ggml_argsort, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, ggml_sort_order),
+        ctx,
+        a,
+        order)
 end
 
 """
@@ -4407,7 +5715,12 @@ struct ggml_tensor * ggml_top_k( struct ggml_context * ctx, struct ggml_tensor *
 ```
 """
 function ggml_top_k(ctx, a, k)
-    ccall((:ggml_top_k, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint), ctx, a, k)
+    ccall((:ggml_top_k, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint),
+        ctx,
+        a,
+        k)
 end
 
 """
@@ -4420,7 +5733,14 @@ struct ggml_tensor * ggml_flash_attn( struct ggml_context * ctx, struct ggml_ten
 ```
 """
 function ggml_flash_attn(ctx, q, k, v, masked)
-    ccall((:ggml_flash_attn, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Bool), ctx, q, k, v, masked)
+    ccall((:ggml_flash_attn, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Bool),
+        ctx,
+        q,
+        k,
+        v,
+        masked)
 end
 
 """
@@ -4433,7 +5753,20 @@ struct ggml_tensor * ggml_flash_attn_back( struct ggml_context * ctx, struct ggm
 ```
 """
 function ggml_flash_attn_back(ctx, q, k, v, d, masked)
-    ccall((:ggml_flash_attn_back, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Bool), ctx, q, k, v, d, masked)
+    ccall((:ggml_flash_attn_back, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            Bool),
+        ctx,
+        q,
+        k,
+        v,
+        d,
+        masked)
 end
 
 """
@@ -4446,7 +5779,20 @@ struct ggml_tensor * ggml_flash_ff( struct ggml_context * ctx, struct ggml_tenso
 ```
 """
 function ggml_flash_ff(ctx, a, b0, b1, c0, c1)
-    ccall((:ggml_flash_ff, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b0, b1, c0, c1)
+    ccall((:ggml_flash_ff, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b0,
+        b1,
+        c0,
+        c1)
 end
 
 """
@@ -4459,7 +5805,12 @@ struct ggml_tensor * ggml_win_part( struct ggml_context * ctx, struct ggml_tenso
 ```
 """
 function ggml_win_part(ctx, a, w)
-    ccall((:ggml_win_part, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint), ctx, a, w)
+    ccall((:ggml_win_part, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint),
+        ctx,
+        a,
+        w)
 end
 
 """
@@ -4472,7 +5823,14 @@ struct ggml_tensor * ggml_win_unpart( struct ggml_context * ctx, struct ggml_ten
 ```
 """
 function ggml_win_unpart(ctx, a, w0, h0, w)
-    ccall((:ggml_win_unpart, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint, Cint, Cint), ctx, a, w0, h0, w)
+    ccall((:ggml_win_unpart, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint, Cint, Cint),
+        ctx,
+        a,
+        w0,
+        h0,
+        w)
 end
 
 """
@@ -4485,7 +5843,12 @@ struct ggml_tensor * ggml_unary( struct ggml_context * ctx, struct ggml_tensor *
 ```
 """
 function ggml_unary(ctx, a, op)
-    ccall((:ggml_unary, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, ggml_unary_op), ctx, a, op)
+    ccall((:ggml_unary, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, ggml_unary_op),
+        ctx,
+        a,
+        op)
 end
 
 """
@@ -4498,7 +5861,12 @@ struct ggml_tensor * ggml_unary_inplace( struct ggml_context * ctx, struct ggml_
 ```
 """
 function ggml_unary_inplace(ctx, a, op)
-    ccall((:ggml_unary_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, ggml_unary_op), ctx, a, op)
+    ccall((:ggml_unary_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, ggml_unary_op),
+        ctx,
+        a,
+        op)
 end
 
 """
@@ -4511,7 +5879,13 @@ struct ggml_tensor * ggml_get_rel_pos( struct ggml_context * ctx, struct ggml_te
 ```
 """
 function ggml_get_rel_pos(ctx, a, qh, kh)
-    ccall((:ggml_get_rel_pos, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint, Cint), ctx, a, qh, kh)
+    ccall((:ggml_get_rel_pos, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Cint, Cint),
+        ctx,
+        a,
+        qh,
+        kh)
 end
 
 """
@@ -4524,7 +5898,13 @@ struct ggml_tensor * ggml_add_rel_pos( struct ggml_context * ctx, struct ggml_te
 ```
 """
 function ggml_add_rel_pos(ctx, a, pw, ph)
-    ccall((:ggml_add_rel_pos, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, pw, ph)
+    ccall((:ggml_add_rel_pos, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        pw,
+        ph)
 end
 
 """
@@ -4537,7 +5917,13 @@ struct ggml_tensor * ggml_add_rel_pos_inplace( struct ggml_context * ctx, struct
 ```
 """
 function ggml_add_rel_pos_inplace(ctx, a, pw, ph)
-    ccall((:ggml_add_rel_pos_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, pw, ph)
+    ccall((:ggml_add_rel_pos_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        pw,
+        ph)
 end
 
 # typedef void ( * ggml_unary_op_f32_t ) ( const int , float * , const float * )
@@ -4565,7 +5951,12 @@ GGML_DEPRECATED(GGML_API struct ggml_tensor * ggml_map_unary_f32( struct ggml_co
 ```
 """
 function ggml_map_unary_f32(ctx, a, fun)
-    ccall((:ggml_map_unary_f32, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, ggml_unary_op_f32_t), ctx, a, fun)
+    ccall((:ggml_map_unary_f32, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, ggml_unary_op_f32_t),
+        ctx,
+        a,
+        fun)
 end
 
 """
@@ -4578,7 +5969,12 @@ GGML_DEPRECATED(GGML_API struct ggml_tensor * ggml_map_unary_inplace_f32( struct
 ```
 """
 function ggml_map_unary_inplace_f32(ctx, a, fun)
-    ccall((:ggml_map_unary_inplace_f32, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, ggml_unary_op_f32_t), ctx, a, fun)
+    ccall((:ggml_map_unary_inplace_f32, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, ggml_unary_op_f32_t),
+        ctx,
+        a,
+        fun)
 end
 
 """
@@ -4591,7 +5987,13 @@ GGML_DEPRECATED(GGML_API struct ggml_tensor * ggml_map_binary_f32( struct ggml_c
 ```
 """
 function ggml_map_binary_f32(ctx, a, b, fun)
-    ccall((:ggml_map_binary_f32, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, ggml_binary_op_f32_t), ctx, a, b, fun)
+    ccall((:ggml_map_binary_f32, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, ggml_binary_op_f32_t),
+        ctx,
+        a,
+        b,
+        fun)
 end
 
 """
@@ -4604,7 +6006,13 @@ GGML_DEPRECATED(GGML_API struct ggml_tensor * ggml_map_binary_inplace_f32( struc
 ```
 """
 function ggml_map_binary_inplace_f32(ctx, a, b, fun)
-    ccall((:ggml_map_binary_inplace_f32, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, ggml_binary_op_f32_t), ctx, a, b, fun)
+    ccall((:ggml_map_binary_inplace_f32, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, ggml_binary_op_f32_t),
+        ctx,
+        a,
+        b,
+        fun)
 end
 
 """
@@ -4617,7 +6025,12 @@ GGML_DEPRECATED(GGML_API struct ggml_tensor * ggml_map_custom1_f32( struct ggml_
 ```
 """
 function ggml_map_custom1_f32(ctx, a, fun)
-    ccall((:ggml_map_custom1_f32, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, ggml_custom1_op_f32_t), ctx, a, fun)
+    ccall((:ggml_map_custom1_f32, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, ggml_custom1_op_f32_t),
+        ctx,
+        a,
+        fun)
 end
 
 """
@@ -4630,7 +6043,12 @@ GGML_DEPRECATED(GGML_API struct ggml_tensor * ggml_map_custom1_inplace_f32( stru
 ```
 """
 function ggml_map_custom1_inplace_f32(ctx, a, fun)
-    ccall((:ggml_map_custom1_inplace_f32, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, ggml_custom1_op_f32_t), ctx, a, fun)
+    ccall((:ggml_map_custom1_inplace_f32, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, ggml_custom1_op_f32_t),
+        ctx,
+        a,
+        fun)
 end
 
 """
@@ -4643,7 +6061,13 @@ GGML_DEPRECATED(GGML_API struct ggml_tensor * ggml_map_custom2_f32( struct ggml_
 ```
 """
 function ggml_map_custom2_f32(ctx, a, b, fun)
-    ccall((:ggml_map_custom2_f32, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, ggml_custom2_op_f32_t), ctx, a, b, fun)
+    ccall((:ggml_map_custom2_f32, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, ggml_custom2_op_f32_t),
+        ctx,
+        a,
+        b,
+        fun)
 end
 
 """
@@ -4656,7 +6080,13 @@ GGML_DEPRECATED(GGML_API struct ggml_tensor * ggml_map_custom2_inplace_f32( stru
 ```
 """
 function ggml_map_custom2_inplace_f32(ctx, a, b, fun)
-    ccall((:ggml_map_custom2_inplace_f32, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, ggml_custom2_op_f32_t), ctx, a, b, fun)
+    ccall((:ggml_map_custom2_inplace_f32, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, ggml_custom2_op_f32_t),
+        ctx,
+        a,
+        b,
+        fun)
 end
 
 """
@@ -4669,7 +6099,18 @@ GGML_DEPRECATED(GGML_API struct ggml_tensor * ggml_map_custom3_f32( struct ggml_
 ```
 """
 function ggml_map_custom3_f32(ctx, a, b, c, fun)
-    ccall((:ggml_map_custom3_f32, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, ggml_custom3_op_f32_t), ctx, a, b, c, fun)
+    ccall((:ggml_map_custom3_f32, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            ggml_custom3_op_f32_t),
+        ctx,
+        a,
+        b,
+        c,
+        fun)
 end
 
 """
@@ -4682,7 +6123,18 @@ GGML_DEPRECATED(GGML_API struct ggml_tensor * ggml_map_custom3_inplace_f32( stru
 ```
 """
 function ggml_map_custom3_inplace_f32(ctx, a, b, c, fun)
-    ccall((:ggml_map_custom3_inplace_f32, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, ggml_custom3_op_f32_t), ctx, a, b, c, fun)
+    ccall((:ggml_map_custom3_inplace_f32, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            ggml_custom3_op_f32_t),
+        ctx,
+        a,
+        b,
+        c,
+        fun)
 end
 
 # typedef void ( * ggml_custom1_op_t ) ( struct ggml_tensor * dst , const struct ggml_tensor * a , int ith , int nth , void * userdata )
@@ -4704,7 +6156,14 @@ struct ggml_tensor * ggml_map_custom1( struct ggml_context * ctx, struct ggml_te
 ```
 """
 function ggml_map_custom1(ctx, a, fun, n_tasks, userdata)
-    ccall((:ggml_map_custom1, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, ggml_custom1_op_t, Cint, Ptr{Cvoid}), ctx, a, fun, n_tasks, userdata)
+    ccall((:ggml_map_custom1, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, ggml_custom1_op_t, Cint, Ptr{Cvoid}),
+        ctx,
+        a,
+        fun,
+        n_tasks,
+        userdata)
 end
 
 """
@@ -4717,7 +6176,14 @@ struct ggml_tensor * ggml_map_custom1_inplace( struct ggml_context * ctx, struct
 ```
 """
 function ggml_map_custom1_inplace(ctx, a, fun, n_tasks, userdata)
-    ccall((:ggml_map_custom1_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, ggml_custom1_op_t, Cint, Ptr{Cvoid}), ctx, a, fun, n_tasks, userdata)
+    ccall((:ggml_map_custom1_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, ggml_custom1_op_t, Cint, Ptr{Cvoid}),
+        ctx,
+        a,
+        fun,
+        n_tasks,
+        userdata)
 end
 
 """
@@ -4730,7 +6196,20 @@ struct ggml_tensor * ggml_map_custom2( struct ggml_context * ctx, struct ggml_te
 ```
 """
 function ggml_map_custom2(ctx, a, b, fun, n_tasks, userdata)
-    ccall((:ggml_map_custom2, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, ggml_custom2_op_t, Cint, Ptr{Cvoid}), ctx, a, b, fun, n_tasks, userdata)
+    ccall((:ggml_map_custom2, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            ggml_custom2_op_t,
+            Cint,
+            Ptr{Cvoid}),
+        ctx,
+        a,
+        b,
+        fun,
+        n_tasks,
+        userdata)
 end
 
 """
@@ -4743,7 +6222,20 @@ struct ggml_tensor * ggml_map_custom2_inplace( struct ggml_context * ctx, struct
 ```
 """
 function ggml_map_custom2_inplace(ctx, a, b, fun, n_tasks, userdata)
-    ccall((:ggml_map_custom2_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, ggml_custom2_op_t, Cint, Ptr{Cvoid}), ctx, a, b, fun, n_tasks, userdata)
+    ccall((:ggml_map_custom2_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            ggml_custom2_op_t,
+            Cint,
+            Ptr{Cvoid}),
+        ctx,
+        a,
+        b,
+        fun,
+        n_tasks,
+        userdata)
 end
 
 """
@@ -4756,7 +6248,22 @@ struct ggml_tensor * ggml_map_custom3( struct ggml_context * ctx, struct ggml_te
 ```
 """
 function ggml_map_custom3(ctx, a, b, c, fun, n_tasks, userdata)
-    ccall((:ggml_map_custom3, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, ggml_custom3_op_t, Cint, Ptr{Cvoid}), ctx, a, b, c, fun, n_tasks, userdata)
+    ccall((:ggml_map_custom3, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            ggml_custom3_op_t,
+            Cint,
+            Ptr{Cvoid}),
+        ctx,
+        a,
+        b,
+        c,
+        fun,
+        n_tasks,
+        userdata)
 end
 
 """
@@ -4769,7 +6276,22 @@ struct ggml_tensor * ggml_map_custom3_inplace( struct ggml_context * ctx, struct
 ```
 """
 function ggml_map_custom3_inplace(ctx, a, b, c, fun, n_tasks, userdata)
-    ccall((:ggml_map_custom3_inplace, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, ggml_custom3_op_t, Cint, Ptr{Cvoid}), ctx, a, b, c, fun, n_tasks, userdata)
+    ccall((:ggml_map_custom3_inplace, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            Ptr{ggml_tensor},
+            ggml_custom3_op_t,
+            Cint,
+            Ptr{Cvoid}),
+        ctx,
+        a,
+        b,
+        c,
+        fun,
+        n_tasks,
+        userdata)
 end
 
 """
@@ -4782,7 +6304,12 @@ struct ggml_tensor * ggml_cross_entropy_loss( struct ggml_context * ctx, struct 
 ```
 """
 function ggml_cross_entropy_loss(ctx, a, b)
-    ccall((:ggml_cross_entropy_loss, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b)
+    ccall((:ggml_cross_entropy_loss, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b)
 end
 
 """
@@ -4795,7 +6322,13 @@ struct ggml_tensor * ggml_cross_entropy_loss_back( struct ggml_context * ctx, st
 ```
 """
 function ggml_cross_entropy_loss_back(ctx, a, b, c)
-    ccall((:ggml_cross_entropy_loss_back, libllama), Ptr{ggml_tensor}, (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Ptr{ggml_tensor}), ctx, a, b, c)
+    ccall((:ggml_cross_entropy_loss_back, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_context}, Ptr{ggml_tensor}, Ptr{ggml_tensor}, Ptr{ggml_tensor}),
+        ctx,
+        a,
+        b,
+        c)
 end
 
 """
@@ -4808,7 +6341,11 @@ void ggml_set_param( struct ggml_context * ctx, struct ggml_tensor * tensor);
 ```
 """
 function ggml_set_param(ctx, tensor)
-    ccall((:ggml_set_param, libllama), Cvoid, (Ptr{ggml_context}, Ptr{ggml_tensor}), ctx, tensor)
+    ccall((:ggml_set_param, libllama),
+        Cvoid,
+        (Ptr{ggml_context}, Ptr{ggml_tensor}),
+        ctx,
+        tensor)
 end
 
 """
@@ -4821,7 +6358,11 @@ void ggml_build_forward_expand (struct ggml_cgraph * cgraph, struct ggml_tensor 
 ```
 """
 function ggml_build_forward_expand(cgraph, tensor)
-    ccall((:ggml_build_forward_expand, libllama), Cvoid, (Ptr{ggml_cgraph}, Ptr{ggml_tensor}), cgraph, tensor)
+    ccall((:ggml_build_forward_expand, libllama),
+        Cvoid,
+        (Ptr{ggml_cgraph}, Ptr{ggml_tensor}),
+        cgraph,
+        tensor)
 end
 
 """
@@ -4834,7 +6375,13 @@ void ggml_build_backward_expand(struct ggml_context * ctx, struct ggml_cgraph * 
 ```
 """
 function ggml_build_backward_expand(ctx, gf, gb, keep)
-    ccall((:ggml_build_backward_expand, libllama), Cvoid, (Ptr{ggml_context}, Ptr{ggml_cgraph}, Ptr{ggml_cgraph}, Bool), ctx, gf, gb, keep)
+    ccall((:ggml_build_backward_expand, libllama),
+        Cvoid,
+        (Ptr{ggml_context}, Ptr{ggml_cgraph}, Ptr{ggml_cgraph}, Bool),
+        ctx,
+        gf,
+        gb,
+        keep)
 end
 
 """
@@ -4860,7 +6407,12 @@ struct ggml_cgraph * ggml_new_graph_custom (struct ggml_context * ctx, size_t si
 ```
 """
 function ggml_new_graph_custom(ctx, size, grads)
-    ccall((:ggml_new_graph_custom, libllama), Ptr{ggml_cgraph}, (Ptr{ggml_context}, Csize_t, Bool), ctx, size, grads)
+    ccall((:ggml_new_graph_custom, libllama),
+        Ptr{ggml_cgraph},
+        (Ptr{ggml_context}, Csize_t, Bool),
+        ctx,
+        size,
+        grads)
 end
 
 """
@@ -4873,7 +6425,11 @@ struct ggml_cgraph * ggml_graph_dup (struct ggml_context * ctx, struct ggml_cgra
 ```
 """
 function ggml_graph_dup(ctx, cgraph)
-    ccall((:ggml_graph_dup, libllama), Ptr{ggml_cgraph}, (Ptr{ggml_context}, Ptr{ggml_cgraph}), ctx, cgraph)
+    ccall((:ggml_graph_dup, libllama),
+        Ptr{ggml_cgraph},
+        (Ptr{ggml_context}, Ptr{ggml_cgraph}),
+        ctx,
+        cgraph)
 end
 
 """
@@ -4886,7 +6442,12 @@ struct ggml_cgraph ggml_graph_view (struct ggml_cgraph * cgraph, int i0, int i1)
 ```
 """
 function ggml_graph_view(cgraph, i0, i1)
-    ccall((:ggml_graph_view, libllama), ggml_cgraph, (Ptr{ggml_cgraph}, Cint, Cint), cgraph, i0, i1)
+    ccall((:ggml_graph_view, libllama),
+        ggml_cgraph,
+        (Ptr{ggml_cgraph}, Cint, Cint),
+        cgraph,
+        i0,
+        i1)
 end
 
 """
@@ -4899,7 +6460,11 @@ void ggml_graph_cpy (struct ggml_cgraph * src, struct ggml_cgraph * dst);
 ```
 """
 function ggml_graph_cpy(src, dst)
-    ccall((:ggml_graph_cpy, libllama), Cvoid, (Ptr{ggml_cgraph}, Ptr{ggml_cgraph}), src, dst)
+    ccall((:ggml_graph_cpy, libllama),
+        Cvoid,
+        (Ptr{ggml_cgraph}, Ptr{ggml_cgraph}),
+        src,
+        dst)
 end
 
 """
@@ -4964,7 +6529,11 @@ struct ggml_cplan ggml_graph_plan (struct ggml_cgraph * cgraph, int n_threads );
 ```
 """
 function ggml_graph_plan(cgraph, n_threads)
-    ccall((:ggml_graph_plan, libllama), ggml_cplan, (Ptr{ggml_cgraph}, Cint), cgraph, n_threads)
+    ccall((:ggml_graph_plan, libllama),
+        ggml_cplan,
+        (Ptr{ggml_cgraph}, Cint),
+        cgraph,
+        n_threads)
 end
 
 """
@@ -4977,7 +6546,11 @@ int ggml_graph_compute(struct ggml_cgraph * cgraph, struct ggml_cplan * cplan);
 ```
 """
 function ggml_graph_compute(cgraph, cplan)
-    ccall((:ggml_graph_compute, libllama), Cint, (Ptr{ggml_cgraph}, Ptr{ggml_cplan}), cgraph, cplan)
+    ccall((:ggml_graph_compute, libllama),
+        Cint,
+        (Ptr{ggml_cgraph}, Ptr{ggml_cplan}),
+        cgraph,
+        cplan)
 end
 
 """
@@ -4990,7 +6563,12 @@ void ggml_graph_compute_with_ctx(struct ggml_context * ctx, struct ggml_cgraph *
 ```
 """
 function ggml_graph_compute_with_ctx(ctx, cgraph, n_threads)
-    ccall((:ggml_graph_compute_with_ctx, libllama), Cvoid, (Ptr{ggml_context}, Ptr{ggml_cgraph}, Cint), ctx, cgraph, n_threads)
+    ccall((:ggml_graph_compute_with_ctx, libllama),
+        Cvoid,
+        (Ptr{ggml_context}, Ptr{ggml_cgraph}, Cint),
+        ctx,
+        cgraph,
+        n_threads)
 end
 
 """
@@ -5003,7 +6581,11 @@ struct ggml_tensor * ggml_graph_get_tensor(struct ggml_cgraph * cgraph, const ch
 ```
 """
 function ggml_graph_get_tensor(cgraph, name)
-    ccall((:ggml_graph_get_tensor, libllama), Ptr{ggml_tensor}, (Ptr{ggml_cgraph}, Ptr{Cchar}), cgraph, name)
+    ccall((:ggml_graph_get_tensor, libllama),
+        Ptr{ggml_tensor},
+        (Ptr{ggml_cgraph}, Ptr{Cchar}),
+        cgraph,
+        name)
 end
 
 """
@@ -5016,7 +6598,11 @@ void ggml_graph_export(const struct ggml_cgraph * cgraph, const char * fname);
 ```
 """
 function ggml_graph_export(cgraph, fname)
-    ccall((:ggml_graph_export, libllama), Cvoid, (Ptr{ggml_cgraph}, Ptr{Cchar}), cgraph, fname)
+    ccall((:ggml_graph_export, libllama),
+        Cvoid,
+        (Ptr{ggml_cgraph}, Ptr{Cchar}),
+        cgraph,
+        fname)
 end
 
 """
@@ -5029,7 +6615,12 @@ struct ggml_cgraph * ggml_graph_import(const char * fname, struct ggml_context *
 ```
 """
 function ggml_graph_import(fname, ctx_data, ctx_eval)
-    ccall((:ggml_graph_import, libllama), Ptr{ggml_cgraph}, (Ptr{Cchar}, Ptr{Ptr{ggml_context}}, Ptr{Ptr{ggml_context}}), fname, ctx_data, ctx_eval)
+    ccall((:ggml_graph_import, libllama),
+        Ptr{ggml_cgraph},
+        (Ptr{Cchar}, Ptr{Ptr{ggml_context}}, Ptr{Ptr{ggml_context}}),
+        fname,
+        ctx_data,
+        ctx_eval)
 end
 
 """
@@ -5055,7 +6646,12 @@ void ggml_graph_dump_dot(const struct ggml_cgraph * gb, const struct ggml_cgraph
 ```
 """
 function ggml_graph_dump_dot(gb, gf, filename)
-    ccall((:ggml_graph_dump_dot, libllama), Cvoid, (Ptr{ggml_cgraph}, Ptr{ggml_cgraph}, Ptr{Cchar}), gb, gf, filename)
+    ccall((:ggml_graph_dump_dot, libllama),
+        Cvoid,
+        (Ptr{ggml_cgraph}, Ptr{ggml_cgraph}, Ptr{Cchar}),
+        gb,
+        gf,
+        filename)
 end
 
 """
@@ -5067,8 +6663,26 @@ end
 void ggml_build_backward_gradient_checkpointing( struct ggml_context * ctx, struct ggml_cgraph * gf, struct ggml_cgraph * gb, struct ggml_cgraph * gb_tmp, struct ggml_tensor * * checkpoints, int n_checkpoints);
 ```
 """
-function ggml_build_backward_gradient_checkpointing(ctx, gf, gb, gb_tmp, checkpoints, n_checkpoints)
-    ccall((:ggml_build_backward_gradient_checkpointing, libllama), Cvoid, (Ptr{ggml_context}, Ptr{ggml_cgraph}, Ptr{ggml_cgraph}, Ptr{ggml_cgraph}, Ptr{Ptr{ggml_tensor}}, Cint), ctx, gf, gb, gb_tmp, checkpoints, n_checkpoints)
+function ggml_build_backward_gradient_checkpointing(ctx,
+    gf,
+    gb,
+    gb_tmp,
+    checkpoints,
+    n_checkpoints)
+    ccall((:ggml_build_backward_gradient_checkpointing, libllama),
+        Cvoid,
+        (Ptr{ggml_context},
+            Ptr{ggml_cgraph},
+            Ptr{ggml_cgraph},
+            Ptr{ggml_cgraph},
+            Ptr{Ptr{ggml_tensor}},
+            Cint),
+        ctx,
+        gf,
+        gb,
+        gb_tmp,
+        checkpoints,
+        n_checkpoints)
 end
 
 @cenum ggml_opt_type::UInt32 begin
@@ -5139,7 +6753,6 @@ function Base.setproperty!(x::Ptr{__JL_Ctag_10}, f::Symbol, v)
     unsafe_store!(getproperty(x, f), v)
 end
 
-
 struct __JL_Ctag_11
     m::Cint
     n_iter::Cint
@@ -5174,7 +6787,6 @@ end
 function Base.setproperty!(x::Ptr{__JL_Ctag_11}, f::Symbol, v)
     unsafe_store!(getproperty(x, f), v)
 end
-
 
 struct ggml_opt_params
     data::NTuple{120, UInt8}
@@ -5237,7 +6849,6 @@ function Base.setproperty!(x::Ptr{__JL_Ctag_8}, f::Symbol, v)
     unsafe_store!(getproperty(x, f), v)
 end
 
-
 struct __JL_Ctag_9
     x::Ptr{ggml_tensor}
     xp::Ptr{ggml_tensor}
@@ -5286,7 +6897,6 @@ end
 function Base.setproperty!(x::Ptr{__JL_Ctag_9}, f::Symbol, v)
     unsafe_store!(getproperty(x, f), v)
 end
-
 
 struct ggml_opt_context
     data::NTuple{312, UInt8}
@@ -5339,7 +6949,12 @@ enum ggml_opt_result ggml_opt( struct ggml_context * ctx, struct ggml_opt_params
 ```
 """
 function ggml_opt(ctx, params, f)
-    ccall((:ggml_opt, libllama), ggml_opt_result, (Ptr{ggml_context}, ggml_opt_params, Ptr{ggml_tensor}), ctx, params, f)
+    ccall((:ggml_opt, libllama),
+        ggml_opt_result,
+        (Ptr{ggml_context}, ggml_opt_params, Ptr{ggml_tensor}),
+        ctx,
+        params,
+        f)
 end
 
 """
@@ -5352,7 +6967,13 @@ void ggml_opt_init( struct ggml_context * ctx, struct ggml_opt_context * opt, st
 ```
 """
 function ggml_opt_init(ctx, opt, params, nx)
-    ccall((:ggml_opt_init, libllama), Cvoid, (Ptr{ggml_context}, Ptr{ggml_opt_context}, ggml_opt_params, Int64), ctx, opt, params, nx)
+    ccall((:ggml_opt_init, libllama),
+        Cvoid,
+        (Ptr{ggml_context}, Ptr{ggml_opt_context}, ggml_opt_params, Int64),
+        ctx,
+        opt,
+        params,
+        nx)
 end
 
 """
@@ -5365,7 +6986,12 @@ enum ggml_opt_result ggml_opt_resume( struct ggml_context * ctx, struct ggml_opt
 ```
 """
 function ggml_opt_resume(ctx, opt, f)
-    ccall((:ggml_opt_resume, libllama), ggml_opt_result, (Ptr{ggml_context}, Ptr{ggml_opt_context}, Ptr{ggml_tensor}), ctx, opt, f)
+    ccall((:ggml_opt_resume, libllama),
+        ggml_opt_result,
+        (Ptr{ggml_context}, Ptr{ggml_opt_context}, Ptr{ggml_tensor}),
+        ctx,
+        opt,
+        f)
 end
 
 """
@@ -5378,7 +7004,22 @@ enum ggml_opt_result ggml_opt_resume_g( struct ggml_context * ctx, struct ggml_o
 ```
 """
 function ggml_opt_resume_g(ctx, opt, f, gf, gb, callback, callback_data)
-    ccall((:ggml_opt_resume_g, libllama), ggml_opt_result, (Ptr{ggml_context}, Ptr{ggml_opt_context}, Ptr{ggml_tensor}, Ptr{ggml_cgraph}, Ptr{ggml_cgraph}, ggml_opt_callback, Ptr{Cvoid}), ctx, opt, f, gf, gb, callback, callback_data)
+    ccall((:ggml_opt_resume_g, libllama),
+        ggml_opt_result,
+        (Ptr{ggml_context},
+            Ptr{ggml_opt_context},
+            Ptr{ggml_tensor},
+            Ptr{ggml_cgraph},
+            Ptr{ggml_cgraph},
+            ggml_opt_callback,
+            Ptr{Cvoid}),
+        ctx,
+        opt,
+        f,
+        gf,
+        gb,
+        callback,
+        callback_data)
 end
 
 """
@@ -5391,7 +7032,14 @@ size_t ggml_quantize_q4_0(const float * src, void * dst, int n, int k, int64_t *
 ```
 """
 function ggml_quantize_q4_0(src, dst, n, k, hist)
-    ccall((:ggml_quantize_q4_0, libllama), Csize_t, (Ptr{Cfloat}, Ptr{Cvoid}, Cint, Cint, Ptr{Int64}), src, dst, n, k, hist)
+    ccall((:ggml_quantize_q4_0, libllama),
+        Csize_t,
+        (Ptr{Cfloat}, Ptr{Cvoid}, Cint, Cint, Ptr{Int64}),
+        src,
+        dst,
+        n,
+        k,
+        hist)
 end
 
 """
@@ -5404,7 +7052,14 @@ size_t ggml_quantize_q4_1(const float * src, void * dst, int n, int k, int64_t *
 ```
 """
 function ggml_quantize_q4_1(src, dst, n, k, hist)
-    ccall((:ggml_quantize_q4_1, libllama), Csize_t, (Ptr{Cfloat}, Ptr{Cvoid}, Cint, Cint, Ptr{Int64}), src, dst, n, k, hist)
+    ccall((:ggml_quantize_q4_1, libllama),
+        Csize_t,
+        (Ptr{Cfloat}, Ptr{Cvoid}, Cint, Cint, Ptr{Int64}),
+        src,
+        dst,
+        n,
+        k,
+        hist)
 end
 
 """
@@ -5417,7 +7072,14 @@ size_t ggml_quantize_q5_0(const float * src, void * dst, int n, int k, int64_t *
 ```
 """
 function ggml_quantize_q5_0(src, dst, n, k, hist)
-    ccall((:ggml_quantize_q5_0, libllama), Csize_t, (Ptr{Cfloat}, Ptr{Cvoid}, Cint, Cint, Ptr{Int64}), src, dst, n, k, hist)
+    ccall((:ggml_quantize_q5_0, libllama),
+        Csize_t,
+        (Ptr{Cfloat}, Ptr{Cvoid}, Cint, Cint, Ptr{Int64}),
+        src,
+        dst,
+        n,
+        k,
+        hist)
 end
 
 """
@@ -5430,7 +7092,14 @@ size_t ggml_quantize_q5_1(const float * src, void * dst, int n, int k, int64_t *
 ```
 """
 function ggml_quantize_q5_1(src, dst, n, k, hist)
-    ccall((:ggml_quantize_q5_1, libllama), Csize_t, (Ptr{Cfloat}, Ptr{Cvoid}, Cint, Cint, Ptr{Int64}), src, dst, n, k, hist)
+    ccall((:ggml_quantize_q5_1, libllama),
+        Csize_t,
+        (Ptr{Cfloat}, Ptr{Cvoid}, Cint, Cint, Ptr{Int64}),
+        src,
+        dst,
+        n,
+        k,
+        hist)
 end
 
 """
@@ -5443,7 +7112,14 @@ size_t ggml_quantize_q8_0(const float * src, void * dst, int n, int k, int64_t *
 ```
 """
 function ggml_quantize_q8_0(src, dst, n, k, hist)
-    ccall((:ggml_quantize_q8_0, libllama), Csize_t, (Ptr{Cfloat}, Ptr{Cvoid}, Cint, Cint, Ptr{Int64}), src, dst, n, k, hist)
+    ccall((:ggml_quantize_q8_0, libllama),
+        Csize_t,
+        (Ptr{Cfloat}, Ptr{Cvoid}, Cint, Cint, Ptr{Int64}),
+        src,
+        dst,
+        n,
+        k,
+        hist)
 end
 
 """
@@ -5456,7 +7132,14 @@ size_t ggml_quantize_q2_K(const float * src, void * dst, int n, int k, int64_t *
 ```
 """
 function ggml_quantize_q2_K(src, dst, n, k, hist)
-    ccall((:ggml_quantize_q2_K, libllama), Csize_t, (Ptr{Cfloat}, Ptr{Cvoid}, Cint, Cint, Ptr{Int64}), src, dst, n, k, hist)
+    ccall((:ggml_quantize_q2_K, libllama),
+        Csize_t,
+        (Ptr{Cfloat}, Ptr{Cvoid}, Cint, Cint, Ptr{Int64}),
+        src,
+        dst,
+        n,
+        k,
+        hist)
 end
 
 """
@@ -5469,7 +7152,14 @@ size_t ggml_quantize_q3_K(const float * src, void * dst, int n, int k, int64_t *
 ```
 """
 function ggml_quantize_q3_K(src, dst, n, k, hist)
-    ccall((:ggml_quantize_q3_K, libllama), Csize_t, (Ptr{Cfloat}, Ptr{Cvoid}, Cint, Cint, Ptr{Int64}), src, dst, n, k, hist)
+    ccall((:ggml_quantize_q3_K, libllama),
+        Csize_t,
+        (Ptr{Cfloat}, Ptr{Cvoid}, Cint, Cint, Ptr{Int64}),
+        src,
+        dst,
+        n,
+        k,
+        hist)
 end
 
 """
@@ -5482,7 +7172,14 @@ size_t ggml_quantize_q4_K(const float * src, void * dst, int n, int k, int64_t *
 ```
 """
 function ggml_quantize_q4_K(src, dst, n, k, hist)
-    ccall((:ggml_quantize_q4_K, libllama), Csize_t, (Ptr{Cfloat}, Ptr{Cvoid}, Cint, Cint, Ptr{Int64}), src, dst, n, k, hist)
+    ccall((:ggml_quantize_q4_K, libllama),
+        Csize_t,
+        (Ptr{Cfloat}, Ptr{Cvoid}, Cint, Cint, Ptr{Int64}),
+        src,
+        dst,
+        n,
+        k,
+        hist)
 end
 
 """
@@ -5495,7 +7192,14 @@ size_t ggml_quantize_q5_K(const float * src, void * dst, int n, int k, int64_t *
 ```
 """
 function ggml_quantize_q5_K(src, dst, n, k, hist)
-    ccall((:ggml_quantize_q5_K, libllama), Csize_t, (Ptr{Cfloat}, Ptr{Cvoid}, Cint, Cint, Ptr{Int64}), src, dst, n, k, hist)
+    ccall((:ggml_quantize_q5_K, libllama),
+        Csize_t,
+        (Ptr{Cfloat}, Ptr{Cvoid}, Cint, Cint, Ptr{Int64}),
+        src,
+        dst,
+        n,
+        k,
+        hist)
 end
 
 """
@@ -5508,7 +7212,14 @@ size_t ggml_quantize_q6_K(const float * src, void * dst, int n, int k, int64_t *
 ```
 """
 function ggml_quantize_q6_K(src, dst, n, k, hist)
-    ccall((:ggml_quantize_q6_K, libllama), Csize_t, (Ptr{Cfloat}, Ptr{Cvoid}, Cint, Cint, Ptr{Int64}), src, dst, n, k, hist)
+    ccall((:ggml_quantize_q6_K, libllama),
+        Csize_t,
+        (Ptr{Cfloat}, Ptr{Cvoid}, Cint, Cint, Ptr{Int64}),
+        src,
+        dst,
+        n,
+        k,
+        hist)
 end
 
 """
@@ -5521,7 +7232,14 @@ size_t ggml_quantize_iq2_xxs(const float * src, void * dst, int n, int k, int64_
 ```
 """
 function ggml_quantize_iq2_xxs(src, dst, n, k, hist)
-    ccall((:ggml_quantize_iq2_xxs, libllama), Csize_t, (Ptr{Cfloat}, Ptr{Cvoid}, Cint, Cint, Ptr{Int64}), src, dst, n, k, hist)
+    ccall((:ggml_quantize_iq2_xxs, libllama),
+        Csize_t,
+        (Ptr{Cfloat}, Ptr{Cvoid}, Cint, Cint, Ptr{Int64}),
+        src,
+        dst,
+        n,
+        k,
+        hist)
 end
 
 """
@@ -5534,7 +7252,15 @@ size_t ggml_quantize_chunk(enum ggml_type type, const float * src, void * dst, i
 ```
 """
 function ggml_quantize_chunk(type, src, dst, start, n, hist)
-    ccall((:ggml_quantize_chunk, libllama), Csize_t, (ggml_type, Ptr{Cfloat}, Ptr{Cvoid}, Cint, Cint, Ptr{Int64}), type, src, dst, start, n, hist)
+    ccall((:ggml_quantize_chunk, libllama),
+        Csize_t,
+        (ggml_type, Ptr{Cfloat}, Ptr{Cvoid}, Cint, Cint, Ptr{Int64}),
+        type,
+        src,
+        dst,
+        start,
+        n,
+        hist)
 end
 
 @cenum gguf_type::UInt32 begin
@@ -5584,7 +7310,11 @@ struct gguf_context * gguf_init_from_file(const char * fname, struct gguf_init_p
 ```
 """
 function gguf_init_from_file(fname, params)
-    ccall((:gguf_init_from_file, libllama), Ptr{gguf_context}, (Ptr{Cchar}, gguf_init_params), fname, params)
+    ccall((:gguf_init_from_file, libllama),
+        Ptr{gguf_context},
+        (Ptr{Cchar}, gguf_init_params),
+        fname,
+        params)
 end
 
 """
@@ -5896,7 +7626,11 @@ const void * gguf_get_val_data(const struct gguf_context * ctx, int key_id);
 ```
 """
 function gguf_get_val_data(ctx, key_id)
-    ccall((:gguf_get_val_data, libllama), Ptr{Cvoid}, (Ptr{gguf_context}, Cint), ctx, key_id)
+    ccall((:gguf_get_val_data, libllama),
+        Ptr{Cvoid},
+        (Ptr{gguf_context}, Cint),
+        ctx,
+        key_id)
 end
 
 """
@@ -5922,7 +7656,11 @@ const void * gguf_get_arr_data(const struct gguf_context * ctx, int key_id);
 ```
 """
 function gguf_get_arr_data(ctx, key_id)
-    ccall((:gguf_get_arr_data, libllama), Ptr{Cvoid}, (Ptr{gguf_context}, Cint), ctx, key_id)
+    ccall((:gguf_get_arr_data, libllama),
+        Ptr{Cvoid},
+        (Ptr{gguf_context}, Cint),
+        ctx,
+        key_id)
 end
 
 """
@@ -5935,7 +7673,12 @@ const char * gguf_get_arr_str (const struct gguf_context * ctx, int key_id, int 
 ```
 """
 function gguf_get_arr_str(ctx, key_id, i)
-    ccall((:gguf_get_arr_str, libllama), Ptr{Cchar}, (Ptr{gguf_context}, Cint, Cint), ctx, key_id, i)
+    ccall((:gguf_get_arr_str, libllama),
+        Ptr{Cchar},
+        (Ptr{gguf_context}, Cint, Cint),
+        ctx,
+        key_id,
+        i)
 end
 
 """
@@ -6013,7 +7756,12 @@ void gguf_set_val_u8 (struct gguf_context * ctx, const char * key, uint8_t val);
 ```
 """
 function gguf_set_val_u8(ctx, key, val)
-    ccall((:gguf_set_val_u8, libllama), Cvoid, (Ptr{gguf_context}, Ptr{Cchar}, UInt8), ctx, key, val)
+    ccall((:gguf_set_val_u8, libllama),
+        Cvoid,
+        (Ptr{gguf_context}, Ptr{Cchar}, UInt8),
+        ctx,
+        key,
+        val)
 end
 
 """
@@ -6026,7 +7774,12 @@ void gguf_set_val_i8 (struct gguf_context * ctx, const char * key, int8_t val);
 ```
 """
 function gguf_set_val_i8(ctx, key, val)
-    ccall((:gguf_set_val_i8, libllama), Cvoid, (Ptr{gguf_context}, Ptr{Cchar}, Int8), ctx, key, val)
+    ccall((:gguf_set_val_i8, libllama),
+        Cvoid,
+        (Ptr{gguf_context}, Ptr{Cchar}, Int8),
+        ctx,
+        key,
+        val)
 end
 
 """
@@ -6039,7 +7792,12 @@ void gguf_set_val_u16 (struct gguf_context * ctx, const char * key, uint16_t val
 ```
 """
 function gguf_set_val_u16(ctx, key, val)
-    ccall((:gguf_set_val_u16, libllama), Cvoid, (Ptr{gguf_context}, Ptr{Cchar}, UInt16), ctx, key, val)
+    ccall((:gguf_set_val_u16, libllama),
+        Cvoid,
+        (Ptr{gguf_context}, Ptr{Cchar}, UInt16),
+        ctx,
+        key,
+        val)
 end
 
 """
@@ -6052,7 +7810,12 @@ void gguf_set_val_i16 (struct gguf_context * ctx, const char * key, int16_t val)
 ```
 """
 function gguf_set_val_i16(ctx, key, val)
-    ccall((:gguf_set_val_i16, libllama), Cvoid, (Ptr{gguf_context}, Ptr{Cchar}, Int16), ctx, key, val)
+    ccall((:gguf_set_val_i16, libllama),
+        Cvoid,
+        (Ptr{gguf_context}, Ptr{Cchar}, Int16),
+        ctx,
+        key,
+        val)
 end
 
 """
@@ -6065,7 +7828,12 @@ void gguf_set_val_u32 (struct gguf_context * ctx, const char * key, uint32_t val
 ```
 """
 function gguf_set_val_u32(ctx, key, val)
-    ccall((:gguf_set_val_u32, libllama), Cvoid, (Ptr{gguf_context}, Ptr{Cchar}, UInt32), ctx, key, val)
+    ccall((:gguf_set_val_u32, libllama),
+        Cvoid,
+        (Ptr{gguf_context}, Ptr{Cchar}, UInt32),
+        ctx,
+        key,
+        val)
 end
 
 """
@@ -6078,7 +7846,12 @@ void gguf_set_val_i32 (struct gguf_context * ctx, const char * key, int32_t val)
 ```
 """
 function gguf_set_val_i32(ctx, key, val)
-    ccall((:gguf_set_val_i32, libllama), Cvoid, (Ptr{gguf_context}, Ptr{Cchar}, Int32), ctx, key, val)
+    ccall((:gguf_set_val_i32, libllama),
+        Cvoid,
+        (Ptr{gguf_context}, Ptr{Cchar}, Int32),
+        ctx,
+        key,
+        val)
 end
 
 """
@@ -6091,7 +7864,12 @@ void gguf_set_val_f32 (struct gguf_context * ctx, const char * key, float val);
 ```
 """
 function gguf_set_val_f32(ctx, key, val)
-    ccall((:gguf_set_val_f32, libllama), Cvoid, (Ptr{gguf_context}, Ptr{Cchar}, Cfloat), ctx, key, val)
+    ccall((:gguf_set_val_f32, libllama),
+        Cvoid,
+        (Ptr{gguf_context}, Ptr{Cchar}, Cfloat),
+        ctx,
+        key,
+        val)
 end
 
 """
@@ -6104,7 +7882,12 @@ void gguf_set_val_u64 (struct gguf_context * ctx, const char * key, uint64_t val
 ```
 """
 function gguf_set_val_u64(ctx, key, val)
-    ccall((:gguf_set_val_u64, libllama), Cvoid, (Ptr{gguf_context}, Ptr{Cchar}, UInt64), ctx, key, val)
+    ccall((:gguf_set_val_u64, libllama),
+        Cvoid,
+        (Ptr{gguf_context}, Ptr{Cchar}, UInt64),
+        ctx,
+        key,
+        val)
 end
 
 """
@@ -6117,7 +7900,12 @@ void gguf_set_val_i64 (struct gguf_context * ctx, const char * key, int64_t val)
 ```
 """
 function gguf_set_val_i64(ctx, key, val)
-    ccall((:gguf_set_val_i64, libllama), Cvoid, (Ptr{gguf_context}, Ptr{Cchar}, Int64), ctx, key, val)
+    ccall((:gguf_set_val_i64, libllama),
+        Cvoid,
+        (Ptr{gguf_context}, Ptr{Cchar}, Int64),
+        ctx,
+        key,
+        val)
 end
 
 """
@@ -6130,7 +7918,12 @@ void gguf_set_val_f64 (struct gguf_context * ctx, const char * key, double val);
 ```
 """
 function gguf_set_val_f64(ctx, key, val)
-    ccall((:gguf_set_val_f64, libllama), Cvoid, (Ptr{gguf_context}, Ptr{Cchar}, Cdouble), ctx, key, val)
+    ccall((:gguf_set_val_f64, libllama),
+        Cvoid,
+        (Ptr{gguf_context}, Ptr{Cchar}, Cdouble),
+        ctx,
+        key,
+        val)
 end
 
 """
@@ -6143,7 +7936,12 @@ void gguf_set_val_bool(struct gguf_context * ctx, const char * key, bool val);
 ```
 """
 function gguf_set_val_bool(ctx, key, val)
-    ccall((:gguf_set_val_bool, libllama), Cvoid, (Ptr{gguf_context}, Ptr{Cchar}, Bool), ctx, key, val)
+    ccall((:gguf_set_val_bool, libllama),
+        Cvoid,
+        (Ptr{gguf_context}, Ptr{Cchar}, Bool),
+        ctx,
+        key,
+        val)
 end
 
 """
@@ -6156,7 +7954,12 @@ void gguf_set_val_str (struct gguf_context * ctx, const char * key, const char *
 ```
 """
 function gguf_set_val_str(ctx, key, val)
-    ccall((:gguf_set_val_str, libllama), Cvoid, (Ptr{gguf_context}, Ptr{Cchar}, Ptr{Cchar}), ctx, key, val)
+    ccall((:gguf_set_val_str, libllama),
+        Cvoid,
+        (Ptr{gguf_context}, Ptr{Cchar}, Ptr{Cchar}),
+        ctx,
+        key,
+        val)
 end
 
 """
@@ -6169,7 +7972,14 @@ void gguf_set_arr_data(struct gguf_context * ctx, const char * key, enum gguf_ty
 ```
 """
 function gguf_set_arr_data(ctx, key, type, data, n)
-    ccall((:gguf_set_arr_data, libllama), Cvoid, (Ptr{gguf_context}, Ptr{Cchar}, gguf_type, Ptr{Cvoid}, Cint), ctx, key, type, data, n)
+    ccall((:gguf_set_arr_data, libllama),
+        Cvoid,
+        (Ptr{gguf_context}, Ptr{Cchar}, gguf_type, Ptr{Cvoid}, Cint),
+        ctx,
+        key,
+        type,
+        data,
+        n)
 end
 
 """
@@ -6182,7 +7992,13 @@ void gguf_set_arr_str (struct gguf_context * ctx, const char * key, const char *
 ```
 """
 function gguf_set_arr_str(ctx, key, data, n)
-    ccall((:gguf_set_arr_str, libllama), Cvoid, (Ptr{gguf_context}, Ptr{Cchar}, Ptr{Ptr{Cchar}}, Cint), ctx, key, data, n)
+    ccall((:gguf_set_arr_str, libllama),
+        Cvoid,
+        (Ptr{gguf_context}, Ptr{Cchar}, Ptr{Ptr{Cchar}}, Cint),
+        ctx,
+        key,
+        data,
+        n)
 end
 
 """
@@ -6208,7 +8024,11 @@ void gguf_add_tensor(struct gguf_context * ctx, const struct ggml_tensor * tenso
 ```
 """
 function gguf_add_tensor(ctx, tensor)
-    ccall((:gguf_add_tensor, libllama), Cvoid, (Ptr{gguf_context}, Ptr{ggml_tensor}), ctx, tensor)
+    ccall((:gguf_add_tensor, libllama),
+        Cvoid,
+        (Ptr{gguf_context}, Ptr{ggml_tensor}),
+        ctx,
+        tensor)
 end
 
 """
@@ -6221,7 +8041,12 @@ void gguf_set_tensor_type(struct gguf_context * ctx, const char * name, enum ggm
 ```
 """
 function gguf_set_tensor_type(ctx, name, type)
-    ccall((:gguf_set_tensor_type, libllama), Cvoid, (Ptr{gguf_context}, Ptr{Cchar}, ggml_type), ctx, name, type)
+    ccall((:gguf_set_tensor_type, libllama),
+        Cvoid,
+        (Ptr{gguf_context}, Ptr{Cchar}, ggml_type),
+        ctx,
+        name,
+        type)
 end
 
 """
@@ -6234,7 +8059,13 @@ void gguf_set_tensor_data(struct gguf_context * ctx, const char * name, const vo
 ```
 """
 function gguf_set_tensor_data(ctx, name, data, size)
-    ccall((:gguf_set_tensor_data, libllama), Cvoid, (Ptr{gguf_context}, Ptr{Cchar}, Ptr{Cvoid}, Csize_t), ctx, name, data, size)
+    ccall((:gguf_set_tensor_data, libllama),
+        Cvoid,
+        (Ptr{gguf_context}, Ptr{Cchar}, Ptr{Cvoid}, Csize_t),
+        ctx,
+        name,
+        data,
+        size)
 end
 
 """
@@ -6247,7 +8078,12 @@ void gguf_write_to_file(const struct gguf_context * ctx, const char * fname, boo
 ```
 """
 function gguf_write_to_file(ctx, fname, only_meta)
-    ccall((:gguf_write_to_file, libllama), Cvoid, (Ptr{gguf_context}, Ptr{Cchar}, Bool), ctx, fname, only_meta)
+    ccall((:gguf_write_to_file, libllama),
+        Cvoid,
+        (Ptr{gguf_context}, Ptr{Cchar}, Bool),
+        ctx,
+        fname,
+        only_meta)
 end
 
 """
@@ -6273,7 +8109,11 @@ void gguf_get_meta_data(const struct gguf_context * ctx, void * data);
 ```
 """
 function gguf_get_meta_data(ctx, data)
-    ccall((:gguf_get_meta_data, libllama), Cvoid, (Ptr{gguf_context}, Ptr{Cvoid}), ctx, data)
+    ccall((:gguf_get_meta_data, libllama),
+        Cvoid,
+        (Ptr{gguf_context}, Ptr{Cvoid}),
+        ctx,
+        data)
 end
 
 """
@@ -6567,7 +8407,10 @@ ggml_type_traits_t ggml_internal_get_type_traits(enum ggml_type type);
 ```
 """
 function ggml_internal_get_type_traits(type)
-    ccall((:ggml_internal_get_type_traits, libllama), ggml_type_traits_t, (ggml_type,), type)
+    ccall((:ggml_internal_get_type_traits, libllama),
+        ggml_type_traits_t,
+        (ggml_type,),
+        type)
 end
 
 const LLAMA_MAX_DEVICES = 1
@@ -6624,7 +8467,7 @@ const GGML_N_TASKS_MAX = -1
 
 # exports
 const PREFIXES = ["llama_", "LLAMA_", "ggml_", "GGML_"]
-for name in names(@__MODULE__; all=true), prefix in PREFIXES
+for name in names(@__MODULE__; all = true), prefix in PREFIXES
     if startswith(string(name), prefix)
         @eval export $name
     end
