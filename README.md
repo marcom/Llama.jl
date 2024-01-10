@@ -1,6 +1,8 @@
 # Llama.jl
 
 [![Build Status](https://github.com/marcom/Llama.jl/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/marcom/Llama.jl/actions/workflows/ci.yml?query=branch%3Amain)
+[![SciML Code Style](https://img.shields.io/static/v1?label=code%20style&message=SciML&color=9558b2&labelColor=389826)](https://github.com/SciML/SciMLStyle)
+
 
 Julia interface to
 [llama.cpp](https://github.com/ggerganov/llama.cpp), a C/C++ port of
