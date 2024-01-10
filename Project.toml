@@ -12,5 +12,5 @@ llama_cpp_jll = "98bd2d0b-bc7c-583a-ba54-7299b0ad0e7f"
 [compat]
 CEnum = "0.5"
 ReplMaker = "0.2"
-julia = "1.8"
+julia = "1.9"
 llama_cpp_jll = "= 0.0.15"
