@@ -12,4 +12,7 @@ showtestset() = println(" "^(2 * Test.get_testset_depth()), "testing ",
     Aqua.test_all(Llama)
 end
 
-include("run-programs.jl")
+@testset "Llama.jl" begin
+    include("utils.jl")
+    include("run-programs.jl")
+end

@@ -1,6 +1,6 @@
 module Llama
 
-export run_llama, run_chat
+export run_llama, run_chat, run_server, download_model
 export LlamaContext, embeddings, llama_eval, logits, tokenize,
     token_to_str
 
