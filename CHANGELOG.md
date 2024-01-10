@@ -13,4 +13,4 @@
 - Added `run_server` functionality that starts a simple HTTP server (interact either in your browser or use other LLM packages). It provides an OpenAI-compatible chat completion endpoint.
 
 ### Fixed
-- Updated llama.cpp JLL bindings to the latest version.
+- Updated llama.cpp JLL bindings to "0.0.15" (llama.cpp b1796)
