@@ -8,6 +8,12 @@ use_deterministic_symbol = true
 smart_de_anonymize = true
 show_c_function_prototype = true
 extract_c_comment_style = "raw"
+# these symbols are not needed and cause problems for Clang.jl (Clang v0.17.8)
+output_ignorelist = [
+    "GGML_TENSOR_UNARY_OP_LOCALS",
+    "GGML_TENSOR_BINARY_OP_LOCALS",
+    "GGML_RESTRICT",
+]
 
 [codegen]
 opaque_func_arg_as_PtrCvoid = true

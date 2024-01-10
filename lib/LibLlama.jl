@@ -6620,13 +6620,7 @@ const GGUF_VERSION = 3
 
 const GGUF_DEFAULT_ALIGNMENT = 32
 
-const GGML_TENSOR_UNARY_OP_LOCALS = ((((((GGML_TENSOR_LOCALS(int64_t, ne0, src0, ne))(GGML_TENSOR_LOCALS))(size_t, nb0, src0, nb))(GGML_TENSOR_LOCALS))(int64_t, ne, dst, ne))(GGML_TENSOR_LOCALS))(size_t, nb, dst, nb)
-
-const GGML_TENSOR_BINARY_OP_LOCALS = ((((((((((GGML_TENSOR_LOCALS(int64_t, ne0, src0, ne))(GGML_TENSOR_LOCALS))(size_t, nb0, src0, nb))(GGML_TENSOR_LOCALS))(int64_t, ne1, src1, ne))(GGML_TENSOR_LOCALS))(size_t, nb1, src1, nb))(GGML_TENSOR_LOCALS))(int64_t, ne, dst, ne))(GGML_TENSOR_LOCALS))(size_t, nb, dst, nb)
-
 const GGML_N_TASKS_MAX = -1
-
-const GGML_RESTRICT = restrict
 
 # exports
 const PREFIXES = ["llama_", "LLAMA_", "ggml_", "GGML_"]
