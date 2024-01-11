@@ -26,8 +26,8 @@ function run_llama(; model::AbstractString, prompt::AbstractString="", nthreads:
         # Provides the path to locate ggml-metal.metal file (must be provided separately)
         cmd = addenv(cmd, "GGML_METAL_PATH_RESOURCES" => joinpath(llama_cpp_jll.artifact_dir, "bin"))
     end
-    disable_sigint() do
-        s = read(cmd, String)
+    s = disable_sigint() do
+        read(cmd, String)
     end
     return s
 end
