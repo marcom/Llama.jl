@@ -30,6 +30,19 @@ LLaMA, are freely available.  They can be downloaded here in GGML
 format (choose one of the .bin files):
 https://huggingface.co/SlyEcho/open_llama_3b_v2_ggml
 
+Explore other models on the [HuggingFace Hub](https://huggingface.co).
+
+Once you have a `url` link to a `.gguf` file, you can simply download it via:
+
+```julia
+using Llama
+
+# Example for an Open-chat 7Bn parameter model (c. 4.4GB)
+url = "https://huggingface.co/TheBloke/openchat-3.5-0106-GGUF/resolve/main/openchat-3.5-0106.Q4_K_M.gguf"
+model = download_model(url)
+# Output: "models/openchat-3.5-0106.Q4_K_M.gguf"
+```
+You can use the model variable directly in the `run_*` functions, like `run_server`.
 
 ## REPL mode
 
