@@ -40,8 +40,10 @@ jobs:
         with:
           files: lcov.info
       - name: 'Install JuliaFormatter'
-        run: julia  -e 'import Pkg; Pkg.add("JuliaFormatter")'
+        run: |
+          julia  -e 'import Pkg; Pkg.add("JuliaFormatter")'
         shell: bash
       - name: 'Check format'
-        run: julia  -e 'using JuliaFormatter; out=format(".", verbose=true); out ? exit(0) : exit(1)'
+        run: |
+          julia  -e 'using JuliaFormatter; out=format(".", verbose=true); out ? exit(0) : exit(1)'
         shell: bash
