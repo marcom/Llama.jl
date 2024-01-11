@@ -39,3 +39,7 @@ jobs:
       - uses: codecov/codecov-action@v2
         with:
           files: lcov.info
+      - name: Install JuliaFormatter and format
+        run: |
+          julia  -e 'import Pkg; Pkg.add("JuliaFormatter")'
+          julia  -e 'using JuliaFormatter; out=format(".", verbose=true); out ? exit(0) : exit(1)'
