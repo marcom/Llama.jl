@@ -30,8 +30,6 @@ LLaMA, are freely available.  They can be downloaded here in GGML
 format (choose one of the .bin files):
 https://huggingface.co/SlyEcho/open_llama_3b_v2_ggml
 
-Explore other models on the [HuggingFace Hub](https://huggingface.co).
-
 Once you have a `url` link to a `.gguf` file, you can simply download it via:
 
 ```julia
@@ -43,6 +41,16 @@ model = download_model(url)
 # Output: "models/openchat-3.5-0106.Q4_K_M.gguf"
 ```
 You can use the model variable directly in the `run_*` functions, like `run_server`.
+
+## Simple HTTP Server
+
+Given a `model` file, you can run a simple HTTP server that provides both an in-browser chat interface and an OpenAI-compatible chat completion endpoint.
+
+```julia
+using Llama
+Llama.run_server(; model)
+```
+Explore other models on the [HuggingFace Hub](https://huggingface.co).
 
 ## REPL mode
 
