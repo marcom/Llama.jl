@@ -1,9 +1,10 @@
 """
     download_model(url::AbstractString; dir::AbstractString="models")
 
-Downloads a model specified by `url` from the HuggingFace Hub into `dir` directory and returns the path to the downloaded file.
+Downloads a model specified by `url` from the HuggingFace Hub into `dir` directory and returns the `model_path` to the downloaded file.
+If the `dir` directory does not exist, it will be created.
 
-Note: Currently works only for models in the GGUF format (expects the URL to end with `.gguf`).
+Note: Currently allows only models in the GGUF format (expects the URL to end with `.gguf`).
 
 See [HuggingFace Model Hub](https://huggingface.co/models) for a list of available models.
 
@@ -16,11 +17,15 @@ model = download_model(url)
 ```
 """
 function download_model(url::AbstractString; dir::AbstractString="models")
-    @assert startswith(url, "https://huggingface.co/") || startswith(url, "http://huggingface.co/") "The provided URL is not a HuggingFace Hub model. See https://huggingface.co/"
-    @assert endswith(url, ".gguf") "The provided URL is not in the GGUF format. File name: $(splitpath(url)[end])"
+    if !endswith(url, ".gguf")
+        throw(ArgumentError("The provided URL is not in the GGUF format. File name: $(splitpath(url)[end])"))
+    end
+    if !(startswith(url, "https://huggingface.co/") || startswith(url, "http://huggingface.co/"))
+        @warn "Potential error. The provided URL seems to not be from the HuggingFace Hub. See https://huggingface.co/ to double-check the link."
+    end
 
-    model_fn = joinpath(dir, splitpath(url)[end]) # target file name
-    mkpath(dirname(model_fn)) # ensure it exists
-    Downloads.download(url, model_fn) # download the model
-    return model_fn # return the path to the downloaded file
+    model_path = joinpath(dir, splitpath(url)[end])
+    mkpath(dirname(model_path))
+    Downloads.download(url, model_path)
+    return model_path
 end
