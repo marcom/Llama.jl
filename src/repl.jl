@@ -16,6 +16,7 @@ function set_repl_llama(ctx::LlamaContext)
 end
 
 function repl_llama(s)
+    @warn "REPL Llama is not yet implemented. Please use `run_*` functions instead. See `?Llama.run_server` for more information."
     # TODO
     return s
 end
@@ -26,9 +27,9 @@ function init_repl()
     end
     ReplMaker.initrepl(
         repl_llama,
-        prompt_text = "LLaMA> ",
-        prompt_color = :blue,
-        start_key = '}',
-        mode_name = "LLaMA_mode",
+        prompt_text="LLaMA> ",
+        prompt_color=:blue,
+        start_key='}',
+        mode_name="LLaMA_mode",
     )
 end

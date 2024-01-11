@@ -17,56 +17,30 @@ add https://github.com/marcom/Llama.jl
 
 The `llama_cpp_jll.jl` package used behind the scenes currently works
 on Linux, Mac, and FreeBSD on i686, x86_64, and aarch64 (note: only
-tested on x86_64-linux so far).
+tested on x86_64-linux and aarch64-macos so far).
 
 ## Downloading the model weights
 
-You will need a file with quantized model weights, see
-[llama.cpp](https://github.com/ggerganov/llama.cpp) for instructions.
+You will need a file with quantized model weights in the right format (GGUF).
 
-The weights for OpenLLaMA, an open-source reproduction of Meta AI's
-LLaMA, are freely available.  They can be downloaded here in GGML
-format (choose one of the .bin files):
-https://huggingface.co/SlyEcho/open_llama_3b_v2_ggml
+You can either download the weights from the [HuggingFace Hub](https://huggingface.co) (search for "GGUF" to download the right format) or convert them from the original PyTorch weights (see [llama.cpp](https://github.com/ggerganov/llama.cpp) for instructions.)
 
+Good weights to start with are the OpenChat weights, which are Apache 2.0 licensed and can be downloaded [here](https://huggingface.co/TheBloke/openchat-3.5-0106-GGUF). Click on the tab "Files" and download one of the `*.gguf` files. We recommend the Q4_K_M version (~4.4GB).
+In the future, there might be new releases of the OpenChat weights, so look you might want to check for new versions.
 
-## REPL mode
-
-The REPL mode is currently non-functional, but stay tuned!
-
-## LibLlama
-
-```julia
-ctx = LlamaContext("./ggml-alpaca-7b-q4.bin")
-```
-
-### `generate`
-
-```julia
-generate(ctx, "Write me a hello world in python")  # => currently prints text to screen
-```
-
-### `logits`
-
-```julia
-logits(ctx)  # => Vector{Float32}, length ctx.n_vocab
-```
-
-### `tokenize`
-
-```julia
-tokenize(ctx, "Hello world")  # => Vector{Int32} (token_ids), variable length
-```
+TODO: Add a note on how to download "https://huggingface.co/TheBloke/openchat-3.5-0106-GGUF/resolve/main/openchat-3.5-0106.Q4_K_M.gguf"
 
 ## Running example executables from llama.cpp
+
+### Llama Text Generation
 
 ```julia
 using Llama
 
-s = run_llama(model="./ggml-alpaca-7b-q4.bin", prompt="Hello", args=`-n 16`)
+s = run_llama(model="models/openchat-3.5-0106.Q4_K_M.gguf", prompt="Hello")
 
-# use more threads
-run_llama(model="./ggml-alpaca-7b-q4.bin", prompt="Hello", nthreads=4)
+# Provide additional arguments to llama.cpp (check the documentation for more details or the help text below)
+s = run_llama(model="models/openchat-3.5-0106.Q4_K_M.gguf", prompt="Hello", n_gpu_layers=0, args=`-n 16`)
 
 # print the help text with more options
 run_llama(model="", prompt="", args=`-h`)
@@ -75,5 +49,13 @@ run_llama(model="", prompt="", args=`-h`)
 ### Interactive chat mode
 
 ```julia
-run_chat(model="./ggml-alpaca-7b-q4.bin", prompt="Hello chat mode", nthreads=4)
+run_chat(model="models/openchat-3.5-0106.Q4_K_M.gguf", prompt="Hello chat mode")
 ```
+
+## REPL mode
+
+The REPL mode is currently non-functional, but stay tuned!
+
+## LibLlama
+
+The `libllama` bindings are currently non-functional, but stay tuned!
