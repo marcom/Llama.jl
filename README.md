@@ -27,6 +27,14 @@ LLaMA, are freely available.  They can be downloaded here in GGML
 format (choose one of the .bin files):
 https://huggingface.co/SlyEcho/open_llama_3b_v2_ggml
 
+## Simple HTTP Server
+
+Given a `model` file, you can run a simple HTTP server that provides both an in-browser chat interface and an OpenAI-compatible chat completion endpoint.
+
+```julia
+using Llama
+Llama.run_server(; model)
+```
 
 ## REPL mode
 

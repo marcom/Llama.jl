@@ -60,8 +60,8 @@ function run_chat(; model::AbstractString, prompt::AbstractString="", nthreads::
 end
 
 """
-    run_server(; model::AbstractString, host::AbstractString="127.0.0.1", port::Int=519, nthreads::Int=Threads.nthreads(), 
-    n_gpu_layers::Int=99, ctx_size::Int=512, args=``)
+    run_server(; model::AbstractString, host::AbstractString="127.0.0.1", port::Int=10897, nthreads::Int=Threads.nthreads(), 
+    n_gpu_layers::Int=99, ctx_size::Int=2048, args=``)
 
 Starts a simple HTTP server with the `model` provided.
 
@@ -72,7 +72,7 @@ Interrupt the server with `Ctrl+C`.
 # Arguments
 - `model`: path to the model to be used
 - `host`: host address to bind to. Defaults to "127.0.0.1"
-- `port`: port to listen on. Defaults to 519 (Why 519? Check the sum of ASCII codes of the letters in "llama")
+- `port`: port to listen on. Defaults to 10897
 - `nthreads`: number of threads to use. Defaults to the number of available threads
 - `n_gpu_layers`: number of layers to offload on the GPU (a.k.a. `ngl` in llama.cpp). Requires more VRAM on your GPU but can speed up inference.
   Set to 0 to run inference on CPU-only. Defaults to 99 (=practically all layers)
@@ -96,7 +96,7 @@ Downloads.download("https://huggingface.co/TheBloke/dolphin-2_6-phi-2-GGUF/resol
 # Start the server
 run_server(; model)
 """
-function run_server(; model::AbstractString, host::AbstractString="127.0.0.1", port::Int=519, nthreads::Int=Threads.nthreads(), n_gpu_layers::Int=99, ctx_size::Int=2048, args=``)
+function run_server(; model::AbstractString, host::AbstractString="127.0.0.1", port::Int=10897, nthreads::Int=Threads.nthreads(), n_gpu_layers::Int=99, ctx_size::Int=2048, args=``)
     cmd = `$(llama_cpp_jll.server()) --model $model --host $host --port $port --threads $nthreads --n-gpu-layers $n_gpu_layers --ctx-size $ctx_size $args`
     # Provides the path to locate ggml-metal.metal file (must be provided separately)
     cmd = addenv(cmd, "GGML_METAL_PATH_RESOURCES" => joinpath(llama_cpp_jll.artifact_dir, "bin"))
