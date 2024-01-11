@@ -1,5 +1,8 @@
 # Llama.jl
 
+[![Build Status](https://github.com/marcom/Llama.jl/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/marcom/Llama.jl/actions/workflows/ci.yml?query=branch%3Amain)
+[![Aqua](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
+
 Julia interface to
 [llama.cpp](https://github.com/ggerganov/llama.cpp), a C/C++ port of
 Meta's [LLaMA](https://arxiv.org/abs/2302.13971) (a large language
@@ -27,6 +30,18 @@ LLaMA, are freely available.  They can be downloaded here in GGML
 format (choose one of the .bin files):
 https://huggingface.co/SlyEcho/open_llama_3b_v2_ggml
 
+Once you have a `url` link to a `.gguf` file, you can simply download it via:
+
+```julia
+using Llama
+
+# Example for an Open-chat 7Bn parameter model (c. 4.4GB)
+url = "https://huggingface.co/TheBloke/openchat-3.5-0106-GGUF/resolve/main/openchat-3.5-0106.Q4_K_M.gguf"
+model = download_model(url)
+# Output: "models/openchat-3.5-0106.Q4_K_M.gguf"
+```
+You can use the model variable directly in the `run_*` functions, like `run_server`.
+
 ## Simple HTTP Server
 
 Given a `model` file, you can run a simple HTTP server that provides both an in-browser chat interface and an OpenAI-compatible chat completion endpoint.
@@ -35,6 +50,7 @@ Given a `model` file, you can run a simple HTTP server that provides both an in-
 using Llama
 Llama.run_server(; model)
 ```
+Explore other models on the [HuggingFace Hub](https://huggingface.co).
 
 ## REPL mode
 

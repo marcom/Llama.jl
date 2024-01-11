@@ -5,12 +5,21 @@ version = "0.2.0"
 
 [deps]
 CEnum = "fa961155-64e5-5f13-b03f-caf6b980ea82"
+Downloads = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
 ReplMaker = "b873ce64-0db9-51f5-a568-4457d8e49576"
-Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 llama_cpp_jll = "98bd2d0b-bc7c-583a-ba54-7299b0ad0e7f"
 
 [compat]
+Aqua = "0.7"
 CEnum = "0.5"
+Downloads = "1.5, 1.6"
 ReplMaker = "0.2"
 julia = "1.9"
 llama_cpp_jll = "= 0.0.15"
+
+[extras]
+Aqua = "4c88cf16-eb10-579e-8560-4a9242c79595"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Aqua", "Test"]
