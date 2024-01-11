@@ -20,10 +20,17 @@ See HuggingFace's model documentation for the correct prompt format or use a lib
 
 See also: `run_chat`, `run_server`
 """
-function run_llama(; model::AbstractString, prompt::AbstractString="", nthreads::Int=Threads.nthreads(), n_gpu_layers::Int=99, ctx_size::Int=2048, args=``)
+function run_llama(;
+    model::AbstractString,
+    prompt::AbstractString = "",
+    nthreads::Int = Threads.nthreads(),
+    n_gpu_layers::Int = 99,
+    ctx_size::Int = 2048,
+    args = ``)
     cmd = `$(llama_cpp_jll.main()) --model $model --prompt $prompt --threads $nthreads --n-gpu-layers $n_gpu_layers --ctx-size $ctx_size $args`
     # Provides the path to locate ggml-metal.metal file (must be provided separately)
-    cmd = addenv(cmd, "GGML_METAL_PATH_RESOURCES" => joinpath(llama_cpp_jll.artifact_dir, "bin"))
+    cmd = addenv(cmd,
+        "GGML_METAL_PATH_RESOURCES" => joinpath(llama_cpp_jll.artifact_dir, "bin"))
     return read(cmd, String)
 end
 
@@ -52,10 +59,17 @@ See HuggingFace's model documentation for the correct prompt format or use a lib
 
 See also: `run_llama`, `run_server`
 """
-function run_chat(; model::AbstractString, prompt::AbstractString="", nthreads::Int=Threads.nthreads(), n_gpu_layers::Int=99, ctx_size::Int=2048, args=``)
+function run_chat(;
+    model::AbstractString,
+    prompt::AbstractString = "",
+    nthreads::Int = Threads.nthreads(),
+    n_gpu_layers::Int = 99,
+    ctx_size::Int = 2048,
+    args = ``)
     cmd = `$(llama_cpp_jll.main()) --model $model --prompt $prompt --threads $nthreads --n-gpu-layers $n_gpu_layers --ctx-size $ctx_size $args -ins`
     # Provides the path to locate ggml-metal.metal file (must be provided separately)
-    cmd = addenv(cmd, "GGML_METAL_PATH_RESOURCES" => joinpath(llama_cpp_jll.artifact_dir, "bin"))
+    cmd = addenv(cmd,
+        "GGML_METAL_PATH_RESOURCES" => joinpath(llama_cpp_jll.artifact_dir, "bin"))
     run(cmd)
 end
 
@@ -96,9 +110,17 @@ Downloads.download("https://huggingface.co/TheBloke/dolphin-2_6-phi-2-GGUF/resol
 # Start the server
 run_server(; model)
 """
-function run_server(; model::AbstractString, host::AbstractString="127.0.0.1", port::Int=10897, nthreads::Int=Threads.nthreads(), n_gpu_layers::Int=99, ctx_size::Int=2048, args=``)
+function run_server(;
+    model::AbstractString,
+    host::AbstractString = "127.0.0.1",
+    port::Int = 10897,
+    nthreads::Int = Threads.nthreads(),
+    n_gpu_layers::Int = 99,
+    ctx_size::Int = 2048,
+    args = ``)
     cmd = `$(llama_cpp_jll.server()) --model $model --host $host --port $port --threads $nthreads --n-gpu-layers $n_gpu_layers --ctx-size $ctx_size $args`
     # Provides the path to locate ggml-metal.metal file (must be provided separately)
-    cmd = addenv(cmd, "GGML_METAL_PATH_RESOURCES" => joinpath(llama_cpp_jll.artifact_dir, "bin"))
+    cmd = addenv(cmd,
+        "GGML_METAL_PATH_RESOURCES" => joinpath(llama_cpp_jll.artifact_dir, "bin"))
     run(cmd)
 end

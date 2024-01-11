@@ -16,11 +16,12 @@ model = download_model(url)
 # Output: "models/rocket-3b-2.76bpw.gguf"
 ```
 """
-function download_model(url::AbstractString; dir::AbstractString="models")
+function download_model(url::AbstractString; dir::AbstractString = "models")
     if !endswith(url, ".gguf")
         throw(ArgumentError("The provided URL is not in the GGUF format. File name: $(splitpath(url)[end])"))
     end
-    if !(startswith(url, "https://huggingface.co/") || startswith(url, "http://huggingface.co/"))
+    if !(startswith(url, "https://huggingface.co/") ||
+         startswith(url, "http://huggingface.co/"))
         @warn "Potential error. The provided URL seems to not be from the HuggingFace Hub. See https://huggingface.co/ to double-check the link."
     end
 

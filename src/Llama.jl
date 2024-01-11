@@ -9,7 +9,6 @@ export download_model
 # export LlamaContext, embeddings, llama_eval, logits, tokenize,
 #     token_to_str
 
-
 import llama_cpp_jll
 import ReplMaker
 import Downloads
