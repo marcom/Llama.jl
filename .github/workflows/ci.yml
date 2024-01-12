@@ -40,11 +40,14 @@ jobs:
         with:
           files: lcov.info
       # Formatting set up based on: https://github.com/SciML/DifferentialEquations.jl/blob/master/.github/workflows/FormatCheck.yml
+      # Execute only on ubuntu (enough to check once)
       - name: Install JuliaFormatter and format
+        if: matrix.config.os == 'ubuntu-latest' && matrix.config.version == 1
         run: |
           julia  -e 'using Pkg; Pkg.add(PackageSpec(name="JuliaFormatter"))'
           julia  -e 'using JuliaFormatter; format(".", verbose=true)'
       - name: Format check, fails if some files have not been formatted
+        if: matrix.config.os == 'ubuntu-latest' && matrix.config.version == 1
         run: |
           julia -e '
           out = Cmd(`git diff --name-only`) |> read |> String
