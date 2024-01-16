@@ -22,9 +22,14 @@ See also: `run_chat`, `run_server`
 """
 function run_llama(; model::AbstractString, prompt::AbstractString="", nthreads::Int=Threads.nthreads(), n_gpu_layers::Int=99, ctx_size::Int=2048, args=``)
     cmd = `$(llama_cpp_jll.main()) --model $model --prompt $prompt --threads $nthreads --n-gpu-layers $n_gpu_layers --ctx-size $ctx_size $args`
-    # Provides the path to locate ggml-metal.metal file (must be provided separately)
-    cmd = addenv(cmd, "GGML_METAL_PATH_RESOURCES" => joinpath(llama_cpp_jll.artifact_dir, "bin"))
-    return read(cmd, String)
+    if Sys.isapple()
+        # Provides the path to locate ggml-metal.metal file (must be provided separately)
+        cmd = addenv(cmd, "GGML_METAL_PATH_RESOURCES" => joinpath(llama_cpp_jll.artifact_dir, "bin"))
+    end
+    s = disable_sigint() do
+        read(cmd, String)
+    end
+    return s
 end
 
 """
@@ -54,9 +59,15 @@ See also: `run_llama`, `run_server`
 """
 function run_chat(; model::AbstractString, prompt::AbstractString="", nthreads::Int=Threads.nthreads(), n_gpu_layers::Int=99, ctx_size::Int=2048, args=``)
     cmd = `$(llama_cpp_jll.main()) --model $model --prompt $prompt --threads $nthreads --n-gpu-layers $n_gpu_layers --ctx-size $ctx_size $args -ins`
-    # Provides the path to locate ggml-metal.metal file (must be provided separately)
-    cmd = addenv(cmd, "GGML_METAL_PATH_RESOURCES" => joinpath(llama_cpp_jll.artifact_dir, "bin"))
-    run(cmd)
+    if Sys.isapple()
+        # Provides the path to locate ggml-metal.metal file (must be provided separately)
+        cmd = addenv(cmd, "GGML_METAL_PATH_RESOURCES" => joinpath(llama_cpp_jll.artifact_dir, "bin"))
+    end
+    disable_sigint() do
+        # disallow julia's SIGINT (Ctrl-C) handler, and allow Ctrl-C
+        # to be caught by llama.cpp
+        run(cmd)
+    end
 end
 
 """
