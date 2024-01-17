@@ -1,0 +1,4 @@
+# See https://domluna.github.io/JuliaFormatter.jl/stable/ for a list of options
+style = "sciml"
+# ignore lib/ folder as it's auto-generated
+ignore = ["lib"]

@@ -4,8 +4,10 @@ using Llama
 using Llama: LibLlama
 
 # show which testset is currently running
-showtestset() = println(" "^(2 * Test.get_testset_depth()), "testing ",
-    Test.get_testset().description)
+function showtestset()
+    println(" "^(2 * Test.get_testset_depth()), "testing ",
+        Test.get_testset().description)
+end
 
 @testset "Code quality (Aqua.jl)" begin
     # Skipping unbound_args check because we need our `MaybeExtract` type to be unboard
