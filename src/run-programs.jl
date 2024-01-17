@@ -30,7 +30,8 @@ function run_llama(;
     cmd = `$(llama_cpp_jll.main()) --model $model --prompt $prompt --threads $nthreads --n-gpu-layers $n_gpu_layers --ctx-size $ctx_size $args`
     if Sys.isapple()
         # Provides the path to locate ggml-metal.metal file (must be provided separately)
-        cmd = addenv(cmd, "GGML_METAL_PATH_RESOURCES" => joinpath(llama_cpp_jll.artifact_dir, "bin"))
+        cmd = addenv(cmd,
+            "GGML_METAL_PATH_RESOURCES" => joinpath(llama_cpp_jll.artifact_dir, "bin"))
     end
     s = disable_sigint() do
         read(cmd, String)
@@ -73,7 +74,8 @@ function run_chat(;
     cmd = `$(llama_cpp_jll.main()) --model $model --prompt $prompt --threads $nthreads --n-gpu-layers $n_gpu_layers --ctx-size $ctx_size $args -ins`
     if Sys.isapple()
         # Provides the path to locate ggml-metal.metal file (must be provided separately)
-        cmd = addenv(cmd, "GGML_METAL_PATH_RESOURCES" => joinpath(llama_cpp_jll.artifact_dir, "bin"))
+        cmd = addenv(cmd,
+            "GGML_METAL_PATH_RESOURCES" => joinpath(llama_cpp_jll.artifact_dir, "bin"))
     end
     disable_sigint() do
         # disallow julia's SIGINT (Ctrl-C) handler, and allow Ctrl-C

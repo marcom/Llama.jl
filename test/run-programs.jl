@@ -4,16 +4,21 @@
     default_run_kwargs = Dict(:n_gpu_layers => 1, :ctx_size => 8)
     @testset "run_llama" begin
         showtestset()
-        redirect_stdio(stdout=devnull) do
-            @test run_llama(; model="", args=`-h`, default_run_kwargs...) isa String
-            @test run_llama(; model="", prompt="", args=`-h`, default_run_kwargs...) isa String
+        redirect_stdio(stdout = devnull) do
+            @test run_llama(; model = "", args = `-h`, default_run_kwargs...) isa String
+            @test run_llama(;
+                model = "",
+                prompt = "",
+                args = `-h`,
+                default_run_kwargs...) isa String
         end
     end
 
     @testset "run_chat" begin
         showtestset()
-        redirect_stdio(stdout=devnull) do
-            @test run_chat(; model="", args=`-h`, default_run_kwargs...) isa Base.Process
+        redirect_stdio(stdout = devnull) do
+            @test run_chat(; model = "", args = `-h`, default_run_kwargs...) isa
+                  Base.Process
         end
     end
 
