@@ -1,7 +1,7 @@
 name = "Llama"
 uuid = "882c185a-eef0-4636-aa0b-94c4dba13695"
 authors = ["Marco Matthies <71844+marcom@users.noreply.github.com>"]
-version = "0.2.0"
+version = "0.3.0"
 
 [deps]
 CEnum = "fa961155-64e5-5f13-b03f-caf6b980ea82"
@@ -15,7 +15,7 @@ CEnum = "0.5"
 Downloads = "1.5, 1.6"
 ReplMaker = "0.2"
 julia = "1.9"
-llama_cpp_jll = "= 0.0.15"
+llama_cpp_jll = "= 0.0.16"
 
 [extras]
 Aqua = "4c88cf16-eb10-579e-8560-4a9242c79595"
