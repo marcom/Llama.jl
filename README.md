@@ -34,6 +34,7 @@ In the future, there might be new releases, so you might want to check for new v
 Once you have a `url` link to a `.gguf` file, you can simply download it via:
 
 ```julia
+using Llama
 # Example for a 7Bn parameter model (c. 4.4GB)
 url = "https://huggingface.co/TheBloke/dolphin-2.6-mistral-7B-dpo-GGUF/resolve/main/dolphin-2.6-mistral-7b-dpo.Q4_K_M.gguf"
 model = download_model(url)
