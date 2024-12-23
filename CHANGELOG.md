@@ -4,6 +4,12 @@
 
 ### Fixed
 
+## [0.4.0]
+
+### Updated
+- Updated `llama.cpp` to `0.0.17` (b4371) for better performance, stability and new features.
+- Updated `llama_cpp_jll` binaries to use `llama_cli` and `llama_server` instead of `main` and `server`.
+
 ## [0.3.0]
 
 ### Added

@@ -27,7 +27,7 @@ function run_llama(;
         n_gpu_layers::Int = 99,
         ctx_size::Int = 2048,
         args = ``)
-    cmd = `$(llama_cpp_jll.main()) --model $model --prompt $prompt --threads $nthreads --n-gpu-layers $n_gpu_layers --ctx-size $ctx_size $args`
+    cmd = `$(llama_cpp_jll.llama_cli()) --model $model --prompt $prompt --threads $nthreads --n-gpu-layers $n_gpu_layers --ctx-size $ctx_size $args`
     if Sys.isapple()
         # Provides the path to locate ggml-metal.metal file (must be provided separately)
         cmd = addenv(cmd,
@@ -71,7 +71,7 @@ function run_chat(;
         n_gpu_layers::Int = 99,
         ctx_size::Int = 2048,
         args = ``)
-    cmd = `$(llama_cpp_jll.main()) --model $model --prompt $prompt --threads $nthreads --n-gpu-layers $n_gpu_layers --ctx-size $ctx_size $args -ins`
+    cmd = `$(llama_cpp_jll.llama_cli()) --model $model --prompt $prompt --threads $nthreads --n-gpu-layers $n_gpu_layers --ctx-size $ctx_size $args -i`
     if Sys.isapple()
         # Provides the path to locate ggml-metal.metal file (must be provided separately)
         cmd = addenv(cmd,
@@ -133,7 +133,7 @@ function run_server(;
         embeddings::Bool = true,
         args = ``)
     embeddings_flag = embeddings ? `--embeddings` : ""
-    cmd = `$(llama_cpp_jll.server()) --model $model --host $host --port $port --threads $nthreads --n-gpu-layers $n_gpu_layers --ctx-size $ctx_size $(embeddings_flag) $args`
+    cmd = `$(llama_cpp_jll.llama_server()) --model $model --host $host --port $port --threads $nthreads --n-gpu-layers $n_gpu_layers --ctx-size $ctx_size $(embeddings_flag) $args`
     # Provides the path to locate ggml-metal.metal file (must be provided separately)
     # ggml-metal than requires ggml-common.h, which is in a separate folder, so we to add C_INCLUDE_PATH as well
     cmd = addenv(
