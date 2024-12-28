@@ -27,7 +27,7 @@ You will need a file with quantized model weights in the right format (GGUF).
 
 You can either download the weights from the [HuggingFace Hub](https://huggingface.co) (search for "GGUF" to download the right format) or convert them from the original PyTorch weights (see [llama.cpp](https://github.com/ggerganov/llama.cpp) for instructions.)
 
-Good weights to start with are the Dolphin-family fine-tuned weights, which are Apache 2.0 licensed and can be downloaded [here](https://huggingface.co/TheBloke/dolphin-2.6-mistral-7B-dpo-GGUF). Click on the tab "Files" and download one of the `*.gguf` files. We recommend the Q4_K_M version (~4.4GB).
+Good weights to start with are the Llama3-family fine-tuned weights ([here](https://huggingface.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF) with a Llama-specific licence) or Qwen 2.5 family, which are Apache 2.0 licensed and can be downloaded [here](https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct-GGUF). Click on the tab "Files" and download one of the `*.gguf` files. We recommend the Q5_K_M version (~5.5GB).
 
 In the future, there might be new releases, so you might want to check for new versions.
 
@@ -35,10 +35,10 @@ Once you have a `url` link to a `.gguf` file, you can simply download it via:
 
 ```julia
 using Llama
-# Example for a 7Bn parameter model (c. 4.4GB)
-url = "https://huggingface.co/TheBloke/dolphin-2.6-mistral-7B-dpo-GGUF/resolve/main/dolphin-2.6-mistral-7b-dpo.Q4_K_M.gguf"
+# Example for a 360M parameter model (c. 0.3GB)
+url = "https://huggingface.co/bartowski/SmolLM2-360M-Instruct-GGUF/resolve/main/SmolLM2-360M-Instruct-Q5_K_S.gguf"
 model = download_model(url)
-# Output: "models/dolphin-2.6-mistral-7b-dpo.Q4_K_M.gguf"
+# Output: "models/SmolLM2-360M-Instruct-Q5_K_S.gguf"
 ```
 
 You can use the model variable directly in the `run_*` functions, like `run_server`.
@@ -56,15 +56,18 @@ using Llama
 Llama.run_server(; model)
 ```
 
+Just open the URL `http://127.0.0.1:10897` in your browser to see the chat interface or use GET requests to the `/v1/chat/completions` endpoint.
+
 ### Llama Text Generation
 
 ```julia
 using Llama
+model = "models/SmolLM2-360M-Instruct-Q5_K_S.gguf"
 
-s = run_llama(model="models/dolphin-2.6-mistral-7b-dpo.Q4_K_M.gguf", prompt="Hello")
+s = run_llama(; model, prompt="Hello")
 
 # Provide additional arguments to llama.cpp (check the documentation for more details or the help text below)
-s = run_llama(model="models/dolphin-2.6-mistral-7b-dpo.Q4_K_M.gguf", prompt="Hello", n_gpu_layers=0, args=`-n 16`)
+s = run_llama(; model, prompt="Hello", n_gpu_layers=0, args=`-n 16`)
 
 # print the help text with more options
 run_llama(model="", prompt="", args=`-h`)
@@ -77,7 +80,7 @@ run_llama(model="", prompt="", args=`-h`)
 ### Interactive chat mode
 
 ```julia
-run_chat(model="models/dolphin-2.6-mistral-7b-dpo.Q4_K_M.gguf", prompt="Hello chat mode")
+run_chat(; model, prompt="Hello chat mode")
 ```
 
 ## REPL mode
