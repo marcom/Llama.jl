@@ -102,7 +102,8 @@ Interrupt the server with `Ctrl+C`.
 - `n_gpu_layers`: number of layers to offload on the GPU (a.k.a. `ngl` in llama.cpp). Requires more VRAM on your GPU but can speed up inference.
   Set to 0 to run inference on CPU-only. Defaults to 99 (=practically all layers)
 - `ctx_size`: context size, ie, how big can the prompt/inference be. Defaults to 2048 (but most models allow 4,000 and more)
-- `embeddings`: whether to allow generating of embeddings. Defaults to `true`
+- `embeddings`: whether to allow generating of embeddings. Defaults to `false`.
+   Note: Embeddings are not supported by all models and it might break the server!
 - `args`: additional arguments to pass to the server
 
 See the [full documentation](https://github.com/ggerganov/llama.cpp/blob/master/examples/server/README.md) for more details.
@@ -130,10 +131,10 @@ function run_server(;
         nthreads::Int = Threads.nthreads(),
         n_gpu_layers::Int = 99,
         ctx_size::Int = 2048,
-        embeddings::Bool = true,
+        embeddings::Bool = false,
         args = ``)
-    embeddings_flag = embeddings ? `--embeddings` : ""
-    cmd = `$(llama_cpp_jll.llama_server()) --model $model --host $host --port $port --threads $nthreads --n-gpu-layers $n_gpu_layers --ctx-size $ctx_size $(embeddings_flag) $args`
+    embeddings_flag = embeddings ? ` --embeddings` : ""
+    cmd = `$(llama_cpp_jll.llama_server()) --model $model --host $host --port $port --threads $nthreads --n-gpu-layers $n_gpu_layers --ctx-size $ctx_size$(embeddings_flag) $args`
     # Provides the path to locate ggml-metal.metal file (must be provided separately)
     # ggml-metal than requires ggml-common.h, which is in a separate folder, so we to add C_INCLUDE_PATH as well
     cmd = addenv(
