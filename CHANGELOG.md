@@ -10,6 +10,9 @@
 - Updated `llama.cpp` to `0.0.17` (b4371) for better performance, stability and new features.
 - Updated `llama_cpp_jll` binaries to use `llama_cli` and `llama_server` instead of `main` and `server`.
 
+### Fixed
+- Fixed `run_server` command to disallow embeddings by default (some models do not support it and it might break the server).
+
 ## [0.3.0]
 
 ### Added
