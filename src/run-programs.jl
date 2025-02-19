@@ -111,7 +111,7 @@ See the [full documentation](https://github.com/ggerganov/llama.cpp/blob/master/
 # Example
 
 ```julia
-using Llama
+using LlamaCpp
 
 # Download a model from HuggingFace, eg, Phi-2.
 # See details [here](https://huggingface.co/TheBloke/dolphin-2_6-phi-2-GGUF)

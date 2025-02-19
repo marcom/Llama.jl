@@ -1,4 +1,4 @@
-using Llama: download_model
+using LlamaCpp: download_model
 @testset "download_model" begin
     # pytorch .bin model suffix
     @test_throws ArgumentError download_model("https://huggingface.co/ikawrakow/various-2bit-sota-gguf/resolve/main/rocket-3b-2.76bpw.bin")

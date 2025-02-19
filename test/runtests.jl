@@ -1,7 +1,7 @@
 using Test
 using Aqua
-using Llama
-using Llama: LibLlama
+using LlamaCpp
+using LlamaCpp: LibLlama
 
 # show which testset is currently running
 function showtestset()
@@ -11,10 +11,10 @@ end
 
 @testset "Code quality (Aqua.jl)" begin
     # Skipping unbound_args check because we need our `MaybeExtract` type to be unboard
-    Aqua.test_all(Llama)
+    Aqua.test_all(LlamaCpp)
 end
 
-@testset "Llama.jl" begin
+@testset "LlamaCpp.jl" begin
     include("utils.jl")
     include("run-programs.jl")
 end

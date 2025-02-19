@@ -1,6 +1,6 @@
-# Llama.jl
+# LlamaCpp.jl
 
-[![Build Status](https://github.com/marcom/Llama.jl/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/marcom/Llama.jl/actions/workflows/ci.yml?query=branch%3Amain)
+[![Build Status](https://github.com/marcom/LlamaCpp.jl/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/marcom/LlamaCpp.jl/actions/workflows/ci.yml?query=branch%3Amain)
 [![Aqua](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
 
 Julia interface to
@@ -14,12 +14,12 @@ model).
 Press `]` at the Julia REPL to enter pkg mode, then:
 
 ```
-add https://github.com/marcom/Llama.jl
+add https://github.com/marcom/LlamaCpp.jl
 ```
 
 The `llama_cpp_jll.jl` package used behind the scenes currently works
-on Linux, Mac, and FreeBSD on i686, x86_64, and aarch64 (note: only
-tested on x86_64-linux and aarch64-macos so far).
+on Linux, Mac, and FreeBSD on `i686`, `x86_64`, and `aarch64` (note: only
+tested on `x86_64-linux` and `aarch64-macos` so far).
 
 ## Downloading the model weights
 
@@ -34,7 +34,7 @@ In the future, there might be new releases, so you might want to check for new v
 Once you have a `url` link to a `.gguf` file, you can simply download it via:
 
 ```julia
-using Llama
+using LlamaCpp
 # Example for a 360M parameter model (c. 0.3GB)
 url = "https://huggingface.co/bartowski/SmolLM2-360M-Instruct-GGUF/resolve/main/SmolLM2-360M-Instruct-Q5_K_S.gguf"
 model = download_model(url)
@@ -47,13 +47,13 @@ You can use the model variable directly in the `run_*` functions, like `run_serv
 
 ### Simple HTTP Server
 
-Server mode is the easiest way to get started with Llama.jl. It provides both an in-browser chat interface and an OpenAI-compatible chat completion endpoint (for packages like [PromptingTools.jl](https://github.com/svilupp/PromptingTools.jl)).
+Server mode is the easiest way to get started with LlamaCpp.jl. It provides both an in-browser chat interface and an OpenAI-compatible chat completion endpoint (for packages like [PromptingTools.jl](https://github.com/svilupp/PromptingTools.jl)).
 
 ```julia
-using Llama
+using LlamaCpp
 
 # Use the `model` downloaded above
-Llama.run_server(; model)
+LlamaCpp.run_server(; model)
 ```
 
 Just open the URL `http://127.0.0.1:10897` in your browser to see the chat interface or use GET requests to the `/v1/chat/completions` endpoint.
@@ -61,7 +61,7 @@ Just open the URL `http://127.0.0.1:10897` in your browser to see the chat inter
 ### Llama Text Generation
 
 ```julia
-using Llama
+using LlamaCpp
 model = "models/SmolLM2-360M-Instruct-Q5_K_S.gguf"
 
 s = run_llama(; model, prompt="Hello")
