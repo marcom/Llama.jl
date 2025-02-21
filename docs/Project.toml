@@ -1,0 +1,3 @@
+[deps]
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+LlamaCpp = "4028143c-eef9-4a3a-9d23-34f3d8ed2047"
