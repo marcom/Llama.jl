@@ -12,6 +12,7 @@ makedocs(;
         edit_link = "main",
         assets = String[]
     ),
+    checkdocs_ignored_modules = [LlamaCpp.LibLlama],
     pages = [
         "Home" => "index.md",
         "API Reference" => "api.md"
