@@ -1,9 +1,8 @@
-# LlamaCpp.jl
+```@meta
+CurrentModule = LlamaCpp
+```
 
-[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://marcom.github.io/LlamaCpp.jl/dev/)
-[![Build Status](https://github.com/marcom/LlamaCpp.jl/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/marcom/LlamaCpp.jl/actions/workflows/ci.yml?query=branch%3Amain)
-[![Coverage](https://codecov.io/gh/svilupp/LlamaCpp.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/marcom/LlamaCpp.jl)
-[![Aqua](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
+# LlamaCpp.jl
 
 Julia interface to
 [llama.cpp](https://github.com/ggerganov/llama.cpp), a C/C++ port of

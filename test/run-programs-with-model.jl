@@ -2,9 +2,9 @@
 const MODEL_PATH = "../ggml-alpaca-7b-q4.bin"
 const ctx = LlamaContext(MODEL_PATH)
 
-using Llama: LibLlama
+using LlamaCpp: LibLlama
 
-@testset "Llama, with model" verbose=true begin
+@testset "LlamaCpp, with model" verbose=true begin
     showtestset()
     @testset "LlamaContext" begin
         showtestset()

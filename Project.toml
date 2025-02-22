@@ -1,7 +1,7 @@
-name = "Llama"
-uuid = "882c185a-eef0-4636-aa0b-94c4dba13695"
+name = "LlamaCpp"
+uuid = "4028143c-eef9-4a3a-9d23-34f3d8ed2047"
 authors = ["Marco Matthies <71844+marcom@users.noreply.github.com>"]
-version = "0.4.0"
+version = "0.5.0"
 
 [deps]
 CEnum = "fa961155-64e5-5f13-b03f-caf6b980ea82"

@@ -1,4 +1,4 @@
-module Llama
+module LlamaCpp
 
 # Use only these executables for now:
 export run_llama, run_chat, run_server
@@ -25,4 +25,4 @@ include("run-programs.jl")
 include("repl.jl")
 include("generate.jl")
 
-end # module Llama
+end # module

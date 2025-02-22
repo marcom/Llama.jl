@@ -4,6 +4,12 @@
 
 ### Fixed
 
+## [0.5.0]
+
+### Updated
+
+- Package name changed to `LlamaCpp.jl` (from `Llama.jl`)
+
 ## [0.4.0]
 
 ### Updated
